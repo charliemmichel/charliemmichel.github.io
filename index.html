@@ -478,6 +478,9 @@ section {
   border: 1px solid var(--border);
   overflow: hidden;
   transition: transform 0.2s;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .mockup-card:hover { transform: translateY(-3px); }
@@ -495,6 +498,25 @@ section {
   transform-origin: top left;
   pointer-events: none;
   border: none;
+}
+
+.mockup-preview::after {
+  content: 'Open mockup ↗';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(107,45,62,0);
+  color: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.mockup-card:hover .mockup-preview::after {
+  background: rgba(107,45,62,0.55);
+  color: white;
 }
 
 .mockup-info {
@@ -905,7 +927,7 @@ footer {
   <p class="section-sub">Anonymized visual representations of actual deliverables. Click any card to open the full mockup.</p>
 
   <div class="mockups-grid">
-    <div class="mockup-card reveal">
+    <a class="mockup-card reveal" href="mockup_elearning_slide.html" target="_blank">
       <div class="mockup-preview">
         <iframe src="mockup_elearning_slide.html" title="eLearning slide mockup" loading="lazy"></iframe>
       </div>
@@ -913,9 +935,9 @@ footer {
         <div class="mockup-title">Synthesia-style e-learning slide</div>
         <div class="mockup-desc">AI-generated avatar module · SCORM 1.2 production</div>
       </div>
-    </div>
+    </a>
 
-    <div class="mockup-card reveal">
+    <a class="mockup-card reveal" href="mockup_newsletter.html" target="_blank">
       <div class="mockup-preview">
         <iframe src="mockup_newsletter.html" title="Newsletter mockup" loading="lazy"></iframe>
       </div>
@@ -923,9 +945,9 @@ footer {
         <div class="mockup-title">Internal HTML newsletter</div>
         <div class="mockup-desc">Quarterly employee communication · 991 recipients</div>
       </div>
-    </div>
+    </a>
 
-    <div class="mockup-card reveal">
+    <a class="mockup-card reveal" href="mockup_lms_scorecard.html" target="_blank">
       <div class="mockup-preview">
         <iframe src="mockup_lms_scorecard.html" title="LMS scorecard mockup" loading="lazy"></iframe>
       </div>
@@ -933,9 +955,9 @@ footer {
         <div class="mockup-title">LMS evaluation scorecard</div>
         <div class="mockup-desc">Vendor comparison · 13 evaluators · $90K decision</div>
       </div>
-    </div>
+    </a>
 
-    <div class="mockup-card reveal">
+    <a class="mockup-card reveal" href="mockup_onboarding.html" target="_blank">
       <div class="mockup-preview">
         <iframe src="mockup_onboarding.html" title="Onboarding program mockup" loading="lazy"></iframe>
       </div>
@@ -943,7 +965,7 @@ footer {
         <div class="mockup-title">Global onboarding program architecture</div>
         <div class="mockup-desc">4 role tracks · 3 regions · 90-day ramp</div>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -955,16 +977,17 @@ footer {
   <div class="contact-links">
     <a href="https://linkedin.com/in/charliemichel" target="_blank" class="contact-link gold-btn">LinkedIn</a>
     <a href="Charlie_Michel_Portfolio.pdf" target="_blank" class="contact-link">Download Portfolio PDF</a>
+    <a href="/cdn-cgi/l/email-protection#3d5e555c4f5154585050545e5558517d5a505c5451135e5250" class="contact-link">Email me</a>
   </div>
 </section>
 
 <!-- Footer -->
 <footer>
   <div class="footer-text">© 2026 Charlie Michel · Enablement &amp; Learning Portfolio</div>
-  <div class="footer-right">charliemichel.github.io</div>
+  <div class="footer-right">charliemmichel.github.io</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── Scroll reveal ── */
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver(entries => {
@@ -1022,12 +1045,4 @@ function mCheckAnswer(btn, correct) {
 function mRestart() {
   mCur = 1; mAnswered = false; mCorrect = false;
   document.querySelectorAll('.quiz-opt').forEach(o => { o.disabled = false; o.className = 'quiz-opt'; });
-  document.getElementById('mFbCorrect').style.display = 'none';
-  document.getElementById('mFbWrong').style.display = 'none';
-  mRender();
-}
-
-mRender();
-</script>
-</body>
-</html>
+  document.getElementByI

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PubDate Newsletter Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #1A1410; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; gap: 1rem; }
+
+.badge { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #C4924A; background: rgba(196,146,74,0.12); border: 1px solid rgba(196,146,74,0.2); border-radius: 999px; padding: 5px 14px; }
+
+/* Email client chrome */
+.email-chrome {
+  width: 100%;
+  max-width: 720px;
+  background: #2A2826;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.chrome-bar {
+  background: #222;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #333;
+}
+
+.chrome-dots { display: flex; gap: 6px; }
+.chrome-dot { width: 10px; height: 10px; border-radius: 50%; }
+.d1 { background: #FF5F57; }
+.d2 { background: #FEBC2E; }
+.d3 { background: #28C840; }
+
+.chrome-subject { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+.email-meta {
+  background: #2A2826;
+  padding: 14px 20px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.sender-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #6B2D3E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  flex-shrink: 0;
+}
+
+.meta-text { flex: 1; }
+.meta-from { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.8); }
+.meta-to { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+.meta-date { font-size: 11px; color: rgba(255,255,255,0.25); }
+
+/* Email body */
+.email-body {
+  background: #f4f1ec;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* Newsletter content */
+.nl-wrap { max-width: 600px; margin: 0 auto; font-family: 'DM Sans', sans-serif; }
+
+.nl-header {
+  background: #6B2D3E;
+  padding: 32px 40px 24px;
+  text-align: center;
+}
+
+.nl-logo {
+  font-family: 'Lora', serif;
+  font-size: 28px;
+  color: white;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.nl-logo span { color: #E8C88A; }
+
+.nl-tagline {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.nl-gold-bar { height: 4px; background: #C4924A; }
+
+.nl-subheader {
+  background: #FAF7F2;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #E8E2D8;
+}
+
+.nl-edition { font-size: 11px; color: #8A8880; letter-spacing: 0.06em; text-transform: uppercase; }
+.nl-date { font-size: 11px; color: #8A8880; }
+
+.nl-body { padding: 32px 40px; background: #FAF7F2; }
+
+.nl-intro {
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  color: #2C2C2A;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #E8E2D8;
+}
+
+.section-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B2D3E;
+  margin-bottom: 14px;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.story-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #E8E2D8;
+}
+
+.story-img {
+  height: 80px;
+  background: #E8E2D8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.story-body { padding: 12px; }
+
+.story-tag {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #C4924A;
+  margin-bottom: 4px;
+}
+
+.story-title { font-size: 12px; font-weight: 500; color: #2C2C2A; line-height: 1.4; margin-bottom: 6px; }
+.story-desc { font-size: 11px; color: #8A8880; line-height: 1.5; }
+
+.highlight-box {
+  background: #6B2D3E;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.highlight-num { font-family: 'Lora', serif; font-size: 36px; color: #E8C88A; font-weight: 600; }
+.highlight-label { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.nl-divider { height: 1px; background: #E8E2D8; margin: 24px 0; }
+
+.people-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.person-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #E8E2D8;
+}
+
+.person-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  flex-shrink: 0;
+}
+
+.person-info { flex: 1; }
+.person-name { font-size: 12px; font-weight: 500; color: #2C2C2A; }
+.person-role { font-size: 11px; color: #8A8880; }
+.person-badge { font-size: 9px; padding: 3px 8px; border-radius: 999px; font-weight: 500; }
+
+.nl-footer {
+  background: #2C2C2A;
+  padding: 24px 40px;
+  text-align: center;
+}
+
+.nl-footer-logo { font-family: 'Lora', serif; font-size: 16px; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+.nl-footer-text { font-size: 10px; color: rgba(255,255,255,0.25); line-height: 1.6; }
+
+.portfolio-note { font-size: 11px; color: rgba(255,255,255,0.3); text-align: center; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="badge">Portfolio Mockup · Internal Employee Newsletter · Q1 2026</div>
+
+<div class="email-chrome">
+  <div class="chrome-bar">
+    <div class="chrome-dots">
+      <div class="chrome-dot d1"></div>
+      <div class="chrome-dot d2"></div>
+      <div class="chrome-dot d3"></div>
+    </div>
+    <div class="chrome-subject">PubDate Q1 2026 — What's happening across the org</div>
+  </div>
+  <div class="email-meta">
+    <div class="sender-avatar">L&D</div>
+    <div class="meta-text">
+      <div class="meta-from">Learning & Development Team &lt;pubdate@company.com&gt;</div>
+      <div class="meta-to">To: All Employees (991 recipients)</div>
+    </div>
+    <div class="meta-date">Apr 2, 2026</div>
+  </div>
+
+  <div class="email-body">
+    <div class="nl-wrap">
+
+      <div class="nl-header">
+        <div class="nl-logo">Pub<span>Date</span></div>
+        <div class="nl-tagline">Your quarterly company update · Q1 2026</div>
+      </div>
+      <div class="nl-gold-bar"></div>
+
+      <div class="nl-subheader">
+        <div class="nl-edition">Volume 4 · Issue 1</div>
+        <div class="nl-date">April 2026</div>
+      </div>
+
+      <div class="nl-body">
+
+        <div class="nl-intro">
+          Welcome to Q1 PubDate. A lot happened this quarter — new tools, new faces, and a few milestones worth pausing on. Here's what you need to know.
+        </div>
+
+        <div class="section-label">This quarter</div>
+
+        <div class="story-grid">
+          <div class="story-card">
+            <div class="story-img">🤖</div>
+            <div class="story-body">
+              <div class="story-tag">AI & Tools</div>
+              <div class="story-title">Helix Agent is live — here's how to get started</div>
+              <div class="story-desc">The new AI assistant is now available to all teams. Training module is in the LMS.</div>
+            </div>
+          </div>
+          <div class="story-card">
+            <div class="story-img">🌍</div>
+            <div class="story-body">
+              <div class="story-tag">People</div>
+              <div class="story-title">Q1 new hire cohort: 47 people across 3 regions</div>
+              <div class="story-desc">Revenue, engineering, and ops all welcomed new teammates this quarter.</div>
+            </div>
+          </div>
+          <div class="story-card">
+            <div class="story-img">📊</div>
+            <div class="story-body">
+              <div class="story-tag">Learning</div>
+              <div class="story-title">LMS refresh coming this summer — what to expect</div>
+              <div class="story-desc">A new learning platform is in evaluation. More details coming in Q2.</div>
+            </div>
+          </div>
+          <div class="story-card">
+            <div class="story-img">🏆</div>
+            <div class="story-body">
+              <div class="story-tag">Recognition</div>
+              <div class="story-title">Value Creator award nominations now open</div>
+              <div class="story-desc">Nominate a colleague who went above and beyond this quarter.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <div class="highlight-num">991</div>
+          <div class="highlight-label">employees received this edition · across US, India & EMEA</div>
+        </div>
+
+        <div class="section-label">Welcome, new teammates</div>
+
+        <div class="people-row">
+          <div class="person-item">
+            <div class="person-av" style="background: #6B2D3E;">JM</div>
+            <div class="person-info">
+              <div class="person-name">Jordan M. &nbsp;<span style="font-size:10px; color:#8A8880;">· Revenue Operations</span></div>
+              <div class="person-role">Senior Account Executive · New York</div>
+            </div>
+            <div class="person-badge" style="background: #F5EEF0; color: #6B2D3E;">New</div>
+          </div>
+          <div class="person-item">
+            <div class="person-av" style="background: #2D5A8A;">RP</div>
+            <div class="person-info">
+              <div class="person-name">Riya P. &nbsp;<span style="font-size:10px; color:#8A8880;">· Engineering</span></div>
+              <div class="person-role">Software Engineer II · Pune</div>
+            </div>
+            <div class="person-badge" style="background: #EDF4FB; color: #2D5A8A;">New</div>
+          </div>
+        </div>
+
+        <div class="nl-divider"></div>
+
+        <div style="font-size: 11px; color: #8A8880; line-height: 1.7; text-align: center;">
+          Questions or story ideas? Reply to this email or reach out to the L&amp;D team on Slack.<br>
+          PubDate is produced quarterly by the Learning &amp; Development team.
+        </div>
+
+      </div>
+
+      <div class="nl-footer">
+        <div class="nl-footer-logo">PubDate</div>
+        <div class="nl-footer-text">
+          You're receiving this because you're part of our global team.<br>
+          © 2026 · All rights reserved · Unsubscribe
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="portfolio-note">Mockup recreated from production — original sent via marketing automation platform to 991 employees.</div>
+
+</body>
+</html>

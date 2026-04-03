@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample E-Learning Module — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --wine: #6B2D3E;
+    --wine-light: #8B3D52;
+    --wine-pale: #F5EEF0;
+    --cream: #FAF7F2;
+    --cream-dark: #F0EBE3;
+    --charcoal: #2C2C2A;
+    --warm-gray: #8A8880;
+    --gold: #C4924A;
+    --gold-light: #E8C88A;
+    --white: #ffffff;
+    --correct: #3A7D5A;
+    --correct-bg: #EDF7F2;
+    --wrong: #8B2E2E;
+    --wrong-bg: #FDF0F0;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #1A1410;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 1rem;
+  }
+
+  /* ── Portfolio badge ── */
+  .portfolio-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    background: rgba(196,146,74,0.12);
+    border: 1px solid rgba(196,146,74,0.25);
+    border-radius: 999px;
+    padding: 6px 16px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Module shell ── */
+  .module-shell {
+    width: 100%;
+    max-width: 780px;
+    background: var(--cream);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--wine);
+    padding: 0 2rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topbar-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .slide-counter {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+
+  /* ── Progress bar ── */
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── Slide area ── */
+  .slide-area {
+    min-height: 480px;
+    padding: 2.5rem 2.5rem 2rem;
+    position: relative;
+  }
+
+  .slide { display: none; animation: fadeSlide 0.35s ease; }
+  .slide.active { display: block; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Slide type: intro ── */
+  .slide-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--wine);
+    background: var(--wine-pale);
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .slide-tag.quiz-tag { background: #FFF8ED; color: var(--gold); }
+  .slide-tag.outcome-tag { background: #EDF7F2; color: var(--correct); }
+
+  h1.slide-title {
+    font-family: 'Lora', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    max-width: 560px;
+  }
+
+  .slide-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--warm-gray);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── Objective cards ── */
+  .obj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 1rem;
+  }
+
+  .obj-card {
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 10px;
+    padding: 1rem;
+    border-top: 3px solid var(--wine);
+  }
+
+  .obj-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .obj-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+  }
+
+  .obj-desc {
+    font-size: 11px;
+    color: var(--warm-gray);
+    line-height: 1.5;
+  }
+
+  /* ── Content slide ── */
+  .content-block {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--cream-dark);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .content-block h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.25rem;
+    color: var(--wine);
+    margin-bottom: 0.75rem;
+  }
+
+  .scenario-box {
+    background: var(--wine-pale);
+    border-left: 3px solid var(--wine);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .key-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .key-points li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.55;
+  }
+
+  .key-points li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  /* ── Callout ── */
+  .callout {
+    background: linear-gradient(135deg, var(--wine) 0%, var(--wine-light) 100%);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .callout-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .callout-text {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.65;
+  }
+
+  .callout-text strong {
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  /* ── Quiz slide ── */
+  .quiz-question {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    color: var(--charcoal);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .quiz-option {
+    background: var(--white);
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 10px;
+    padding: 0.9rem 1.25rem;
+    font-size: 14px;
+    color: var(--charcoal);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--wine);
+    background: var(--wine-pale);
+  }
+
+  .quiz-option .opt-letter {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--warm-gray);
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+
+  .quiz-option.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+  .quiz-option.correct .opt-letter {
+    background: var(--correct);
+    color: white;
+  }
+
+  .quiz-option.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+  .quiz-option.wrong .opt-letter {
+    background: var(--wrong);
+    color: white;
+  }
+
+  .quiz-option.dimmed { opacity: 0.4; }
+  .quiz-option:disabled { cursor: default; }
+
+  .quiz-feedback {
+    display: none;
+    padding: 0.85rem 1.1rem;
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    margin-bottom: 0.5rem;
+  }
+
+  .quiz-feedback.correct {
+    background: var(--correct-bg);
+    border: 1px solid rgba(58,125,90,0.25);
+    color: var(--correct);
+    display: block;
+  }
+
+  .quiz-feedback.wrong {
+    background: var(--wrong-bg);
+    border: 1px solid rgba(139,46,46,0.2);
+    color: var(--wrong);
+    display: block;
+  }
+
+  /* ── Completion slide ── */
+  .completion-wrap {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .completion-badge {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--wine), var(--wine-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 24px rgba(107,45,62,0.3);
+  }
+
+  .completion-title {
+    font-family: 'Lora', serif;
+    font-size: 1.75rem;
+    color: var(--charcoal);
+    margin-bottom: 0.5rem;
+  }
+
+  .completion-sub {
+    font-size: 14px;
+    color: var(--warm-gray);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .score-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .score-item {
+    text-align: center;
+  }
+
+  .score-num {
+    font-family: 'Lora', serif;
+    font-size: 2rem;
+    color: var(--wine);
+    font-weight: 600;
+    display: block;
+  }
+
+  .score-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--warm-gray);
+  }
+
+  .portfolio-note {
+    background: var(--cream-dark);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 12.5px;
+    color: var(--warm-gray);
+    line-height: 1.65;
+    max-width: 480px;
+    margin: 0 auto;
+    font-style: italic;
+  }
+
+  .portfolio-note strong { color: var(--charcoal); font-style: normal; }
+
+  /* ── Bottom nav ── */
+  .bottom-nav {
+    border-top: 1px solid var(--cream-dark);
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white);
+  }
+
+  .nav-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .nav-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    transition: all 0.25s;
+  }
+
+  .nav-dot.active { background: var(--wine); width: 20px; border-radius: 4px; }
+  .nav-dot.done { background: var(--gold); }
+
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 9px 22px;
+    cursor: pointer;
+    transition: all 0.18s;
+    border: none;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--warm-gray);
+    border: 1.5px solid var(--cream-dark);
+  }
+  .btn-ghost:hover { border-color: var(--warm-gray); color: var(--charcoal); }
+
+  .btn-primary {
+    background: var(--wine);
+    color: white;
+    box-shadow: 0 2px 8px rgba(107,45,62,0.25);
+  }
+  .btn-primary:hover { background: var(--wine-light); }
+  .btn-primary:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+
+  .btn-gold {
+    background: var(--gold);
+    color: white;
+    box-shadow: 0 2px 8px rgba(196,146,74,0.3);
+  }
+  .btn-gold:hover { background: #B8833E; }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .slide-area { padding: 1.5rem 1.25rem; }
+    .bottom-nav { padding: 1rem 1.25rem; }
+    .obj-grid { grid-template-columns: 1fr; }
+    h1.slide-title { font-size: 1.5rem; }
+    .topbar { padding: 0 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="portfolio-badge">Portfolio Sample &nbsp;·&nbsp; Enablement &amp; Learning Design</div>
+
+<div class="module-shell">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <span class="topbar-title">Onboarding Essentials: Working Across Teams</span>
+    <div class="topbar-right">
+      <span class="slide-counter" id="slideCounter">1 of 5</span>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+  </div>
+
+  <!-- Slide area -->
+  <div class="slide-area">
+
+    <!-- SLIDE 1: Intro -->
+    <div class="slide active" id="slide-1">
+      <span class="slide-tag">Module Introduction</span>
+      <h1 class="slide-title">Working across teams starts before day one.</h1>
+      <p class="slide-subtitle">This module covers the three things every new hire needs to understand about cross-functional collaboration in the first 30 days.</p>
+
+      <div class="obj-grid">
+        <div class="obj-card">
+          <div class="obj-icon">🗺️</div>
+          <div class="obj-title">Navigate the org</div>
+          <div class="obj-desc">Know who owns what and why it matters for your work.</div>
+        </div>
+        <div class="obj-card">
+          <div class="obj-icon">💬</div>
+          <div class="obj-title">Communicate early</div>
+          <div class="obj-desc">Set expectations before they become assumptions.</div>
+        </div>
+        <div class="obj-card">
+          <div class="obj-icon">✅</div>
+          <div class="obj-title">Build trust fast</div>
+          <div class="obj-desc">Small actions in week one compound over months.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Scenario + Content -->
+    <div class="slide" id="slide-2">
+      <span class="slide-tag">Core Concept</span>
+      <h1 class="slide-title">The ask nobody makes until it's too late.</h1>
+
+      <div class="content-block">
+        <div class="scenario-box">
+          "I've been here three weeks and I still don't know who to go to when I have a question that touches Sales AND Marketing. I just end up guessing."
+          <br><br><em style="font-style: normal; font-size: 12px; color: var(--warm-gray);">— Common new hire feedback, 30-day survey</em>
+        </div>
+
+        <ul class="key-points">
+          <li>Most new hires wait to be told how the org works. High performers ask in week one.</li>
+          <li>The question "who should I loop in on this?" is never a sign of weakness. It's how work gets unblocked.</li>
+          <li>Every team has an unofficial point of contact who isn't on any org chart. Find them early.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <div class="callout-icon">💡</div>
+        <div class="callout-text"><strong>The 30-day rule:</strong> In your first 30 days, your job is to listen more than you speak and to map more than you build. Everything you create after that will be better for it.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Content -->
+    <div class="slide" id="slide-3">
+      <span class="slide-tag">Skill Building</span>
+      <h1 class="slide-title">Three habits that build trust faster than anything else.</h1>
+
+      <div class="content-block">
+        <h2>What high-trust new hires do differently</h2>
+        <ul class="key-points" style="gap: 14px;">
+          <li><strong style="color: var(--wine);">They confirm, don't assume.</strong> Before starting a cross-functional project, they send a two-line message that says: "Here's what I think we're doing and by when. Does that match your understanding?" Takes 90 seconds. Prevents weeks of rework.</li>
+          <li><strong style="color: var(--wine);">They share progress before they're asked.</strong> A quick weekly note to your manager and key partners ("here's where things stand, here's where I need input") signals ownership without requiring a meeting.</li>
+          <li><strong style="color: var(--wine);">They make it easy to help them.</strong> When they need something, they come with context. Not "can you help with this" — but "here's the situation, here's what I need from you, here's my deadline."</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Knowledge Check -->
+    <div class="slide" id="slide-4">
+      <span class="slide-tag quiz-tag">Knowledge Check</span>
+      <h1 class="slide-title" style="font-size: 1.35rem;">Let's see what landed.</h1>
+
+      <p class="quiz-question">A new hire is three weeks in and realizes she doesn't know who the right contact is when a project involves both the Sales and Product teams. What's the best first move?</p>
+
+      <div class="quiz-options" id="quizOptions">
+        <button class="quiz-option" onclick="checkAnswer(this, false)">
+          <span class="opt-letter">A</span>
+          Wait until her manager brings it up in their next 1:1.
+        </button>
+        <button class="quiz-option" onclick="checkAnswer(this, false)">
+          <span class="opt-letter">B</span>
+          Guess based on who she's seen in meetings and proceed.
+        </button>
+        <button class="quiz-option" onclick="checkAnswer(this, true)">
+          <span class="opt-letter">C</span>
+          Ask her manager or a trusted colleague directly: "Who should I loop in when a project touches both teams?"
+        </button>
+        <button class="quiz-option" onclick="checkAnswer(this, false)">
+          <span class="opt-letter">D</span>
+          Send a message to both teams and let them figure out the ownership.
+        </button>
+      </div>
+
+      <div class="quiz-feedback correct" id="feedbackCorrect">
+        ✓ &nbsp;<strong>Correct.</strong> Asking directly is always faster than guessing. In the first 30 days, curiosity is an asset. The people around you expect new hires to ask — it signals awareness, not weakness.
+      </div>
+      <div class="quiz-feedback wrong" id="feedbackWrong">
+        Not quite. Guessing or waiting costs more time than asking directly ever would. In your first 30 days, people expect you to ask questions — it's how you build a map of the org quickly.
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Completion -->
+    <div class="slide" id="slide-5">
+      <div class="completion-wrap">
+        <div class="completion-badge">🎓</div>
+        <h2 class="completion-title">Module complete.</h2>
+        <p class="completion-sub">You've covered the core habits for cross-functional success in your first 30 days.</p>
+
+        <div class="score-row">
+          <div class="score-item">
+            <span class="score-num">3</span>
+            <span class="score-label">Concepts covered</span>
+          </div>
+          <div class="score-item">
+            <span class="score-num" id="finalScore">—</span>
+            <span class="score-label">Quiz result</span>
+          </div>
+          <div class="score-item">
+            <span class="score-num">✓</span>
+            <span class="score-label">Complete</span>
+          </div>
+        </div>
+
+        <div class="portfolio-note">
+          <strong>Portfolio note:</strong> This is a sample module built to demonstrate instructional design, scenario-based learning, and interactive quiz development. In production this would be packaged as SCORM 1.2 and deployed via an LMS with completion tracking and reporting.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slide-area -->
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <button class="btn btn-ghost" id="backBtn" onclick="navigate(-1)" style="visibility: hidden;">Back</button>
+
+    <div class="nav-dots" id="navDots"></div>
+
+    <button class="btn btn-primary" id="nextBtn" onclick="navigate(1)">Start →</button>
+  </div>
+
+</div><!-- /module-shell -->
+
+<script>
+  const TOTAL = 5;
+  let current = 1;
+  let quizAnswered = false;
+  let quizCorrect = false;
+
+  function updateUI() {
+    // Slides
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + current).classList.add('active');
+
+    // Progress
+    document.getElementById('progressFill').style.width = (current / TOTAL * 100) + '%';
+    document.getElementById('slideCounter').textContent = current + ' of ' + TOTAL;
+
+    // Dots
+    const dotsEl = document.getElementById('navDots');
+    dotsEl.innerHTML = '';
+    for (let i = 1; i <= TOTAL; i++) {
+      const d = document.createElement('div');
+      d.className = 'nav-dot' + (i === current ? ' active' : i < current ? ' done' : '');
+      dotsEl.appendChild(d);
+    }
+
+    // Back button
+    document.getElementById('backBtn').style.visibility = current > 1 ? 'visible' : 'hidden';
+
+    // Next button
+    const nextBtn = document.getElementById('nextBtn');
+    if (current === 1) {
+      nextBtn.textContent = 'Begin →';
+      nextBtn.className = 'btn btn-primary';
+      nextBtn.disabled = false;
+    } else if (current === TOTAL - 1) {
+      // Quiz slide
+      nextBtn.textContent = 'Next →';
+      nextBtn.disabled = !quizAnswered;
+    } else if (current === TOTAL) {
+      nextBtn.textContent = 'Restart';
+      nextBtn.className = 'btn btn-gold';
+      nextBtn.disabled = false;
+      nextBtn.onclick = restart;
+      // Set final score
+      document.getElementById('finalScore').textContent = quizCorrect ? '100%' : '0%';
+    } else {
+      nextBtn.textContent = 'Continue →';
+      nextBtn.className = 'btn btn-primary';
+      nextBtn.disabled = false;
+      nextBtn.onclick = () => navigate(1);
+    }
+  }
+
+  function navigate(dir) {
+    if (dir === 1 && current === TOTAL) return;
+    if (dir === -1 && current === 1) return;
+    current += dir;
+    updateUI();
+  }
+
+  function checkAnswer(btn, isCorrect) {
+    if (quizAnswered) return;
+    quizAnswered = true;
+    quizCorrect = isCorrect;
+
+    const opts = document.querySelectorAll('.quiz-option');
+    opts.forEach(o => {
+      o.disabled = true;
+      if (o !== btn) o.classList.add('dimmed');
+    });
+
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    if (isCorrect) {
+      document.getElementById('feedbackCorrect').style.display = 'block';
+    } else {
+      document.getElementById('feedbackWrong').style.display = 'block';
+      // also highlight correct
+      opts[2].classList.add('correct');
+      opts[2].classList.remove('dimmed');
+    }
+
+    document.getElementById('nextBtn').disabled = false;
+  }
+
+  function restart() {
+    current = 1;
+    quizAnswered = false;
+    quizCorrect = false;
+
+    // Reset quiz UI
+    document.querySelectorAll('.quiz-option').forEach(o => {
+      o.disabled = false;
+      o.classList.remove('correct', 'wrong', 'dimmed');
+    });
+    document.getElementById('feedbackCorrect').style.display = 'none';
+    document.getElementById('feedbackWrong').style.display = 'none';
+
+    document.getElementById('nextBtn').onclick = () => navigate(1);
+    updateUI();
+  }
+
+  // Init
+  updateUI();
+</script>
+</body>
+</html>

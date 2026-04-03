@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS Evaluation Scorecard</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #1A1410; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; gap: 1rem; }
+.badge { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #C4924A; background: rgba(196,146,74,0.12); border: 1px solid rgba(196,146,74,0.2); border-radius: 999px; padding: 5px 14px; }
+
+.dashboard {
+  width: 100%;
+  max-width: 900px;
+  background: #FAF7F2;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dash-header {
+  background: #2C2C2A;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-title { font-family: 'Lora', serif; font-size: 18px; color: white; }
+.dash-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+.dash-status {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 11px;
+  color: #C4924A;
+  background: rgba(196,146,74,0.12);
+  border: 1px solid rgba(196,146,74,0.2);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #C4924A; }
+
+.dash-body { padding: 24px 28px; }
+
+/* Summary row */
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #E8E2D8;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.stat-num { font-family: 'Lora', serif; font-size: 26px; color: #6B2D3E; font-weight: 600; }
+.stat-label { font-size: 10px; color: #8A8880; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+/* Vendor comparison */
+.section-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8A8880;
+  margin-bottom: 12px;
+}
+
+.vendor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.vendor-card {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #E8E2D8;
+  overflow: hidden;
+}
+
+.vendor-header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #E8E2D8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vendor-name { font-size: 14px; font-weight: 500; color: #2C2C2A; }
+.vendor-score-wrap { display: flex; align-items: baseline; gap: 4px; }
+.vendor-score { font-family: 'Lora', serif; font-size: 22px; font-weight: 600; }
+.vendor-denom { font-size: 12px; color: #8A8880; }
+
+.vendor-body { padding: 14px 16px; }
+
+.criteria-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.criteria-label { font-size: 11px; color: #2C2C2A; width: 130px; flex-shrink: 0; }
+
+.bar-track {
+  flex: 1;
+  height: 6px;
+  background: #F0EBE3;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease; }
+
+.criteria-val { font-size: 11px; font-weight: 500; color: #2C2C2A; width: 28px; text-align: right; }
+
+.vendor-footer {
+  padding: 10px 16px;
+  background: #FAF7F2;
+  border-top: 1px solid #E8E2D8;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.tag-green { background: #EDF7F2; color: #3A7D5A; }
+.tag-red { background: #FDF0F0; color: #8B2E2E; }
+.tag-amber { background: #FFF8ED; color: #8A5A1A; }
+
+/* Evaluator section */
+.evaluator-section {
+  margin-bottom: 24px;
+}
+
+.evaluator-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.eval-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid #E8E2D8;
+  border-radius: 999px;
+  padding: 5px 10px 5px 6px;
+  font-size: 11px;
+  color: #2C2C2A;
+}
+
+.eval-av {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 500;
+  color: white;
+  flex-shrink: 0;
+}
+
+.eval-check { color: #3A7D5A; font-size: 10px; }
+
+/* Decision banner */
+.decision-banner {
+  background: #6B2D3E;
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.decision-icon { font-size: 24px; flex-shrink: 0; }
+.decision-text h3 { font-family: 'Lora', serif; font-size: 15px; color: white; margin-bottom: 4px; }
+.decision-text p { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.decision-badge { margin-left: auto; background: #C4924A; color: white; font-size: 11px; font-weight: 500; padding: 6px 14px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+
+.portfolio-note { font-size: 11px; color: rgba(255,255,255,0.3); text-align: center; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="badge">Portfolio Mockup · LMS Platform Evaluation · Master Scorecard</div>
+
+<div class="dashboard">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">LMS Evaluation — Master Scorecard</div>
+      <div class="dash-sub">Cross-functional review · 13 evaluators · 2 vendor POCs</div>
+    </div>
+    <div class="dash-status"><div class="status-dot"></div> Final review phase</div>
+  </div>
+
+  <div class="dash-body">
+
+    <div class="summary-row">
+      <div class="stat-card">
+        <div class="stat-num">13</div>
+        <div class="stat-label">Evaluators</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Vendor POCs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Criteria</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">9</div>
+        <div class="stat-label">Workbook tabs</div>
+      </div>
+    </div>
+
+    <div class="section-title">Vendor composite scores</div>
+    <div class="vendor-grid">
+
+      <div class="vendor-card">
+        <div class="vendor-header">
+          <div>
+            <div class="vendor-name">Vendor A</div>
+            <div style="font-size:10px; color:#8A8880; margin-top:2px;">POC: March 2–13</div>
+          </div>
+          <div class="vendor-score-wrap">
+            <div class="vendor-score" style="color: #8A8880;">6.2</div>
+            <div class="vendor-denom">/10</div>
+          </div>
+        </div>
+        <div class="vendor-body">
+          <div class="criteria-row">
+            <div class="criteria-label">Ease of use</div>
+            <div class="bar-track"><div class="bar-fill" style="width:62%; background:#8A8880;"></div></div>
+            <div class="criteria-val">6.2</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Admin experience</div>
+            <div class="bar-track"><div class="bar-fill" style="width:58%; background:#8A8880;"></div></div>
+            <div class="criteria-val">5.8</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Reporting & analytics</div>
+            <div class="bar-track"><div class="bar-fill" style="width:70%; background:#8A8880;"></div></div>
+            <div class="criteria-val">7.0</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Integrations</div>
+            <div class="bar-track"><div class="bar-fill" style="width:55%; background:#8A8880;"></div></div>
+            <div class="criteria-val">5.5</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Content authoring</div>
+            <div class="bar-track"><div class="bar-fill" style="width:60%; background:#8A8880;"></div></div>
+            <div class="criteria-val">6.0</div>
+          </div>
+        </div>
+        <div class="vendor-footer">
+          <div class="tag tag-amber">3-yr contract only</div>
+          <div class="tag tag-red">SF integration = premium</div>
+          <div class="tag tag-green">Strong reporting</div>
+        </div>
+      </div>
+
+      <div class="vendor-card" style="border-color: #6B2D3E; border-width: 2px;">
+        <div class="vendor-header" style="background: #FDF8F9;">
+          <div>
+            <div class="vendor-name" style="color: #6B2D3E;">Vendor B ★ Recommended</div>
+            <div style="font-size:10px; color:#8A8880; margin-top:2px;">POC: March 17 – April 3</div>
+          </div>
+          <div class="vendor-score-wrap">
+            <div class="vendor-score" style="color: #6B2D3E;">7.8</div>
+            <div class="vendor-denom">/10</div>
+          </div>
+        </div>
+        <div class="vendor-body">
+          <div class="criteria-row">
+            <div class="criteria-label">Ease of use</div>
+            <div class="bar-track"><div class="bar-fill" style="width:82%; background:#6B2D3E;"></div></div>
+            <div class="criteria-val">8.2</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Admin experience</div>
+            <div class="bar-track"><div class="bar-fill" style="width:78%; background:#6B2D3E;"></div></div>
+            <div class="criteria-val">7.8</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Reporting & analytics</div>
+            <div class="bar-track"><div class="bar-fill" style="width:80%; background:#6B2D3E;"></div></div>
+            <div class="criteria-val">8.0</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Integrations</div>
+            <div class="bar-track"><div class="bar-fill" style="width:75%; background:#6B2D3E;"></div></div>
+            <div class="criteria-val">7.5</div>
+          </div>
+          <div class="criteria-row">
+            <div class="criteria-label">Content authoring</div>
+            <div class="bar-track"><div class="bar-fill" style="width:76%; background:#6B2D3E;"></div></div>
+            <div class="criteria-val">7.6</div>
+          </div>
+        </div>
+        <div class="vendor-footer">
+          <div class="tag tag-green">1-yr contract available</div>
+          <div class="tag tag-green">Native SF integration</div>
+          <div class="tag tag-green">Strong enablement fit</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="evaluator-section">
+      <div class="section-title">Evaluation panel · 13 cross-functional reviewers</div>
+      <div class="evaluator-grid">
+        <div class="eval-pill"><div class="eval-av" style="background:#6B2D3E;">L&D</div>Learning & Dev <span class="eval-check">✓</span></div>
+        <div class="eval-pill"><div class="eval-av" style="background:#2D5A8A;">PM</div>Product Mktg <span class="eval-check">✓</span></div>
+        <div class="eval-pill"><div class="eval-av" style="background:#3A7D5A;">RV</div>Revenue <span class="eval-check">✓</span></div>
+        <div class="eval-pill"><div class="eval-av" style="background:#8A5A1A;">IT</div>IT / Systems <span class="eval-check">✓</span></div>
+        <div class="eval-pill"><div class="eval-av" style="background:#6B2D3E;">HR</div>People Ops <span class="eval-check">✓</span></div>
+        <div class="eval-pill"><div class="eval-av" style="background:#4A3070;">CS</div>Client Success <span class="eval-check">✓</span></div>
+        <div class="eval-pill"><div class="eval-av" style="background:#2C2C2A;">+7</div>more teams <span class="eval-check">✓</span></div>
+      </div>
+    </div>
+
+    <div class="decision-banner">
+      <div class="decision-icon">📋</div>
+      <div class="decision-text">
+        <h3>Executive recommendation delivered</h3>
+        <p>Full scoring rationale, risk analysis, behavior change strategy, and launch plan submitted to executive sponsor. Handoff workbook built for continuity.</p>
+      </div>
+      <div class="decision-badge">Q2 2026</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="portfolio-note">Mockup recreated from production — scores and vendor names anonymized. Original built as a 9-tab Excel workbook.</div>
+
+</body>
+</html>

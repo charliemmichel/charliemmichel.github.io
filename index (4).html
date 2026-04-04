@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Charlie Michel — L&D and Enablement Program Manager. Building programs that connect to how organizations actually run.">
+<title>Charlie Michel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1C0E0A;
+  --parchment:#F5EBD8;
+  --parchment-dim:rgba(245,235,216,0.5);
+  --parchment-mute:rgba(245,235,216,0.28);
+  --wine:#8B2D2D;
+  --wine-mid:#A03535;
+  --wine-pale:rgba(139,45,45,0.12);
+  --gold:#C4924A;
+  --gold-pale:#FFF8ED;
+  --gold-dim:rgba(196,146,74,0.25);
+  --sienna:#D4855A;
+  --cream:#FAF7F2;
+  --cream-dark:#F0EBE3;
+  --charcoal:#2C2C2A;
+  --text:#2C2C2A;
+  --muted:#8A8880;
+  --border:#E8E3DB;
+  --forest:#1A2410;
+  --navy:#12100E;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(28,14,10,0.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(196,146,74,0.15);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,6vw,5rem)}
+.nav-logo{font-family:'Lora',serif;font-size:17px;color:var(--parchment);text-decoration:none;letter-spacing:-0.01em}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:13px;color:rgba(245,235,216,0.5);text-decoration:none;transition:color .2s;letter-spacing:.02em}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--wine);color:var(--parchment)!important;padding:6px 18px;border-radius:3px;font-weight:500;transition:background .2s!important;letter-spacing:.03em}
+.nav-cta:hover{background:var(--wine-mid)!important}
+@media(max-width:680px){.nav-links{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--ink);position:relative;overflow:hidden;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%}
+.hero-photo{position:absolute;right:0;top:0;bottom:0;width:45%;object-fit:cover;object-position:center top;display:block}
+.hero-photo-fade{position:absolute;right:0;top:0;bottom:0;width:45%;background:linear-gradient(to right,var(--ink) 0%,transparent 35%,transparent 80%,var(--ink) 100%);z-index:1}
+.hero-photo-fade-bottom{position:absolute;right:0;bottom:0;width:45%;height:30%;background:linear-gradient(to top,var(--ink) 0%,transparent 100%);z-index:1}
+.hero-content{position:relative;z-index:3;padding:clamp(6rem,12vw,10rem) clamp(1.5rem,8vw,8rem) 5rem;max-width:580px}
+.hero-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem;display:flex;align-items:center;gap:12px;animation:fadeUp .7s .2s ease both}
+.hero-label::before{content:'';width:28px;height:1px;background:var(--gold);display:block}
+h1.hero-title{font-family:'Lora',serif;font-size:clamp(2.2rem,5vw,3.8rem);color:var(--parchment);line-height:1.12;margin-bottom:1.25rem;font-weight:400;animation:fadeUp .7s .4s ease both}
+h1.hero-title em{font-style:italic;color:var(--sienna)}
+.hero-sub{font-size:clamp(14px,1.6vw,15.5px);color:var(--parchment-dim);max-width:420px;line-height:1.85;margin-bottom:2.5rem;font-weight:300;animation:fadeUp .7s .6s ease both}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:3rem;animation:fadeUp .7s .8s ease both}
+.btn-wine{background:var(--wine);color:var(--parchment);padding:11px 26px;border-radius:3px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:.03em;transition:background .2s;display:inline-block}
+.btn-wine:hover{background:var(--wine-mid)}
+.btn-outline{background:transparent;color:rgba(245,235,216,.5);padding:11px 26px;border-radius:3px;font-size:13px;letter-spacing:.03em;border:1px solid rgba(245,235,216,.15);text-decoration:none;transition:all .2s;display:inline-block}
+.btn-outline:hover{border-color:rgba(245,235,216,.38);color:var(--parchment)}
+.hero-stats{display:flex;gap:2.5rem;animation:fadeUp .7s 1s ease both}
+.hstat{display:flex;flex-direction:column;gap:2px}
+.hstat-n{font-family:'Lora',serif;font-size:1.35rem;color:var(--gold);line-height:1}
+.hstat-l{font-size:10px;color:var(--parchment-mute);text-transform:uppercase;letter-spacing:.07em}
+.hero-stamp{position:absolute;bottom:24px;left:clamp(1.5rem,8vw,8rem);font-size:9px;letter-spacing:.16em;color:rgba(196,146,74,0.35);text-transform:uppercase;z-index:3;font-family:'DM Sans',sans-serif}
+.hero-rule-top{position:absolute;top:48px;left:0;right:0;height:1px;background:rgba(196,146,74,0.12);z-index:2}
+.hero-stripe{position:absolute;top:0;right:80px;width:1px;height:100%;background:rgba(196,146,74,0.18);z-index:2;display:none}
+
+/* SVG background elements */
+.hero-svg-bg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+
+/* SECTIONS */
+section{padding:clamp(4rem,7vw,6rem) clamp(1.5rem,8vw,8rem)}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';width:24px;height:1px;background:var(--gold)}
+.sec-title{font-family:'Lora',serif;font-size:clamp(1.6rem,3.5vw,2.3rem);color:var(--charcoal);margin-bottom:.75rem;line-height:1.25}
+.sec-sub{font-size:15px;color:var(--muted);max-width:500px;line-height:1.75;margin-bottom:3rem;font-weight:300}
+
+/* ABOUT */
+#about{background:var(--ink);border-top:1px solid rgba(196,146,74,0.15)}
+#about .eyebrow{color:var(--gold)}
+#about .sec-title{color:var(--parchment)}
+.about-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:4.5rem;align-items:start;max-width:1020px}
+.about-text p{font-size:15px;line-height:1.88;color:rgba(245,235,216,0.72);margin-bottom:1rem}
+.about-text p:last-child{margin-bottom:0}
+.about-text strong{color:var(--gold);font-weight:500}
+.about-right-title{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(196,146,74,0.6);margin-bottom:12px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:2rem}
+.skill{background:rgba(245,235,216,0.05);border:1px solid rgba(196,146,74,0.2);border-radius:3px;padding:6px 12px;font-size:12px;color:rgba(245,235,216,0.6);display:flex;align-items:center;gap:6px;letter-spacing:.01em}
+.skill::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.method-card{background:rgba(245,235,216,0.04);border-radius:3px;padding:10px 12px;border-left:2px solid var(--wine)}
+.method-title{font-size:12px;font-weight:500;color:var(--parchment);margin-bottom:2px}
+.method-desc{font-size:10.5px;color:rgba(245,235,216,0.38);line-height:1.45}
+@media(max-width:700px){.about-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* CURRENTLY */
+#current{background:var(--cream-dark);border-top:4px solid var(--wine)}
+.current-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px}
+.current-card{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:1.5rem;border-top:3px solid var(--wine);transition:transform .2s,box-shadow .2s}
+.current-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(139,45,45,0.08)}
+.current-status{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--wine);margin-bottom:12px}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--wine);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.current-title{font-family:'Lora',serif;font-size:1rem;color:var(--charcoal);margin-bottom:8px;line-height:1.35}
+.current-desc{font-size:12.5px;color:var(--muted);line-height:1.65}
+@media(max-width:700px){.current-grid{grid-template-columns:1fr}}
+
+/* CASE STUDY */
+#casestudy{background:var(--ink);border-top:1px solid rgba(196,146,74,0.15)}
+#casestudy .eyebrow{color:var(--gold)}
+#casestudy .sec-title{color:var(--parchment)}
+.cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;max-width:1000px}
+.cs-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin-bottom:.5rem}
+.cs-title{font-family:'Lora',serif;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--parchment);margin-bottom:1rem;line-height:1.3}
+.cs-body p{font-size:14.5px;color:rgba(245,235,216,0.65);line-height:1.82;margin-bottom:1rem}
+.cs-body strong{color:var(--gold);font-weight:500}
+.cs-phase{background:rgba(245,235,216,0.04);border-radius:3px;padding:1rem 1.25rem;border:1px solid rgba(196,146,74,0.15);border-left:3px solid var(--wine);margin-bottom:10px}
+.cs-phase-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin-bottom:4px}
+.cs-phase-title{font-size:13.5px;font-weight:500;color:var(--parchment);margin-bottom:4px}
+.cs-phase-desc{font-size:12px;color:rgba(245,235,216,0.42);line-height:1.55}
+.cs-outcome{background:var(--wine);border-radius:3px;padding:1.25rem 1.5rem;margin-top:0}
+.cs-outcome-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,235,216,0.5);margin-bottom:8px}
+.cs-outcome-text{font-size:14px;color:var(--parchment);line-height:1.65}
+.cs-outcome-text strong{color:var(--gold)}
+@media(max-width:700px){.cs-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* TESTIMONIAL */
+#testimonial{background:var(--cream);border-top:1px solid var(--border)}
+.testimonial-wrap{max-width:720px}
+.quote-mark{font-family:'Lora',serif;font-size:6rem;color:rgba(139,45,45,0.15);line-height:.7;margin-bottom:.5rem;display:block}
+.quote-text{font-family:'Lora',serif;font-size:clamp(1rem,2vw,1.2rem);color:var(--charcoal);line-height:1.75;margin-bottom:1.5rem;font-style:italic}
+.quote-attr{display:flex;align-items:center;gap:14px}
+.quote-avatar{width:40px;height:40px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-size:1rem;color:var(--parchment);flex-shrink:0}
+.quote-name{font-size:14px;font-weight:500;color:var(--charcoal)}
+.quote-role{font-size:12px;color:var(--muted)}
+
+/* WORK */
+#work{background:var(--cream-dark)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.pcard{background:var(--cream);border-radius:4px;border:1px solid var(--border);overflow:hidden;transition:transform .2s,box-shadow .2s;text-decoration:none;display:block;cursor:pointer}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(139,45,45,0.1)}
+.ctop{height:160px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bg-ink{background:var(--ink)}
+.bg-wine-d{background:#3D1218}
+.bg-charcoal{background:var(--charcoal)}
+.bg-forest{background:var(--forest)}
+.bg-sienna{background:#2A1508}
+.bg-navy{background:var(--navy)}
+.card-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(196,146,74,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(196,146,74,0.06) 1px,transparent 1px);background-size:24px 24px}
+.card-text{position:relative;z-index:1;text-align:center;padding:0 1.5rem}
+.card-accent{font-family:'Lora',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:400;color:rgba(245,235,216,0.88);line-height:1.2;text-align:center}
+.card-accent em{font-style:italic;color:var(--gold)}
+.card-sub-label{font-size:10px;color:rgba(245,235,216,0.32);margin-top:6px;text-align:center;letter-spacing:.06em}
+.card-rule{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--wine)}
+.chover{position:absolute;inset:0;background:rgba(139,45,45,0);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:transparent;letter-spacing:.04em;transition:all .22s;z-index:2;font-family:'DM Sans',sans-serif}
+.pcard:hover .chover{background:rgba(139,45,45,0.65);color:var(--parchment)}
+.cbody{padding:16px 18px 18px}
+.ctag{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);background:rgba(139,45,45,0.08);padding:3px 8px;border-radius:2px;display:inline-block;margin-bottom:8px}
+.ctag.teal{color:#1D6B4A;background:#EDF7F2}
+.ctag.amber{color:#7A4E10;background:rgba(196,146,74,0.1)}
+.ctag.slate{color:#2A3D5A;background:#EBF0F7}
+.ctitle{font-family:'Lora',serif;font-size:15px;color:var(--charcoal);margin-bottom:6px;line-height:1.3}
+.cdesc{font-size:12.5px;color:var(--muted);line-height:1.62;margin-bottom:12px}
+.cstats{display:flex;gap:14px;padding-top:10px;border-top:1px solid var(--border)}
+.cstat{font-size:11px;color:var(--muted)}
+.cstat strong{display:block;font-size:13px;color:var(--wine);font-family:'Lora',serif;line-height:1.1}
+@media(max-width:700px){.pgrid{grid-template-columns:1fr}}
+
+/* MODULE */
+#module{background:var(--ink);padding:clamp(4rem,8vw,6.5rem) clamp(1.5rem,8vw,8rem);border-top:1px solid rgba(196,146,74,0.15)}
+#module .eyebrow{color:var(--gold)}
+#module .sec-title{color:var(--parchment)}
+#module .sec-sub{color:rgba(245,235,216,0.42)}
+.mwrap{max-width:720px;background:var(--cream);border-radius:4px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.6);border-top:3px solid var(--wine)}
+.mbar{background:var(--charcoal);padding:0 1.5rem;height:46px;display:flex;align-items:center;justify-content:space-between}
+.mbar-t{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,235,216,0.5)}
+.mctr{font-size:11px;color:rgba(245,235,216,0.28)}
+.mtrack{height:2px;background:rgba(196,146,74,0.15)}
+.mfill{height:100%;background:var(--gold);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.mbody{padding:2rem 2.25rem 1.5rem;min-height:390px}
+.mslide{display:none}
+.mslide.active{display:block;animation:fadeUp .3s ease}
+.mtag{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);background:rgba(139,45,45,0.08);border-radius:2px;padding:3px 9px;display:inline-block;margin-bottom:1rem}
+.mtag.quiz{background:rgba(196,146,74,0.1);color:#7A4E10}
+.mh{font-family:'Lora',serif;font-size:1.25rem;color:var(--charcoal);line-height:1.3;margin-bottom:1rem}
+.mp{font-size:14px;color:var(--muted);line-height:1.72;margin-bottom:1rem}
+.objgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:.75rem}
+.objcard{background:var(--cream-dark);border:1px solid var(--border);border-radius:3px;padding:14px;border-top:2px solid var(--wine)}
+.ot{font-size:12px;font-weight:500;color:var(--charcoal);margin-bottom:4px}
+.od{font-size:11px;color:var(--muted);line-height:1.5}
+.objnum{font-family:'Lora',serif;font-size:1.4rem;color:var(--wine);margin-bottom:4px}
+.scenario{background:rgba(139,45,45,0.06);border-left:2px solid var(--wine);border-radius:0 4px 4px 0;padding:14px 16px;font-size:13.5px;color:var(--charcoal);line-height:1.68;font-style:italic;margin-bottom:16px}
+.scenario cite{font-style:normal;font-size:11px;color:var(--muted);display:block;margin-top:6px}
+.pts{list-style:none;display:flex;flex-direction:column;gap:10px}
+.pt{display:flex;gap:10px;font-size:13.5px;color:var(--charcoal);line-height:1.6;align-items:flex-start}
+.pt-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:9px}
+.callout{background:var(--charcoal);border-radius:3px;padding:1rem 1.25rem;font-size:13px;color:rgba(245,235,216,0.82);line-height:1.68;margin-top:1rem}
+.callout strong{color:var(--gold);font-weight:500}
+.model-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem}
+.model-step{text-align:center;position:relative}
+.model-step::after{content:'';position:absolute;top:13px;right:-4px;width:8px;height:1px;background:var(--border)}
+.model-step:last-child::after{display:none}
+.model-badge{width:26px;height:26px;border-radius:50%;background:rgba(139,45,45,0.08);border:1.5px solid var(--wine);display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:10px;font-weight:600;color:var(--wine)}
+.model-label{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:500}
+.model-desc{font-size:9.5px;color:var(--muted);line-height:1.4;margin-top:3px}
+.quiz-q{font-family:'Lora',serif;font-size:1.05rem;color:var(--charcoal);margin-bottom:1.25rem;line-height:1.45}
+.qopts{display:flex;flex-direction:column;gap:9px;margin-bottom:1rem}
+.qopt{background:var(--cream-dark);border:1.5px solid var(--border);border-radius:4px;padding:10px 14px;font-size:13.5px;color:var(--charcoal);cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;width:100%;transition:border-color .15s,background .15s;font-family:'DM Sans',sans-serif}
+.qopt:hover:not(:disabled){border-color:var(--wine);background:rgba(139,45,45,0.04)}
+.ql{width:24px;height:24px;border-radius:50%;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--muted);flex-shrink:0;transition:all .15s}
+.qopt.correct{border-color:#3A7D5A;background:#EDF7F2}
+.qopt.correct .ql{background:#3A7D5A;color:white;border-color:#3A7D5A}
+.qopt.wrong{border-color:#8B2E2E;background:#FDF0F0}
+.qopt.wrong .ql{background:#8B2E2E;color:white;border-color:#8B2E2E}
+.qopt.dimmed{opacity:.3}
+.fb{display:none;padding:10px 14px;border-radius:4px;font-size:13px;line-height:1.58;margin-bottom:.5rem}
+.fb.correct{background:#EDF7F2;border:1px solid rgba(58,125,90,.2);color:#2A6B44;display:block}
+.fb.wrong{background:#FDF0F0;border:1px solid rgba(139,46,46,.15);color:#7A2020;display:block}
+.done-wrap{text-align:center;padding:1.5rem 0 .5rem}
+.done-circle{width:68px;height:68px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem}
+.done-title{font-family:'Lora',serif;font-size:1.5rem;color:var(--charcoal);margin-bottom:.4rem}
+.done-sub{font-size:13.5px;color:var(--muted);margin-bottom:1.5rem;line-height:1.65;max-width:380px;margin-left:auto;margin-right:auto}
+.done-stats{display:flex;justify-content:center;gap:3rem;margin-bottom:1.75rem;padding:1.25rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ds-n{font-family:'Lora',serif;font-size:1.8rem;color:var(--wine);display:block;line-height:1}
+.ds-l{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.mnote{background:var(--cream-dark);border-radius:3px;padding:.9rem 1.1rem;font-size:11.5px;color:var(--muted);line-height:1.68;font-style:italic;max-width:440px;margin:0 auto}
+.mnote strong{color:var(--charcoal);font-style:normal}
+.mnav{border-top:1px solid var(--border);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;background:var(--cream-dark)}
+.mdots{display:flex;gap:5px;align-items:center}
+.mdot{width:5px;height:5px;border-radius:50%;background:var(--border);transition:all .22s}
+.mdot.active{background:var(--wine);width:16px;border-radius:2px}
+.mdot.done{background:var(--gold)}
+.mbtn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border-radius:3px;padding:7px 20px;cursor:pointer;transition:all .15s;border:none;letter-spacing:.02em}
+.mbtn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.mbtn-ghost:hover{border-color:var(--muted);color:var(--charcoal)}
+.mbtn-wine{background:var(--wine);color:var(--parchment)}
+.mbtn-wine:hover{background:var(--wine-mid)}
+.mbtn-wine:disabled{opacity:.3;cursor:default}
+.mbtn-gold{background:var(--gold);color:white}
+.mbtn-gold:hover{background:#B8833E}
+@media(max-width:540px){.objgrid{grid-template-columns:1fr}.model-row{grid-template-columns:repeat(3,1fr)}}
+
+/* CONTACT */
+#contact{background:var(--wine);text-align:center;padding:clamp(4rem,8vw,6rem) clamp(1.5rem,8vw,8rem)}
+#contact .eyebrow{color:rgba(245,235,216,0.38);justify-content:center}
+#contact .eyebrow::after{display:none}
+#contact .sec-title{color:var(--parchment);margin-bottom:.75rem}
+#contact .sec-sub{color:rgba(245,235,216,0.52);margin:0 auto 1rem;max-width:520px}
+.contact-fine{font-size:12px;color:rgba(245,235,216,0.3);margin:0 auto 2.5rem;max-width:480px;line-height:1.7}
+.crow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cbtn{display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border-radius:3px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;border:1.5px solid transparent;letter-spacing:.03em}
+.cbtn svg{width:15px;height:15px;flex-shrink:0}
+.cbtn-parchment{background:var(--parchment);color:var(--wine);border-color:var(--parchment)}
+.cbtn-parchment:hover{background:#EDD9C0}
+.cbtn-ghost{background:transparent;color:rgba(245,235,216,.72);border-color:rgba(245,235,216,.2)}
+.cbtn-ghost:hover{border-color:rgba(245,235,216,.45);color:var(--parchment)}
+
+footer{background:var(--ink);padding:1.5rem clamp(1.5rem,8vw,8rem);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(196,146,74,0.12)}
+.fl{font-size:11px;color:rgba(245,235,216,0.22);letter-spacing:.04em}
+.fr{font-size:11px;color:rgba(245,235,216,0.15);letter-spacing:.04em}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Charlie Michel</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#module">Live Demo</a></li>
+    <li><a href="#contact" class="nav-cta">Let's talk</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+
+  <img src="charlie.jpg" alt="Charlie Michel" class="hero-photo">
+  <div class="hero-photo-fade"></div>
+  <div class="hero-photo-fade-bottom"></div>
+
+  <svg class="hero-svg-bg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <radialGradient id="hg1" cx="30%" cy="55%" r="40%">
+      <stop offset="0%" stop-color="#6B1A1A" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1C0E0A" stop-opacity="0"/>
+    </radialGradient>
+    <rect width="1200" height="900" fill="url(#hg1)"/>
+    <line x1="0" y1="52" x2="1200" y2="52" stroke="#C4924A" stroke-width="0.5" opacity="0.15"/>
+    <line x1="0" y1="848" x2="1200" y2="848" stroke="#C4924A" stroke-width="0.5" opacity="0.15"/>
+    <g opacity="0.12" stroke="#C4924A" stroke-width="0.5" fill="none">
+      <path d="M420,0 C428,120 408,240 430,360 C450,470 432,590 448,720 C458,800 454,850 456,900" stroke-dasharray="6,4"/>
+      <path d="M450,0 C460,110 440,230 462,350 C482,460 465,580 480,700" stroke-dasharray="4,6"/>
+    </g>
+    <g opacity="0.2" fill="#C4924A">
+      <ellipse cx="400" cy="310" rx="20" ry="7" transform="rotate(-38,400,310)"/>
+      <ellipse cx="380" cy="332" rx="18" ry="6" transform="rotate(-22,380,332)"/>
+      <ellipse cx="415" cy="348" rx="16" ry="6" transform="rotate(-55,415,348)"/>
+      <ellipse cx="388" cy="372" rx="20" ry="7" transform="rotate(-18,388,372)"/>
+      <ellipse cx="418" cy="392" rx="15" ry="5" transform="rotate(-65,418,392)"/>
+      <ellipse cx="382" cy="418" rx="19" ry="7" transform="rotate(-28,382,418)"/>
+      <ellipse cx="410" cy="440" rx="14" ry="5" transform="rotate(-72,410,440)"/>
+      <path d="M396,285 C393,330 390,375 387,420 C384,465 381,510 378,555" stroke="#C4924A" stroke-width="1" fill="none" opacity="0.45" stroke-dasharray="none"/>
+    </g>
+    <text x="60" y="870" font-family="Georgia,serif" font-size="9" fill="#C4924A" opacity="0.3" letter-spacing="0.14em">CHARLIE MICHEL &nbsp;&nbsp; PORTFOLIO &nbsp;&nbsp; 2026</text>
+  </svg>
+
+  <div class="hero-rule-top"></div>
+
+  <div class="hero-content">
+    <div class="hero-label">L&amp;D &amp; Enablement &nbsp;&middot;&nbsp; Jersey City, NJ</div>
+    <h1 class="hero-title">Six years of building<br><em>things that actually work.</em></h1>
+    <p class="hero-sub">I build programs that connect to how organizations actually run. From HRIS to new hire day one to team performance. Across six years, every function, both sides of the business.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-wine">See the work</a>
+      <a href="#module" class="btn-outline">Try a live module</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n">1,000+</span><span class="hstat-l">Employees enabled</span></div>
+      <div class="hstat"><span class="hstat-n">6+</span><span class="hstat-l">Years in L&amp;D</span></div>
+      <div class="hstat"><span class="hstat-n">3</span><span class="hstat-l">Continents</span></div>
+    </div>
+  </div>
+  <div class="hero-stamp">Charlie Michel &nbsp;&middot;&nbsp; Enablement &amp; Learning Portfolio &nbsp;&middot;&nbsp; 2026</div>
+</section>
+
+<section id="about">
+  <div class="eyebrow">About</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I am a Senior Program Manager on the L&D team at a global ad tech company, where I own onboarding and enablement for <strong>1,000+ employees across the US, India, and EMEA</strong>.</p>
+      <p>I have worked across the full operating cycle of a tech company. From the HRIS trigger that starts an offer to how a new hire shows up in Salesforce six months later. I have partnered with recruiting, CS, HR, and GTM teams, sat inside client support operations to understand the work firsthand, and built the tracking infrastructure to measure whether programs actually moved anything.</p>
+      <p>I build AI enablement programs, onboarding systems, cross-functional training, manager development programs, mentorship structures, and internal communications. I consult on capability gaps at the executive level and also fix the broken Qualtrics form. I do not think of those as different categories of work.</p>
+      <p><strong>What drives me is making organizations run cleanly. Nothing falling through the cracks, every handoff accounted for, and people genuinely equipped to do their jobs well.</strong> I want to do that work somewhere the mission matters to me too.</p>
+    </div>
+    <div>
+      <div class="about-right-title">Core expertise</div>
+      <div class="skills-wrap">
+        <div class="skill">AI Enablement &amp; Adoption</div>
+        <div class="skill">Global Onboarding</div>
+        <div class="skill">LMS Administration</div>
+        <div class="skill">eLearning Design</div>
+        <div class="skill">Change Management</div>
+        <div class="skill">Sales Enablement</div>
+        <div class="skill">Leadership Development</div>
+        <div class="skill">Synthesia / SCORM 1.2</div>
+        <div class="skill">Articulate RISE</div>
+        <div class="skill">BPO Training</div>
+        <div class="skill">Program Management</div>
+        <div class="skill">AI/ML Training Data</div>
+        <div class="skill">Facilitation</div>
+        <div class="skill">Knowledge Management</div>
+      </div>
+      <div class="about-right-title">Methodologies</div>
+      <div class="method-grid">
+        <div class="method-card"><div class="method-title">ADDIE</div><div class="method-desc">Analysis through evaluation, full ID lifecycle</div></div>
+        <div class="method-card"><div class="method-title">Kirkpatrick</div><div class="method-desc">4-level measurement: reaction to results</div></div>
+        <div class="method-card"><div class="method-title">MEDDIC</div><div class="method-desc">Sales methodology enablement and coaching</div></div>
+        <div class="method-card"><div class="method-title">70-20-10</div><div class="method-desc">Blended learning design framework</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="current">
+  <div class="eyebrow">Currently</div>
+  <h2 class="sec-title">What I am working on right now.</h2>
+  <div class="current-grid">
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>Active</div>
+      <div class="current-title">$300K platform decision</div>
+      <div class="current-desc">Leading a cross-functional LMS evaluation across L&D, Revenue, CS, and HR. Managing vendor POCs, scoring frameworks, and stakeholder alignment toward a decision with a hard September deadline.</div>
+    </div>
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>In progress</div>
+      <div class="current-title">Connecting learning to the systems teams actually use</div>
+      <div class="current-desc">Designing an enablement architecture that surfaces in the tools people already work in, rather than living in a separate platform nobody opens. Making the invisible work visible.</div>
+    </div>
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>Ongoing</div>
+      <div class="current-title">Onboarding as an operating system</div>
+      <div class="current-desc">Mapping the full new hire journey from first HRIS trigger to team integration. Finding every gap, every broken handoff, every thing nobody owns, and building the infrastructure to fix it so it does not need fixing again.</div>
+    </div>
+  </div>
+</section>
+
+<section id="casestudy">
+  <div class="eyebrow">Case Study</div>
+  <div class="cs-grid">
+    <div class="cs-left">
+      <div class="cs-label">AI Enablement</div>
+      <h2 class="cs-title">How I built an AI tool rollout program that actually changed how people worked.</h2>
+      <div class="cs-body">
+        <p>Three regions, different workflows, different levels of tool familiarity, and no shared time zone for live training. The program needed to work asynchronously and actually change behavior, not just produce a completion number.</p>
+        <p>Built the whole thing solo. Script, Synthesia avatar configuration, slide-by-slide trigger word mapping, screenshot captures, three embedded quiz blocks, SCORM packaging, and LMS deployment. The production pipeline became the repeatable template for every AI tool launch that followed.</p>
+        <p><strong>The result:</strong> VP-level recognition on launch and adopted as the organizational standard for AI enablement. The content was substantive enough that the CEO watched the full module and followed up with questions, which mattered as confirmation that something had actually landed.</p>
+      </div>
+    </div>
+    <div class="cs-right">
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 1 &mdash; Analyze</div>
+        <div class="cs-phase-title">Audience and gap assessment</div>
+        <div class="cs-phase-desc">Three distinct learner groups across US, India, and EMEA with different tool familiarity, workflow contexts, and time zone constraints.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 2 &mdash; Design</div>
+        <div class="cs-phase-title">Scenario-based module structure</div>
+        <div class="cs-phase-desc">24-slide arc with scenario-based learning, three embedded quiz blocks at key retention moments, and a consistent AI presenter across all content.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 3 &mdash; Develop</div>
+        <div class="cs-phase-title">Full production pipeline, built solo</div>
+        <div class="cs-phase-desc">Script, Synthesia avatar configuration, trigger word mapping, SCORM 1.2 packaging, and LMS deployment across three regions.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 4 &mdash; Implement and Evaluate</div>
+        <div class="cs-phase-title">Global deployment and executive impact</div>
+        <div class="cs-phase-desc">VP recognition on launch. CEO watched in full and sent follow-up questions. Adopted as the org standard for all future AI enablement.</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-label">Outcome</div>
+        <div class="cs-outcome-text">A solo-built module that reached <strong>1,000+ employees</strong> across 3 regions and became the organizational template for every AI tool rollout that followed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonial">
+  <div class="eyebrow">From colleagues</div>
+  <div class="testimonial-wrap">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">Charlie's training expertise and her ability to tailor her message to any audience was evident from the start, along with her unique talent of challenging trainees to consider different perspectives while maintaining engagement. Her leadership and professionalism created a positive learning environment among our peers and our clients. I would recommend Charlie for any position involving training, leadership development, or program management.</p>
+    <div class="quote-attr">
+      <div class="quote-avatar">C</div>
+      <div>
+        <div class="quote-name">Carolyn</div>
+        <div class="quote-role">Former colleague &middot; Ford EV Enablement Program</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="eyebrow">Featured Work</div>
+  <h2 class="sec-title">Six years. Six projects.</h2>
+  <p class="sec-sub">Every project built on the same conviction: learning only matters if it changes what people do.</p>
+  <div class="pgrid">
+    <div class="pcard reveal" onclick="document.getElementById('module').scrollIntoView({behavior:'smooth'})">
+      <div class="ctop bg-ink"><div class="card-grid"></div><div class="card-text"><div class="card-accent">AI tool.<br><em>CEO-level</em><br>recognition.</div></div><div class="card-rule"></div><div class="chover">Try it live below</div></div>
+      <div class="cbody"><span class="ctag">AI Enablement</span><div class="ctitle">AI Tool Enablement Module</div><div class="cdesc">Built the full enablement program for an internal AI platform launch across three regions, solo. Script, production, SCORM packaging, and LMS deployment. Became the organizational template for every AI tool launch that followed.</div><div class="cstats"><div class="cstat"><strong>1,000+</strong>Learners</div><div class="cstat"><strong>3</strong>Regions</div><div class="cstat"><strong>24</strong>Slides</div></div></div>
+    </div>
+    <a class="pcard reveal" href="mockup_lms_scorecard.html" target="_blank">
+      <div class="ctop bg-charcoal"><div class="card-grid"></div><div class="card-text"><div class="card-accent" style="font-size:clamp(1.8rem,3.5vw,2.5rem)">$300K</div><div class="card-sub-label">Platform decision</div></div><div class="card-rule"></div><div class="chover">View scorecard</div></div>
+      <div class="cbody"><span class="ctag">LMS Strategy</span><div class="ctitle">Enterprise LMS Evaluation</div><div class="cdesc">Managing a $300K platform decision across L&D, Revenue, CS, and HR. Built the evaluation framework, ran two vendor POCs with 13 cross-functional reviewers, and delivered a scored recommendation to executive leadership.</div><div class="cstats"><div class="cstat"><strong>13</strong>Evaluators</div><div class="cstat"><strong>2</strong>Vendor POCs</div><div class="cstat"><strong>$300K</strong>Decision</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_onboarding.html" target="_blank">
+      <div class="ctop bg-wine-d"><div class="card-grid"></div><div class="card-text"><div class="card-accent">3 regions.<br>1 program.</div><div class="card-sub-label">US &middot; India &middot; EMEA</div></div><div class="card-rule"></div><div class="chover">View program</div></div>
+      <div class="cbody"><span class="ctag">Global Onboarding</span><div class="ctitle">Global Onboarding Program</div><div class="cdesc">Own global onboarding end to end for 1,000+ employees across the US, India, and EMEA. Four role tracks, pre-boarding through 90-day ramp, connected to HRIS, LMS, and manager workflows.</div><div class="cstats"><div class="cstat"><strong>1,000+</strong>Employees</div><div class="cstat"><strong>3</strong>Regions</div><div class="cstat"><strong>4</strong>Tracks</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_newsletter.html" target="_blank">
+      <div class="ctop bg-sienna"><div class="card-grid"></div><div class="card-text"><div class="card-accent" style="font-size:clamp(1.8rem,3.5vw,2.4rem)">991</div><div class="card-sub-label">Employees reached</div></div><div class="card-rule"></div><div class="chover">View newsletter</div></div>
+      <div class="cbody"><span class="ctag amber">Internal Comms</span><div class="ctitle">Internal Newsletter Program</div><div class="cdesc">Built and run the quarterly internal newsletter for 1,000+ employees. Custom HTML template, precise distribution list management, and full production ownership from content collection through send.</div><div class="cstats"><div class="cstat"><strong>991</strong>Recipients</div><div class="cstat"><strong>Quarterly</strong>Cadence</div><div class="cstat"><strong>HTML</strong>Custom</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_elearning_slide.html" target="_blank">
+      <div class="ctop bg-charcoal"><div class="card-grid"></div><div class="card-text"><div class="card-accent">BPO.<br>Exec.<br><em>Scale.</em></div></div><div class="card-rule"></div><div class="chover">View mockup</div></div>
+      <div class="cbody"><span class="ctag slate">Scale Enablement</span><div class="ctitle">Onboarding at Hypergrowth</div><div class="cdesc">Built the training function from scratch during rapid headcount growth. Trained BPO teams and executive stakeholders, embedded in client support to understand the work firsthand, and built the content library that scaled with the company.</div><div class="cstats"><div class="cstat"><strong>3 yrs</strong>Ownership</div><div class="cstat"><strong>Multi-function</strong>Scope</div><div class="cstat"><strong>BPO+Exec</strong>Audiences</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_ev_coaching.html" target="_blank">
+      <div class="ctop bg-forest"><div class="card-grid"></div><div class="card-text"><div class="card-accent">Field.<br>Ford.<br><em>Southeast.</em></div></div><div class="card-rule"></div><div class="chover">View program</div></div>
+      <div class="cbody"><span class="ctag teal">Field Enablement</span><div class="ctitle">Ford EV Field Coaching</div><div class="cdesc">Ford-contracted field enablement across the Southeast. Coached dealership teams on EV certification requirements, product positioning, and sales readiness through live floor facilitation across multiple markets.</div><div class="cstats"><div class="cstat"><strong>SE US</strong>Region</div><div class="cstat"><strong>Multi-market</strong>Portfolio</div><div class="cstat"><strong>Field</strong>Delivery</div></div></div>
+    </a>
+  </div>
+</section>
+
+<section id="module">
+  <div class="eyebrow">Live Demo</div>
+  <h2 class="sec-title" style="color:var(--parchment)">Try an interactive module.</h2>
+  <p class="sec-sub">A real example of how I design learning. Scenario-based, ADDIE-informed, quiz-validated. In production this ships as SCORM 1.2 via LMS with completion tracking.</p>
+  <div class="mwrap">
+    <div class="mbar"><span class="mbar-t">AI Tool Adoption: Making New Technology Stick</span><span class="mctr" id="mCtr">1 of 5</span></div>
+    <div class="mtrack"><div class="mfill" id="mFill" style="width:20%"></div></div>
+    <div class="mbody">
+      <div class="mslide active" id="ms1">
+        <span class="mtag">Introduction</span>
+        <div class="mh">New AI tools don't fail because of the technology. They fail because of the people.</div>
+        <p class="mp">Technology adoption stalls not at the technical layer but at the behavioral one. This module gives you a framework for driving real adoption, not just awareness.</p>
+        <div class="objgrid">
+          <div class="objcard"><div class="objnum">01</div><div class="ot">Understand resistance</div><div class="od">Why people avoid new tools even when they're better.</div></div>
+          <div class="objcard"><div class="objnum">02</div><div class="ot">Design for behavior</div><div class="od">The difference between training and adoption enablement.</div></div>
+          <div class="objcard"><div class="objnum">03</div><div class="ot">Measure what matters</div><div class="od">Completion rates vs. behavior change and why it matters.</div></div>
+        </div>
+      </div>
+      <div class="mslide" id="ms2">
+        <span class="mtag">Core Concept</span>
+        <div class="mh">The ADDIE model and what most programs skip.</div>
+        <p class="mp">Effective enablement is not built by accident. ADDIE provides a structured approach that separates programs that produce results from ones that just check boxes.</p>
+        <div class="model-row">
+          <div class="model-step"><div class="model-badge">A</div><div class="model-label">Analyze</div><div class="model-desc">Audience, gaps, goals</div></div>
+          <div class="model-step"><div class="model-badge">D</div><div class="model-label">Design</div><div class="model-desc">Structure and strategy</div></div>
+          <div class="model-step"><div class="model-badge">D</div><div class="model-label">Develop</div><div class="model-desc">Build the content</div></div>
+          <div class="model-step"><div class="model-badge">I</div><div class="model-label">Implement</div><div class="model-desc">Deploy and facilitate</div></div>
+          <div class="model-step"><div class="model-badge">E</div><div class="model-label">Evaluate</div><div class="model-desc">Measure and iterate</div></div>
+        </div>
+        <div class="callout"><strong>The most skipped phase:</strong> Evaluate. Most programs measure completion and call it done. But Kirkpatrick Level 3, behavior change on the job, is where real ROI lives. If behavior has not changed, the program did not work.</div>
+      </div>
+      <div class="mslide" id="ms3">
+        <span class="mtag">Application</span>
+        <div class="mh">What separates adoption from awareness.</div>
+        <div class="scenario">"We rolled out the tool to everyone. Sent the training link. Completion rate was 94%. But three months later, barely anyone was actually using it."<cite>L&D Manager, post-launch retrospective</cite></div>
+        <ul class="pts">
+          <li class="pt"><div class="pt-dot"></div><div><strong style="color:var(--wine)">Awareness is not adoption.</strong> A high completion rate does not mean behavior has changed. It means people clicked through.</div></li>
+          <li class="pt"><div class="pt-dot"></div><div><strong style="color:var(--wine)">Adoption requires opportunity, motivation, and ability.</strong> Remove any one and the behavior will not stick, regardless of how good the training is.</div></li>
+          <li class="pt"><div class="pt-dot"></div><div><strong style="color:var(--wine)">The environment enables or prevents use.</strong> If the tool is not integrated into the workflow, the best training in the world will not move the needle.</div></li>
+        </ul>
+      </div>
+      <div class="mslide" id="ms4">
+        <span class="mtag quiz">Knowledge Check</span>
+        <div class="quiz-q">A new AI summarization tool was rolled out company-wide. Training completion hit 91% in two weeks. But 60 days later, usage data shows only 18% of employees are using it regularly. What does this most likely indicate?</div>
+        <div class="qopts" id="mOpts">
+          <button class="qopt" onclick="mCheck(this,false)"><span class="ql">A</span>The training content was too difficult for most employees.</button>
+          <button class="qopt" onclick="mCheck(this,false)"><span class="ql">B</span>Employees need to retake the training to reinforce retention.</button>
+          <button class="qopt" onclick="mCheck(this,true)"><span class="ql">C</span>Completion rate measures awareness, not adoption. A behavior change strategy is missing.</button>
+          <button class="qopt" onclick="mCheck(this,false)"><span class="ql">D</span>The tool itself is not useful enough to justify adoption.</button>
+        </div>
+        <div class="fb correct" id="mFbC">&#10003; &nbsp;<strong>Correct.</strong> High completion confirms exposure, not behavior change. Sustainable adoption requires workflow integration, manager reinforcement, and ongoing performance support beyond the initial training event.</div>
+        <div class="fb wrong" id="mFbW">Not quite. The completion data shows people engaged with the training. The gap between 91% completion and 18% usage is the classic awareness-vs-adoption problem. Training alone rarely changes behavior without workflow integration alongside it.</div>
+      </div>
+      <div class="mslide" id="ms5">
+        <div class="done-wrap">
+          <div class="done-circle"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><polyline points="6,15 12,21 24,9" stroke="#F5EBD8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="done-title">Module complete.</div>
+          <p class="done-sub">You covered the difference between awareness and adoption, and why that gap is where most AI rollouts fail.</p>
+          <div class="done-stats">
+            <div><span class="ds-n">3</span><span class="ds-l">Concepts</span></div>
+            <div><span class="ds-n" id="mScore">&#8212;</span><span class="ds-l">Quiz result</span></div>
+            <div><span class="ds-n">ADDIE</span><span class="ds-l">Framework</span></div>
+          </div>
+          <div class="mnote"><strong>Portfolio note:</strong> This module demonstrates scenario-based instructional design, ADDIE methodology, Kirkpatrick-level thinking, and interactive quiz development. In production: SCORM 1.2, deployed via LMS with completion tracking and behavior-change reporting.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mnav">
+      <button class="mbtn mbtn-ghost" id="mBack" onclick="mNav(-1)" style="visibility:hidden">&#8592; Back</button>
+      <div class="mdots" id="mDots"></div>
+      <button class="mbtn mbtn-wine" id="mNext" onclick="mNav(1)">Begin &#8594;</button>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">Let's connect</div>
+  <h2 class="sec-title">Looking for the right fit.</h2>
+  <p class="sec-sub">I do my best work at companies where the product genuinely excites me and the problems are complex enough to need real thinking. I want to be somewhere I can contribute at every layer, not just the training layer.</p>
+  <p class="contact-fine">Senior enablement, L&D program management, AI adoption, people operations. Open to hybrid and remote. Based in Jersey City.</p>
+  <div class="crow">
+    <a href="https://linkedin.com/in/charliemichel" target="_blank" class="cbtn cbtn-parchment">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="mailto:charliemmichel@gmail.com" class="cbtn cbtn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email me
+    </a>
+    <a href="Charlie_Michel_Portfolio.pdf" target="_blank" class="cbtn cbtn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Download PDF
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">&#169; 2026 Charlie Michel &nbsp;&middot;&nbsp; Enablement &amp; Learning Portfolio</div>
+  <div class="fr">charliemmichel.github.io</div>
+</footer>
+
+<script>
+document.querySelectorAll('.reveal').forEach(r=>new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')});},{threshold:.1}).observe(r));
+let mCur=1,mAnswered=false,mCorrect=false;const MT=5;
+function mRender(){
+  document.querySelectorAll('.mslide').forEach(s=>s.classList.remove('active'));
+  document.getElementById('ms'+mCur).classList.add('active');
+  document.getElementById('mFill').style.width=(mCur/MT*100)+'%';
+  document.getElementById('mCtr').textContent=mCur+' of '+MT;
+  document.getElementById('mBack').style.visibility=mCur>1?'visible':'hidden';
+  const d=document.getElementById('mDots');d.innerHTML='';
+  for(let i=1;i<=MT;i++){const x=document.createElement('div');x.className='mdot'+(i===mCur?' active':i<mCur?' done':'');d.appendChild(x);}
+  const nx=document.getElementById('mNext');
+  if(mCur===1){nx.textContent='Begin \u2192';nx.className='mbtn mbtn-wine';nx.disabled=false;nx.onclick=()=>mNav(1);}
+  else if(mCur===MT-1){nx.textContent='Next \u2192';nx.disabled=!mAnswered;nx.className='mbtn mbtn-wine';nx.onclick=()=>mNav(1);}
+  else if(mCur===MT){nx.textContent='Restart \u21BA';nx.className='mbtn mbtn-gold';nx.disabled=false;nx.onclick=mRestart;document.getElementById('mScore').textContent=mCorrect?'100%':'Try again';}
+  else{nx.textContent='Continue \u2192';nx.className='mbtn mbtn-wine';nx.disabled=false;nx.onclick=()=>mNav(1);}
+}
+function mNav(d){if(d===1&&mCur===MT)return;mCur=Math.max(1,Math.min(MT,mCur+d));mRender();}
+function mCheck(btn,correct){
+  if(mAnswered)return;mAnswered=true;mCorrect=correct;
+  document.querySelectorAll('.qopt').forEach(o=>{o.disabled=true;if(o!==btn)o.classList.add('dimmed');});
+  btn.classList.add(correct?'correct':'wrong');
+  document.getElementById(correct?'mFbC':'mFbW').style.display='block';
+  document.getElementById('mNext').disabled=false;
+}
+function mRestart(){
+  mCur=1;mAnswered=false;mCorrect=false;
+  document.querySelectorAll('.qopt').forEach(o=>{o.disabled=false;o.className='qopt';});
+  document.getElementById('mFbC').style.display='none';
+  document.getElementById('mFbW').style.display='none';
+  document.getElementById('mNext').onclick=()=>mNav(1);
+  mRender();
+}
+mRender();
+</script>
+</body>
+</html>

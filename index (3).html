@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Charlie Michel. AI Enablement and L&D Program Manager. Building programs that make learning stick and AI adoption actually happen.">
+<title>Charlie Michel. Enablement Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--wine:#6B2D3E;--wine-mid:#8B3D52;--wine-pale:#F5EEF0;--cream:#FAF7F2;--cream-dark:#F0EBE3;--charcoal:#2C2C2A;--warm-gray:#8A8880;--gold:#C4924A;--gold-pale:#FFF8ED;--white:#fff;--border:#E8E3DB;--text:#2C2C2A;--muted:#8A8880;--forest:#1E2D1A;--navy:#1E1B2E;--deep-gold:#3A2A1A}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,6vw,5rem)}
+.nav-logo{font-family:'Lora',serif;font-size:17px;color:var(--wine);text-decoration:none;letter-spacing:-0.01em}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--wine)}
+.nav-cta{background:var(--wine);color:var(--white)!important;padding:7px 18px;border-radius:6px;font-weight:500;transition:background .2s!important}
+.nav-cta:hover{background:var(--wine-mid)!important}
+@media(max-width:680px){.nav-links{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 420px;align-items:center;padding:clamp(6rem,10vw,9rem) clamp(1.5rem,6vw,5rem) 5rem;position:relative;overflow:hidden;background:var(--charcoal);gap:4rem}
+.hero-orb1{position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(107,45,62,0.35);top:-120px;left:-120px;filter:blur(90px);pointer-events:none}
+.hero-orb2{position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(196,146,74,0.08);bottom:80px;right:30%;filter:blur(60px);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:56px 56px;pointer-events:none}
+.hero-content{position:relative;z-index:2}
+.hero-title-tag{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
+.hero-title-tag::before{content:'';width:20px;height:1px;background:var(--gold)}
+h1.hero-title{font-family:'Lora',serif;font-size:clamp(2.2rem,4.5vw,3.8rem);color:var(--white);line-height:1.12;margin-bottom:1.25rem}
+h1.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:clamp(14px,1.6vw,16px);color:rgba(255,255,255,0.5);max-width:480px;line-height:1.82;margin-bottom:2.25rem;font-weight:300}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-wine{background:var(--wine);color:var(--white);padding:11px 26px;border-radius:7px;font-size:14px;font-weight:500;text-decoration:none;transition:background .2s,transform .15s;display:inline-block}
+.btn-wine:hover{background:var(--wine-mid);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:rgba(255,255,255,.6);padding:11px 26px;border-radius:7px;font-size:14px;border:1px solid rgba(255,255,255,.18);text-decoration:none;transition:all .2s;display:inline-block}
+.btn-outline:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+.hero-mini-stats{display:flex;gap:2rem}
+.hms{display:flex;flex-direction:column;gap:2px}
+.hms-n{font-family:'Lora',serif;font-size:1.3rem;color:var(--gold);line-height:1}
+.hms-l{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em}
+
+/* Hero photo */
+.hero-photo-wrap{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center}
+.hero-photo-frame{position:relative;width:340px}
+.hero-photo-frame::before{content:'';position:absolute;top:-16px;left:-16px;right:16px;bottom:16px;border:1.5px solid rgba(196,146,74,0.3);border-radius:12px;z-index:0}
+.hero-photo{width:100%;border-radius:10px;display:block;position:relative;z-index:1;object-fit:cover;height:420px}
+.hero-photo-badge{position:absolute;bottom:-16px;left:-16px;background:var(--wine);border-radius:8px;padding:12px 16px;z-index:2;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.badge-title{font-size:13px;font-weight:500;color:var(--white);line-height:1.2}
+.badge-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-photo-wrap{display:none}}
+
+/* SECTIONS */
+section{padding:clamp(4rem,7vw,6rem) clamp(1.5rem,8vw,8rem)}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';width:28px;height:1px;background:var(--gold)}
+.sec-title{font-family:'Lora',serif;font-size:clamp(1.6rem,3.5vw,2.3rem);color:var(--charcoal);margin-bottom:.75rem;line-height:1.25}
+.sec-sub{font-size:15px;color:var(--muted);max-width:500px;line-height:1.75;margin-bottom:3rem;font-weight:300}
+
+/* ABOUT */
+#about{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.about-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:4.5rem;align-items:start;max-width:1020px}
+.about-text p{font-size:15px;line-height:1.88;color:var(--text);margin-bottom:1rem}
+.about-text p:last-child{margin-bottom:0}
+.about-text strong{color:var(--wine);font-weight:500}
+.about-right-title{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:2rem}
+.skill{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;color:var(--charcoal);display:flex;align-items:center;gap:6px}
+.skill::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.method-card{background:var(--cream-dark);border-radius:8px;padding:10px 12px;border-left:3px solid var(--wine)}
+.method-title{font-size:12px;font-weight:500;color:var(--charcoal);margin-bottom:2px}
+.method-desc{font-size:10.5px;color:var(--muted);line-height:1.45}
+@media(max-width:700px){.about-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* CURRENTLY BUILDING */
+#current{background:var(--charcoal)}
+#current .eyebrow{color:var(--gold)}
+#current .sec-title{color:var(--white)}
+.current-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px}
+.current-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:1.5rem;transition:border-color .2s}
+.current-card:hover{border-color:rgba(196,146,74,.3)}
+.current-status{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.current-title{font-family:'Lora',serif;font-size:1rem;color:var(--white);margin-bottom:8px;line-height:1.35}
+.current-desc{font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.65}
+@media(max-width:700px){.current-grid{grid-template-columns:1fr}}
+
+/* CASE STUDY */
+#casestudy{background:var(--cream-dark)}
+.cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;max-width:1000px}
+.cs-left{}
+.cs-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin-bottom:.5rem}
+.cs-title{font-family:'Lora',serif;font-size:clamp(1.4rem,3vw,2rem);color:var(--charcoal);margin-bottom:1rem;line-height:1.3}
+.cs-body p{font-size:14.5px;color:var(--text);line-height:1.8;margin-bottom:1rem}
+.cs-body p:last-child{margin-bottom:0}
+.cs-body strong{color:var(--wine);font-weight:500}
+.cs-right{display:flex;flex-direction:column;gap:16px}
+.cs-phase{background:var(--white);border-radius:10px;padding:1.1rem 1.25rem;border:1px solid var(--border);border-left:4px solid var(--wine)}
+.cs-phase-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin-bottom:4px}
+.cs-phase-title{font-size:13.5px;font-weight:500;color:var(--charcoal);margin-bottom:4px}
+.cs-phase-desc{font-size:12px;color:var(--muted);line-height:1.55}
+.cs-outcome-strip{background:var(--wine);border-radius:10px;padding:1.25rem 1.5rem;margin-top:0}
+.cs-outcome-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px}
+.cs-outcome-text{font-size:14px;color:var(--white);line-height:1.65}
+.cs-outcome-text strong{color:var(--gold)}
+@media(max-width:700px){.cs-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* TESTIMONIAL */
+#testimonial{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.testimonial-wrap{max-width:760px}
+.quote-mark{font-family:'Lora',serif;font-size:5rem;color:var(--wine-pale);line-height:.8;margin-bottom:.5rem;display:block}
+.quote-text{font-family:'Lora',serif;font-size:clamp(1.05rem,2vw,1.25rem);color:var(--charcoal);line-height:1.72;margin-bottom:1.5rem;font-style:italic}
+.quote-attr{display:flex;align-items:center;gap:14px}
+.quote-avatar{width:44px;height:44px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-size:1.1rem;color:var(--white);font-weight:600;flex-shrink:0}
+.quote-name{font-size:14px;font-weight:500;color:var(--charcoal)}
+.quote-role{font-size:12px;color:var(--muted)}
+
+/* WORK */
+#work{background:var(--cream)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.pcard{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;transition:transform .2s,box-shadow .2s;text-decoration:none;display:block;cursor:pointer}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(107,45,62,.1)}
+.ctop{height:170px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bg-navy{background:var(--navy)}.bg-wine{background:var(--wine)}.bg-charcoal{background:var(--charcoal)}.bg-forest{background:var(--forest)}.bg-deepgold{background:var(--deep-gold)}.bg-darkwine{background:#3D1A24}
+.card-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px}
+.card-hero-text{position:relative;z-index:1;text-align:center;padding:0 1.5rem}
+.card-hero-accent{font-family:'Lora',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:rgba(255,255,255,0.9);line-height:1.2;text-align:center}
+.card-hero-accent em{font-style:italic;color:var(--gold)}
+.card-hero-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:6px;text-align:center;letter-spacing:.04em}
+.card-bar-chart{display:flex;align-items:flex-end;gap:5px;height:50px;justify-content:center;margin-top:12px}
+.cbar{width:16px;border-radius:3px 3px 0 0;background:rgba(255,255,255,.12)}
+.cbar.hi{background:rgba(196,146,74,.65)}
+.card-dots-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;width:108px;margin:10px auto 0}
+.cdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.1)}
+.cdot.lit{background:rgba(196,146,74,.6)}
+.card-hero-label{position:absolute;bottom:14px;left:14px;font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.32)}
+.chover{position:absolute;inset:0;background:rgba(107,45,62,0);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:transparent;letter-spacing:.04em;transition:all .22s;z-index:2}
+.pcard:hover .chover{background:rgba(107,45,62,.58);color:white}
+.cbody{padding:18px 20px 20px}
+.ctag{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--wine);background:var(--wine-pale);padding:3px 9px;border-radius:4px;display:inline-block;margin-bottom:9px}
+.ctag.teal{color:#1D6B4A;background:#EDF7F2}
+.ctag.amber{color:#7A4E10;background:var(--gold-pale)}
+.ctag.slate{color:#2A3D5A;background:#EBF0F7}
+.ctitle{font-family:'Lora',serif;font-size:16px;color:var(--charcoal);margin-bottom:6px;line-height:1.3}
+.cdesc{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.cstats{display:flex;gap:16px;padding-top:12px;border-top:1px solid var(--border)}
+.cstat{font-size:11px;color:var(--muted)}
+.cstat strong{display:block;font-size:14px;color:var(--wine);font-family:'Lora',serif;line-height:1.1}
+@media(max-width:700px){.pgrid{grid-template-columns:1fr}}
+
+/* MODULE */
+#module{background:var(--charcoal);padding:clamp(4rem,8vw,6.5rem) clamp(1.5rem,8vw,8rem)}
+#module .eyebrow{color:var(--gold)}
+#module .sec-title{color:var(--white)}
+#module .sec-sub{color:rgba(255,255,255,.42)}
+.mwrap{max-width:740px;background:var(--cream);border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5)}
+.mbar{background:var(--wine);padding:0 1.5rem;height:48px;display:flex;align-items:center;justify-content:space-between}
+.mbar-t{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.68)}
+.mctr{font-size:11px;color:rgba(255,255,255,.38)}
+.mtrack{height:3px;background:rgba(255,255,255,.1)}
+.mfill{height:100%;background:var(--gold);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.mbody{padding:2rem 2.25rem 1.5rem;min-height:400px}
+.mslide{display:none}
+.mslide.active{display:block;animation:fadeUp .32s ease}
+.mtag{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);background:var(--wine-pale);border-radius:4px;padding:3px 9px;display:inline-block;margin-bottom:1rem}
+.mtag.quiz{background:var(--gold-pale);color:#7A4E10}
+.mh{font-family:'Lora',serif;font-size:1.3rem;color:var(--charcoal);line-height:1.3;margin-bottom:1rem}
+.mp{font-size:14px;color:var(--muted);line-height:1.72;margin-bottom:1rem}
+.objgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:.75rem}
+.objcard{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:14px;border-top:3px solid var(--wine)}
+.ot{font-size:12px;font-weight:500;color:var(--charcoal);margin-bottom:4px}
+.od{font-size:11px;color:var(--muted);line-height:1.5}
+.objnum{font-family:'Lora',serif;font-size:1.5rem;color:var(--wine);margin-bottom:4px}
+.scenario{background:var(--wine-pale);border-left:3px solid var(--wine);border-radius:0 7px 7px 0;padding:14px 16px;font-size:13.5px;color:var(--charcoal);line-height:1.68;font-style:italic;margin-bottom:16px}
+.scenario cite{font-style:normal;font-size:11px;color:var(--muted);display:block;margin-top:6px}
+.pts{list-style:none;display:flex;flex-direction:column;gap:10px}
+.pt{display:flex;gap:10px;font-size:13.5px;color:var(--charcoal);line-height:1.6;align-items:flex-start}
+.pt-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:8px}
+.callout{background:var(--charcoal);border-radius:8px;padding:1rem 1.25rem;font-size:13px;color:rgba(255,255,255,.88);line-height:1.68;margin-top:1rem}
+.callout strong{color:var(--gold);font-weight:500}
+.model-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem}
+.model-step{text-align:center;position:relative}
+.model-step::after{content:'';position:absolute;top:14px;right:-4px;width:8px;height:1px;background:var(--border)}
+.model-step:last-child::after{display:none}
+.model-badge{width:28px;height:28px;border-radius:50%;background:var(--wine-pale);border:2px solid var(--wine);display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:10px;font-weight:600;color:var(--wine)}
+.model-label{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:500}
+.model-desc{font-size:9.5px;color:var(--muted);line-height:1.4;margin-top:3px}
+.quiz-q{font-family:'Lora',serif;font-size:1.1rem;color:var(--charcoal);margin-bottom:1.25rem;line-height:1.42}
+.qopts{display:flex;flex-direction:column;gap:9px;margin-bottom:1rem}
+.qopt{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13.5px;color:var(--charcoal);cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;width:100%;transition:border-color .15s,background .15s;font-family:'DM Sans',sans-serif}
+.qopt:hover:not(:disabled){border-color:var(--wine);background:var(--wine-pale)}
+.ql{width:24px;height:24px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--muted);flex-shrink:0;transition:all .15s}
+.qopt.correct{border-color:#3A7D5A;background:#EDF7F2}
+.qopt.correct .ql{background:#3A7D5A;color:white}
+.qopt.wrong{border-color:#8B2E2E;background:#FDF0F0}
+.qopt.wrong .ql{background:#8B2E2E;color:white}
+.qopt.dimmed{opacity:.32}
+.fb{display:none;padding:10px 14px;border-radius:7px;font-size:13px;line-height:1.58;margin-bottom:.5rem}
+.fb.correct{background:#EDF7F2;border:1px solid rgba(58,125,90,.2);color:#2A6B44;display:block}
+.fb.wrong{background:#FDF0F0;border:1px solid rgba(139,46,46,.15);color:#7A2020;display:block}
+.done-wrap{text-align:center;padding:1.5rem 0 .5rem}
+.done-circle{width:72px;height:72px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 8px 24px rgba(107,45,62,.22)}
+.done-title{font-family:'Lora',serif;font-size:1.5rem;color:var(--charcoal);margin-bottom:.4rem}
+.done-sub{font-size:13.5px;color:var(--muted);margin-bottom:1.5rem;line-height:1.65;max-width:380px;margin-left:auto;margin-right:auto}
+.done-stats{display:flex;justify-content:center;gap:3rem;margin-bottom:1.75rem;padding:1.25rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ds-n{font-family:'Lora',serif;font-size:1.8rem;color:var(--wine);display:block;line-height:1}
+.ds-l{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.mnote{background:var(--cream-dark);border-radius:8px;padding:.9rem 1.1rem;font-size:11.5px;color:var(--muted);line-height:1.68;font-style:italic;max-width:440px;margin:0 auto}
+.mnote strong{color:var(--charcoal);font-style:normal}
+.mnav{border-top:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;background:var(--white)}
+.mdots{display:flex;gap:5px;align-items:center}
+.mdot{width:6px;height:6px;border-radius:50%;background:var(--cream-dark);transition:all .22s}
+.mdot.active{background:var(--wine);width:18px;border-radius:3px}
+.mdot.done{background:var(--gold)}
+.mbtn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border-radius:7px;padding:8px 22px;cursor:pointer;transition:all .15s;border:none}
+.mbtn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.mbtn-ghost:hover{border-color:var(--warm-gray);color:var(--charcoal)}
+.mbtn-wine{background:var(--wine);color:white}
+.mbtn-wine:hover{background:var(--wine-mid)}
+.mbtn-wine:disabled{opacity:.32;cursor:default}
+.mbtn-gold{background:var(--gold);color:white}
+.mbtn-gold:hover{background:#B8833E}
+@media(max-width:540px){.objgrid{grid-template-columns:1fr}.model-row{grid-template-columns:repeat(3,1fr)}}
+
+/* CONTACT */
+#contact{background:var(--wine);text-align:center;padding:clamp(4rem,8vw,6rem) clamp(1.5rem,8vw,8rem)}
+#contact .eyebrow{color:rgba(255,255,255,.38);justify-content:center}
+#contact .eyebrow::after{display:none}
+#contact .sec-title{color:var(--white);margin-bottom:.75rem}
+#contact .sec-sub{color:rgba(255,255,255,.52);margin:0 auto 2.5rem;max-width:520px}
+.crow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cbtn{display:inline-flex;align-items:center;gap:9px;padding:12px 24px;border-radius:7px;font-size:14px;font-weight:500;text-decoration:none;transition:all .2s;border:1.5px solid transparent}
+.cbtn svg{width:16px;height:16px;flex-shrink:0}
+.cbtn-gold{background:var(--gold);color:white;border-color:var(--gold)}
+.cbtn-gold:hover{background:#B8833E;border-color:#B8833E}
+.cbtn-ghost{background:transparent;color:rgba(255,255,255,.78);border-color:rgba(255,255,255,.22)}
+.cbtn-ghost:hover{border-color:rgba(255,255,255,.48);color:white}
+
+footer{background:var(--charcoal);padding:1.5rem clamp(1.5rem,8vw,8rem);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.fl{font-size:12px;color:rgba(255,255,255,.28)}
+.fr{font-size:12px;color:rgba(255,255,255,.18)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Charlie Michel</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#module">Live Demo</a></li>
+    <li><a href="#contact" class="nav-cta">Let's talk</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-orb1"></div><div class="hero-orb2"></div><div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-title-tag">L&amp;D &amp; Enablement &nbsp;&middot;&nbsp; Jersey City, NJ</div>
+    <h1 class="hero-title">Six years of building<br><em>things that actually work.</em></h1>
+    <p class="hero-sub">I design programs that turn new hires into high performers. and make sure AI tools don't just launch, they land. Six years across ad tech, logistics, automotive, and legal industries.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-wine">See the work</a>
+      <a href="#module" class="btn-outline">Try a live module</a>
+    </div>
+    <div class="hero-mini-stats">
+      <div class="hms"><span class="hms-n">1,000+</span><span class="hms-l">Employees enabled</span></div>
+      <div class="hms"><span class="hms-n">6+</span><span class="hms-l">Years L&amp;D</span></div>
+      <div class="hms"><span class="hms-n">3</span><span class="hms-l">Continents</span></div>
+      <div class="hms"><span class="hms-n">CEO</span><span class="hms-l">Recognition</span></div>
+    </div>
+  </div>
+  <div class="hero-photo-wrap">
+    <div class="hero-photo-frame">
+      <img src="charlie.jpg" alt="Charlie Michel" class="hero-photo">
+      <div class="hero-photo-badge">
+        <div class="badge-title">Charlie Michel</div>
+        <div class="badge-sub">AI Enablement &amp; L&amp;D</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="eyebrow">About</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I am a Senior Program Manager on the L&D team at a global ad tech company, where I own onboarding and enablement for <strong>1,000+ employees across the US, India, and EMEA</strong>.</p>
+      <p>I have worked across the full operating cycle of a tech company. From the HRIS trigger that starts an offer to how a new hire shows up in Salesforce six months later. I have partnered with recruiting, CS, HR, and GTM teams, sat inside client support operations to understand the work firsthand, and built the tracking infrastructure to measure whether programs actually moved anything.</p>
+      <p>I build AI enablement programs, onboarding systems, cross-functional training, manager development programs, mentorship structures, and internal communications. I consult on capability gaps at the executive level and also fix the broken Qualtrics form. I do not think of those as different categories of work.</p>
+      <p><strong>What drives me is making organizations run cleanly. Nothing falling through the cracks, every handoff accounted for, and people genuinely equipped to do their jobs well.</strong> I want to do that work somewhere the mission matters to me too.</p>
+    </div>
+    <div>
+      <div class="about-right-title">Core expertise</div>
+      <div class="skills-wrap">
+        <div class="skill">AI Enablement &amp; Adoption</div>
+        <div class="skill">Global Onboarding</div>
+        <div class="skill">LMS Administration</div>
+        <div class="skill">eLearning Design</div>
+        <div class="skill">Change Management</div>
+        <div class="skill">Sales Enablement</div>
+        <div class="skill">Leadership Development</div>
+        <div class="skill">Synthesia / SCORM 1.2</div>
+        <div class="skill">Articulate RISE</div>
+        <div class="skill">BPO Training</div>
+        <div class="skill">Program Management</div>
+        <div class="skill">AI/ML Training Data</div>
+        <div class="skill">Facilitation</div>
+        <div class="skill">Knowledge Management</div>
+      </div>
+      <div class="about-right-title">Methodologies</div>
+      <div class="method-grid">
+        <div class="method-card"><div class="method-title">ADDIE</div><div class="method-desc">Analysis through evaluation. full ID lifecycle</div></div>
+        <div class="method-card"><div class="method-title">Kirkpatrick</div><div class="method-desc">4-level measurement: reaction to results</div></div>
+        <div class="method-card"><div class="method-title">MEDDIC</div><div class="method-desc">Sales methodology enablement &amp; coaching</div></div>
+        <div class="method-card"><div class="method-title">70-20-10</div><div class="method-desc">Blended learning design framework</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="current">
+  <div class="eyebrow">Currently</div>
+  <h2 class="sec-title" style="color:var(--white)">What I am working on right now.</h2>
+  <div class="current-grid">
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>Active</div>
+      <div class="current-title">Enterprise platform migration strategy</div>
+      <div class="current-desc">Leading a cross-functional evaluation to replace a core learning platform. managing vendor POCs, stakeholder alignment, and a $300K decision with a September deadline.</div>
+    </div>
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>In progress</div>
+      <div class="current-title">Connecting learning to the systems teams actually use</div>
+      <div class="current-desc">Designing an enablement architecture that surfaces in the tools people already work in, rather than living in a separate platform nobody opens. Making the invisible work visible.</div>
+    </div>
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>Ongoing</div>
+      <div class="current-title">Onboarding as an operating system</div>
+      <div class="current-desc">Mapping the full new hire journey from first HRIS trigger to team integration. Finding every gap, every broken handoff, every thing nobody owns, and building the infrastructure to fix it so it does not need fixing again.</div>
+    </div>
+  </div>
+</section>
+
+<section id="casestudy">
+  <div class="eyebrow">Case Study</div>
+  <div class="cs-grid">
+    <div class="cs-left">
+      <div class="cs-label">AI Enablement</div>
+      <h2 class="cs-title">How I built an AI tool rollout program that the CEO actually watched.</h2>
+      <div class="cs-body">
+        <p>When a new internal AI platform launched across a 1,000-person organization spanning three continents, there was no adoption plan. Just a tool and an expectation that people would figure it out.</p>
+        <p>Three regions, different workflows, different levels of tool familiarity, and no shared time zone for live training. The program needed to work asynchronously and actually change behavior, not just produce a completion number.</p>
+        <p>Built the whole thing solo. Script, Synthesia avatar configuration, slide-by-slide trigger word mapping, screenshot captures, three embedded quiz blocks, SCORM packaging, and LMS deployment. The production pipeline became the repeatable template for every AI tool launch that followed.</p>
+        <p><strong>The result:</strong> VP-level recognition on launch and adopted as the organizational standard for AI enablement. The content was substantive enough that the CEO watched the full module and followed up with questions, which mattered as a signal that something had actually landed.</p>
+      </div>
+    </div>
+    <div class="cs-right">
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 1. Analyze</div>
+        <div class="cs-phase-title">Audience &amp; gap assessment</div>
+        <div class="cs-phase-desc">Identified three distinct learner groups across US, India, and EMEA with different tool familiarity, workflow contexts, and time zone constraints.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 2. Design</div>
+        <div class="cs-phase-title">Scenario-based module structure</div>
+        <div class="cs-phase-desc">Designed a 24-slide arc with scenario-based learning, three embedded quiz blocks at key retention moments, and a consistent AI presenter across all content.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 3. Develop</div>
+        <div class="cs-phase-title">Full production pipeline, built solo</div>
+        <div class="cs-phase-desc">Wrote the script, configured the Synthesia avatar, mapped trigger words slide-by-slide, captured screenshots, and packaged as SCORM 1.2 for LMS deployment.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Phase 4. Implement &amp; Evaluate</div>
+        <div class="cs-phase-title">Global deployment + executive impact</div>
+        <div class="cs-phase-desc">Deployed globally via LMS. VP recognition on launch. CEO watched in full and sent follow-up questions. Adopted as the org standard for AI enablement.</div>
+      </div>
+      <div class="cs-outcome-strip">
+        <div class="cs-outcome-label">Outcome</div>
+        <div class="cs-outcome-text">A solo-built module that reached <strong>1,000+ employees</strong> across 3 regions, earned <strong>CEO-level attention</strong>, and became the organizational template for all future AI tool rollouts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonial">
+  <div class="eyebrow">From colleagues</div>
+  <div class="testimonial-wrap">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">Charlie's training expertise and her ability to tailor her message to any audience was evident from the start, along with her unique talent of challenging trainees to consider different perspectives while maintaining engagement. Her leadership and professionalism created a positive learning environment among our peers and our clients. I'd recommend Charlie for any position involving training, leadership development, or program management.</p>
+    <div class="quote-attr">
+      <div class="quote-avatar">C</div>
+      <div>
+        <div class="quote-name">Carolyn</div>
+        <div class="quote-role">Former colleague &middot; Ford EV Enablement Program</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="eyebrow">Featured Work</div>
+  <h2 class="sec-title">Six years. Six projects.</h2>
+  <p class="sec-sub">Every project built on the same conviction: learning only matters if it changes what people do.</p>
+  <div class="pgrid">
+    <div class="pcard reveal" onclick="document.getElementById('module').scrollIntoView({behavior:'smooth'})">
+      <div class="ctop bg-navy"><div class="card-grid-lines"></div><div class="card-hero-text"><div class="card-hero-accent">AI tool.<br><em>CEO-level</em><br>recognition.</div></div><div class="card-hero-label">Interactive demo below</div><div class="chover">Try it live ↓</div></div>
+      <div class="cbody"><span class="ctag">AI Enablement</span><div class="ctitle">AI Tool Enablement Module</div><div class="cdesc">Built solo from script to SCORM. 24 slides, AI-generated video, quiz blocks. CEO watched it in full. Became the org-wide standard for AI tool launches.</div><div class="cstats"><div class="cstat"><strong>1,000+</strong>Learners</div><div class="cstat"><strong>CEO</strong>Recognition</div><div class="cstat"><strong>24</strong>Slides</div></div></div>
+    </div>
+    <a class="pcard reveal" href="mockup_lms_scorecard.html" target="_blank">
+      <div class="ctop bg-charcoal"><div class="card-grid-lines"></div><div class="card-hero-text"><div class="card-hero-accent" style="font-size:clamp(2rem,4vw,2.8rem)">$300K</div><div class="card-hero-sub">Platform decision</div><div class="card-bar-chart"><div class="cbar" style="height:30%"></div><div class="cbar" style="height:55%"></div><div class="cbar hi" style="height:80%"></div><div class="cbar" style="height:45%"></div><div class="cbar hi" style="height:95%"></div><div class="cbar" style="height:35%"></div></div></div><div class="chover">View scorecard →</div></div>
+      <div class="cbody"><span class="ctag">LMS Strategy</span><div class="ctitle">Enterprise LMS Evaluation</div><div class="cdesc">Led a 13-person cross-functional review panel. 2 vendor POCs, 9-tab master workbook, executive recommendation delivered.</div><div class="cstats"><div class="cstat"><strong>13</strong>Evaluators</div><div class="cstat"><strong>2</strong>Vendor POCs</div><div class="cstat"><strong>$300K</strong>Decision</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_onboarding.html" target="_blank">
+      <div class="ctop bg-wine"><div class="card-grid-lines"></div><div class="card-hero-text"><div class="card-hero-accent">3 regions.<br>1 program.</div><div class="card-hero-sub">US &middot; India &middot; EMEA</div></div><div class="chover">View program →</div></div>
+      <div class="cbody"><span class="ctag">Global Onboarding</span><div class="ctitle">Global Onboarding Program</div><div class="cdesc">End-to-end ownership across 3 regions. 4 role tracks, pre-boarding through 90-day ramp, built to scale without breaking.</div><div class="cstats"><div class="cstat"><strong>1,000+</strong>Employees</div><div class="cstat"><strong>3</strong>Regions</div><div class="cstat"><strong>4</strong>Tracks</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_newsletter.html" target="_blank">
+      <div class="ctop bg-deepgold"><div class="card-grid-lines"></div><div class="card-hero-text"><div class="card-hero-accent" style="font-size:clamp(1.8rem,3.5vw,2.4rem)">991</div><div class="card-hero-sub">Employees reached</div><div class="card-dots-grid"><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot"></div><div class="cdot"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot lit"></div><div class="cdot"></div><div class="cdot"></div><div class="cdot"></div></div></div><div class="chover">View newsletter →</div></div>
+      <div class="cbody"><span class="ctag amber">Internal Comms</span><div class="ctitle">Internal Newsletter Program</div><div class="cdesc">Quarterly HTML email. Custom template, clean distribution list of 991 employees, full production cycle managed end-to-end.</div><div class="cstats"><div class="cstat"><strong>991</strong>Recipients</div><div class="cstat"><strong>Quarterly</strong>Cadence</div><div class="cstat"><strong>HTML</strong>Custom</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_elearning_slide.html" target="_blank">
+      <div class="ctop bg-charcoal"><div class="card-grid-lines"></div><div class="card-hero-text"><div class="card-hero-accent">BPO.<br>Exec.<br><em>Scale.</em></div></div><div class="chover">View mockup →</div></div>
+      <div class="cbody"><span class="ctag slate">Scale Enablement</span><div class="ctitle">Onboarding at Hypergrowth</div><div class="cdesc">Built the training function from scratch during rapid headcount growth. Trained BPO teams and executive stakeholders, embedded in client support to understand the work firsthand, and built the content library that scaled with the company.</div><div class="cstats"><div class="cstat"><strong>3 yrs</strong>Ownership</div><div class="cstat"><strong>Multi-function</strong>Scope</div><div class="cstat"><strong>BPO+Exec</strong>Audiences</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_ev_coaching.html" target="_blank">
+      <div class="ctop bg-forest"><div class="card-grid-lines"></div><div class="card-hero-text"><div class="card-hero-accent">Field.<br>Ford.<br><em>Southeast.</em></div></div><div class="chover">View program →</div></div>
+      <div class="cbody"><span class="ctag teal">Field Enablement</span><div class="ctitle">Ford EV Field Coaching</div><div class="cdesc">Ford-contracted field enablement across the Southeast. Coached dealership teams on EV certification requirements, product positioning, and sales readiness through live floor facilitation across multiple markets.</div><div class="cstats"><div class="cstat"><strong>SE US</strong>Region</div><div class="cstat"><strong>Multi-market</strong>Portfolio</div><div class="cstat"><strong>Field</strong>Delivery</div></div></div>
+    </a>
+  </div>
+</section>
+
+<section id="module">
+  <div class="eyebrow">Live Demo</div>
+  <h2 class="sec-title" style="color:var(--white)">Try an interactive module.</h2>
+  <p class="sec-sub">A real example of how I design learning. Scenario-based, ADDIE-informed, quiz-validated. In production this ships as SCORM 1.2 via LMS with completion tracking.</p>
+  <div class="mwrap">
+    <div class="mbar"><span class="mbar-t">AI Tool Adoption: Making New Technology Stick</span><span class="mctr" id="mCtr">1 of 5</span></div>
+    <div class="mtrack"><div class="mfill" id="mFill" style="width:20%"></div></div>
+    <div class="mbody">
+      <div class="mslide active" id="ms1">
+        <span class="mtag">Introduction</span>
+        <div class="mh">New AI tools don't fail because of the technology. They fail because of the people.</div>
+        <p class="mp">Research consistently shows that technology adoption stalls not at the technical layer but at the behavioral one. This module gives you a framework for driving real adoption. not just awareness.</p>
+        <div class="objgrid">
+          <div class="objcard"><div class="objnum">01</div><div class="ot">Understand resistance</div><div class="od">Why people avoid new tools even when they're better.</div></div>
+          <div class="objcard"><div class="objnum">02</div><div class="ot">Design for behavior</div><div class="od">The difference between training and adoption enablement.</div></div>
+          <div class="objcard"><div class="objnum">03</div><div class="ot">Measure what matters</div><div class="od">Completion rates vs. behavior change. and why it matters.</div></div>
+        </div>
+      </div>
+      <div class="mslide" id="ms2">
+        <span class="mtag">Core Concept</span>
+        <div class="mh">The ADDIE model. and what most programs skip.</div>
+        <p class="mp">Effective enablement isn't built by accident. The ADDIE framework provides a structured approach that separates programs that produce results from ones that just check boxes.</p>
+        <div class="model-row">
+          <div class="model-step"><div class="model-badge">A</div><div class="model-label">Analyze</div><div class="model-desc">Audience, gaps, goals</div></div>
+          <div class="model-step"><div class="model-badge">D</div><div class="model-label">Design</div><div class="model-desc">Structure &amp; strategy</div></div>
+          <div class="model-step"><div class="model-badge">D</div><div class="model-label">Develop</div><div class="model-desc">Build the content</div></div>
+          <div class="model-step"><div class="model-badge">I</div><div class="model-label">Implement</div><div class="model-desc">Deploy &amp; facilitate</div></div>
+          <div class="model-step"><div class="model-badge">E</div><div class="model-label">Evaluate</div><div class="model-desc">Measure &amp; iterate</div></div>
+        </div>
+        <div class="callout"><strong>The most skipped phase:</strong> Evaluate. Most programs measure completion and call it done. But Kirkpatrick Level 3. behavior change on the job. is where real ROI lives. If behavior hasn't changed, the program didn't work.</div>
+      </div>
+      <div class="mslide" id="ms3">
+        <span class="mtag">Application</span>
+        <div class="mh">What separates adoption from awareness.</div>
+        <div class="scenario">"We rolled out the tool to everyone. Sent the training link. Completion rate was 94%. But three months later, barely anyone was actually using it."<cite>. L&D Manager, post-launch retrospective</cite></div>
+        <ul class="pts">
+          <li class="pt"><div class="pt-dot"></div><div><strong style="color:var(--wine)">Awareness is not adoption.</strong> A high completion rate on a 10-minute video does not mean behavior has changed. It means people clicked through.</div></li>
+          <li class="pt"><div class="pt-dot"></div><div><strong style="color:var(--wine)">Adoption requires opportunity, motivation, and ability.</strong> Remove any one of these and the behavior won't stick. regardless of how good the training is.</div></li>
+          <li class="pt"><div class="pt-dot"></div><div><strong style="color:var(--wine)">The environment enables or prevents use.</strong> If the tool isn't integrated into the workflow, the best training in the world won't move the needle.</div></li>
+        </ul>
+      </div>
+      <div class="mslide" id="ms4">
+        <span class="mtag quiz">Knowledge Check</span>
+        <div class="quiz-q">A new AI summarization tool was rolled out company-wide. Training completion hit 91% in two weeks. But 60 days later, usage data shows only 18% of employees are using it regularly. What does this most likely indicate?</div>
+        <div class="qopts" id="mOpts">
+          <button class="qopt" onclick="mCheck(this,false)"><span class="ql">A</span>The training content was too difficult for most employees.</button>
+          <button class="qopt" onclick="mCheck(this,false)"><span class="ql">B</span>Employees need to retake the training to reinforce retention.</button>
+          <button class="qopt" onclick="mCheck(this,true)"><span class="ql">C</span>Completion rate measures awareness, not adoption. a behavior change strategy is missing.</button>
+          <button class="qopt" onclick="mCheck(this,false)"><span class="ql">D</span>The tool itself is not useful enough to justify adoption.</button>
+        </div>
+        <div class="fb correct" id="mFbC">&#10003; &nbsp;<strong>Correct.</strong> High completion confirms exposure. not behavior change. Sustainable adoption requires workflow integration, manager reinforcement, and ongoing performance support beyond the initial training event.</div>
+        <div class="fb wrong" id="mFbW">Not quite. The completion data actually shows people engaged with the training. The gap between 91% completion and 18% usage is the classic awareness-vs-adoption problem. Training alone rarely changes behavior without workflow integration and reinforcement alongside it.</div>
+      </div>
+      <div class="mslide" id="ms5">
+        <div class="done-wrap">
+          <div class="done-circle">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><polyline points="7,16 13,22 25,10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="done-title">Module complete.</div>
+          <p class="done-sub">You covered the difference between awareness and adoption. and why that gap is where most AI rollouts fail.</p>
+          <div class="done-stats">
+            <div><span class="ds-n">3</span><span class="ds-l">Concepts</span></div>
+            <div><span class="ds-n" id="mScore">.</span><span class="ds-l">Quiz result</span></div>
+            <div><span class="ds-n">ADDIE</span><span class="ds-l">Framework</span></div>
+          </div>
+          <div class="mnote"><strong>Portfolio note:</strong> This module demonstrates scenario-based instructional design, ADDIE methodology, Kirkpatrick-level thinking, and interactive quiz development. In production: SCORM 1.2, deployed via LMS with completion tracking and behavior-change reporting.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mnav">
+      <button class="mbtn mbtn-ghost" id="mBack" onclick="mNav(-1)" style="visibility:hidden">&#8592; Back</button>
+      <div class="mdots" id="mDots"></div>
+      <button class="mbtn mbtn-wine" id="mNext" onclick="mNav(1)">Begin &#8594;</button>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">Let's connect</div>
+  <h2 class="sec-title">Open to the right opportunity.</h2>
+  <p class="sec-sub">Targeting senior enablement, AI adoption, and L&amp;D program management roles at AI-forward companies and SaaS organizations. Based in Jersey City, open to hybrid and remote.</p>
+  <div class="crow">
+    <a href="https://linkedin.com/in/charliemichel" target="_blank" class="cbtn cbtn-gold">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="mailto:charliemmichel@gmail.com" class="cbtn cbtn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email me
+    </a>
+    <a href="Charlie_Michel_Portfolio.pdf" target="_blank" class="cbtn cbtn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Download PDF
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">&#169; 2026 Charlie Michel &middot; Enablement &amp; Learning Portfolio</div>
+  <div class="fr">charliemmichel.github.io</div>
+</footer>
+
+<script>
+document.querySelectorAll('.reveal').forEach(r=>new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')});},{threshold:.1}).observe(r));
+let mCur=1,mAnswered=false,mCorrect=false;const MT=5;
+function mRender(){
+  document.querySelectorAll('.mslide').forEach(s=>s.classList.remove('active'));
+  document.getElementById('ms'+mCur).classList.add('active');
+  document.getElementById('mFill').style.width=(mCur/MT*100)+'%';
+  document.getElementById('mCtr').textContent=mCur+' of '+MT;
+  document.getElementById('mBack').style.visibility=mCur>1?'visible':'hidden';
+  const d=document.getElementById('mDots');d.innerHTML='';
+  for(let i=1;i<=MT;i++){const x=document.createElement('div');x.className='mdot'+(i===mCur?' active':i<mCur?' done':'');d.appendChild(x);}
+  const nx=document.getElementById('mNext');
+  if(mCur===1){nx.textContent='Begin \u2192';nx.className='mbtn mbtn-wine';nx.disabled=false;nx.onclick=()=>mNav(1);}
+  else if(mCur===MT-1){nx.textContent='Next \u2192';nx.disabled=!mAnswered;nx.className='mbtn mbtn-wine';nx.onclick=()=>mNav(1);}
+  else if(mCur===MT){nx.textContent='Restart \u21BA';nx.className='mbtn mbtn-gold';nx.disabled=false;nx.onclick=mRestart;document.getElementById('mScore').textContent=mCorrect?'100%':'Try again';}
+  else{nx.textContent='Continue \u2192';nx.className='mbtn mbtn-wine';nx.disabled=false;nx.onclick=()=>mNav(1);}
+}
+function mNav(d){if(d===1&&mCur===MT)return;mCur=Math.max(1,Math.min(MT,mCur+d));mRender();}
+function mCheck(btn,correct){
+  if(mAnswered)return;mAnswered=true;mCorrect=correct;
+  document.querySelectorAll('.qopt').forEach(o=>{o.disabled=true;if(o!==btn)o.classList.add('dimmed');});
+  btn.classList.add(correct?'correct':'wrong');
+  document.getElementById(correct?'mFbC':'mFbW').style.display='block';
+  document.getElementById('mNext').disabled=false;
+}
+function mRestart(){
+  mCur=1;mAnswered=false;mCorrect=false;
+  document.querySelectorAll('.qopt').forEach(o=>{o.disabled=false;o.className='qopt';});
+  document.getElementById('mFbC').style.display='none';
+  document.getElementById('mFbW').style.display='none';
+  document.getElementById('mNext').onclick=()=>mNav(1);
+  mRender();
+}
+mRender();
+</script>
+</body>
+</html>

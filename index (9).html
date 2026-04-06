@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Charlie Michel. L&D and Enablement Program Manager. Building programs that connect to how organizations actually run.">
+<title>Charlie Michel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1C0E0A;
+  --parchment:#F5EBD8;
+  --parchment-dim:rgba(245,235,216,0.5);
+  --parchment-mute:rgba(245,235,216,0.28);
+  --wine:#8B2D2D;
+  --wine-mid:#A03535;
+  --wine-pale:rgba(139,45,45,0.12);
+  --gold:#C4924A;
+  --sienna:#D4855A;
+  --cream:#FAF7F2;
+  --cream-dark:#F0EBE3;
+  --charcoal:#2C2C2A;
+  --text:#2C2C2A;
+  --muted:#8A8880;
+  --border:#E8E3DB;
+  --forest:#1A2410;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(28,14,10,0.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(196,146,74,0.15);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,6vw,5rem)}
+.nav-logo{font-family:'Lora',serif;font-size:17px;color:var(--parchment);text-decoration:none;letter-spacing:-0.01em}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:13px;color:rgba(245,235,216,0.5);text-decoration:none;transition:color .2s;letter-spacing:.02em}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--wine);color:var(--parchment)!important;padding:6px 18px;border-radius:3px;font-weight:500;transition:background .2s!important;letter-spacing:.03em}
+.nav-cta:hover{background:var(--wine-mid)!important}
+@media(max-width:680px){.nav-links{display:none}}
+
+.hero{min-height:100vh;background:var(--ink);position:relative;overflow:hidden;display:flex;align-items:center}
+.hero-photo{position:absolute;right:0;top:0;bottom:0;width:25%;object-fit:cover;object-position:center top;display:block}
+.hero-photo-fade{position:absolute;right:0;top:0;bottom:0;width:25%;background:linear-gradient(to right,var(--ink) 0%,transparent 25%,transparent 75%,var(--ink) 100%);z-index:1}
+.hero-photo-fade-bottom{position:absolute;right:0;bottom:0;width:25%;height:30%;background:linear-gradient(to top,var(--ink) 0%,transparent 100%);z-index:1}
+.hero-content{position:relative;z-index:3;padding:clamp(6rem,12vw,10rem) clamp(1.5rem,8vw,8rem) 5rem;max-width:600px}
+.hero-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem;display:flex;align-items:center;gap:12px;animation:fadeUp .7s .2s ease both}
+.hero-label::before{content:'';width:28px;height:1px;background:var(--gold);display:block}
+.award-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(196,146,74,0.15);border:1px solid rgba(196,146,74,0.3);padding:8px 14px;border-radius:4px;margin-bottom:1.6rem;animation:fadeUp .7s .3s ease both}
+.award-badge svg{width:18px;height:18px;fill:var(--gold)}
+.award-text{font-size:11px;color:var(--gold);font-weight:500;letter-spacing:.06em}
+h1.hero-title{font-family:'Lora',serif;font-size:clamp(2.2rem,5vw,3.8rem);color:var(--parchment);line-height:1.12;margin-bottom:1.25rem;font-weight:400;animation:fadeUp .7s .4s ease both}
+h1.hero-title em{font-style:italic;color:var(--sienna)}
+.hero-sub{font-size:clamp(14px,1.6vw,15.5px);color:var(--parchment-dim);max-width:480px;line-height:1.85;margin-bottom:2.5rem;font-weight:300;animation:fadeUp .7s .6s ease both}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:3rem;animation:fadeUp .7s .8s ease both}
+.btn-wine{background:var(--wine);color:var(--parchment);padding:11px 26px;border-radius:3px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:.03em;transition:background .2s;display:inline-block}
+.btn-wine:hover{background:var(--wine-mid)}
+.btn-outline{background:transparent;color:rgba(245,235,216,.5);padding:11px 26px;border-radius:3px;font-size:13px;letter-spacing:.03em;border:1px solid rgba(245,235,216,.15);text-decoration:none;transition:all .2s;display:inline-block}
+.btn-outline:hover{border-color:rgba(245,235,216,.38);color:var(--parchment)}
+.hero-stats{display:flex;gap:2.5rem;animation:fadeUp .7s 1s ease both;flex-wrap:wrap}
+.hstat{display:flex;flex-direction:column;gap:2px}
+.hstat-n{font-family:'Lora',serif;font-size:1.35rem;color:var(--gold);line-height:1}
+.hstat-l{font-size:10px;color:var(--parchment-mute);text-transform:uppercase;letter-spacing:.07em}
+.hero-stamp{position:absolute;bottom:24px;left:clamp(1.5rem,8vw,8rem);font-size:9px;letter-spacing:.16em;color:rgba(196,146,74,0.35);text-transform:uppercase;z-index:3}
+.hero-rule-top{position:absolute;top:48px;left:0;right:0;height:1px;background:rgba(196,146,74,0.12);z-index:2}
+.hero-svg-bg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+
+section{padding:clamp(4rem,7vw,6rem) clamp(1.5rem,8vw,8rem)}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';width:24px;height:1px;background:var(--gold)}
+.sec-title{font-family:'Lora',serif;font-size:clamp(1.6rem,3.5vw,2.3rem);color:var(--charcoal);margin-bottom:.75rem;line-height:1.25}
+.sec-sub{font-size:15px;color:var(--muted);max-width:520px;line-height:1.75;margin-bottom:3rem;font-weight:300}
+
+#about{background:var(--ink);border-top:1px solid rgba(196,146,74,0.15)}
+#about .eyebrow{color:var(--gold)}
+#about .sec-title{color:var(--parchment)}
+.about-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:4.5rem;align-items:start;max-width:1020px}
+.about-text p{font-size:15px;line-height:1.88;color:rgba(245,235,216,0.72);margin-bottom:1rem}
+.about-text p:last-child{margin-bottom:0}
+.about-text strong{color:var(--gold);font-weight:500}
+.about-right-title{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(196,146,74,0.6);margin-bottom:12px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:2rem}
+.skill{background:rgba(245,235,216,0.05);border:1px solid rgba(196,146,74,0.2);border-radius:3px;padding:6px 12px;font-size:12px;color:rgba(245,235,216,0.6);display:flex;align-items:center;gap:6px;letter-spacing:.01em}
+.skill::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.method-card{background:rgba(245,235,216,0.04);border-radius:3px;padding:10px 12px;border-left:2px solid var(--wine)}
+.method-title{font-size:12px;font-weight:500;color:var(--parchment);margin-bottom:2px}
+.method-desc{font-size:10.5px;color:rgba(245,235,216,0.38);line-height:1.45}
+@media(max-width:700px){.about-grid{grid-template-columns:1fr;gap:2rem}}
+
+#current{background:var(--cream-dark);border-top:4px solid var(--wine)}
+.current-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px}
+.current-card{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:1.5rem;border-top:3px solid var(--wine);transition:transform .2s,box-shadow .2s}
+.current-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(139,45,45,0.08)}
+.current-status{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--wine);margin-bottom:12px}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--wine);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.current-title{font-family:'Lora',serif;font-size:1rem;color:var(--charcoal);margin-bottom:8px;line-height:1.35}
+.current-desc{font-size:12.5px;color:var(--muted);line-height:1.65}
+@media(max-width:700px){.current-grid{grid-template-columns:1fr}}
+
+#casestudy{background:var(--ink);border-top:1px solid rgba(196,146,74,0.15)}
+#casestudy .eyebrow{color:var(--gold)}
+#casestudy .sec-title{color:var(--parchment)}
+.cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;max-width:1000px}
+.cs-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin-bottom:.5rem}
+.cs-title{font-family:'Lora',serif;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--parchment);margin-bottom:1rem;line-height:1.3}
+.cs-body p{font-size:14.5px;color:rgba(245,235,216,0.65);line-height:1.82;margin-bottom:1rem}
+.cs-body strong{color:var(--gold);font-weight:500}
+.cs-phase{background:rgba(245,235,216,0.04);border-radius:3px;padding:1rem 1.25rem;border:1px solid rgba(196,146,74,0.15);border-left:3px solid var(--wine);margin-bottom:10px}
+.cs-phase-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin-bottom:4px}
+.cs-phase-title{font-size:13.5px;font-weight:500;color:var(--parchment);margin-bottom:4px}
+.cs-phase-desc{font-size:12px;color:rgba(245,235,216,0.42);line-height:1.55}
+.cs-outcome{background:var(--wine);border-radius:3px;padding:1.25rem 1.5rem;margin-top:0}
+.cs-outcome-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,235,216,0.5);margin-bottom:8px}
+.cs-outcome-text{font-size:14px;color:var(--parchment);line-height:1.65}
+.cs-outcome-text strong{color:var(--gold)}
+@media(max-width:700px){.cs-grid{grid-template-columns:1fr;gap:2rem}}
+
+#testimonial{background:var(--cream);border-top:1px solid var(--border)}
+.testimonial-wrap{max-width:720px}
+.quote-mark{font-family:'Lora',serif;font-size:6rem;color:rgba(139,45,45,0.15);line-height:.7;margin-bottom:.5rem;display:block}
+.quote-text{font-family:'Lora',serif;font-size:clamp(1rem,2vw,1.2rem);color:var(--charcoal);line-height:1.75;margin-bottom:1.5rem;font-style:italic}
+.quote-attr{display:flex;align-items:center;gap:14px}
+.quote-avatar{width:40px;height:40px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-size:1rem;color:var(--parchment);flex-shrink:0}
+.quote-name{font-size:14px;font-weight:500;color:var(--charcoal)}
+.quote-role{font-size:12px;color:var(--muted)}
+
+#work{background:var(--cream-dark)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.pcard{background:var(--cream);border-radius:4px;border:1px solid var(--border);overflow:hidden;transition:transform .2s,box-shadow .2s;text-decoration:none;display:block;cursor:pointer}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(139,45,45,0.1)}
+.ctop{height:160px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bg-ink{background:var(--ink)}
+.bg-wine-d{background:#3D1218}
+.bg-charcoal{background:var(--charcoal)}
+.bg-forest{background:var(--forest)}
+.card-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(196,146,74,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(196,146,74,0.06) 1px,transparent 1px);background-size:24px 24px}
+.card-text{position:relative;z-index:1;text-align:center;padding:0 1.5rem}
+.card-accent{font-family:'Lora',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:400;color:rgba(245,235,216,0.88);line-height:1.2;text-align:center}
+.card-accent em{font-style:italic;color:var(--gold)}
+.card-sub-label{font-size:10px;color:rgba(245,235,216,0.32);margin-top:6px;text-align:center;letter-spacing:.06em}
+.card-rule{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--wine)}
+.chover{position:absolute;inset:0;background:rgba(139,45,45,0);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:transparent;letter-spacing:.04em;transition:all .22s;z-index:2}
+.pcard:hover .chover{background:rgba(139,45,45,0.65);color:var(--parchment)}
+.cbody{padding:16px 18px 18px}
+.ctag{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);background:rgba(139,45,45,0.08);padding:3px 8px;border-radius:2px;display:inline-block;margin-bottom:8px}
+.ctag.award{background:rgba(196,146,74,0.15);color:#7A4E10;border:1px solid rgba(196,146,74,0.3)}
+.ctag.teal{color:#1D6B4A;background:#EDF7F2}
+.ctitle{font-family:'Lora',serif;font-size:15px;color:var(--charcoal);margin-bottom:6px;line-height:1.3}
+.cdesc{font-size:12.5px;color:var(--muted);line-height:1.62;margin-bottom:12px}
+.cstats{display:flex;gap:14px;padding-top:10px;border-top:1px solid var(--border)}
+.cstat{font-size:11px;color:var(--muted)}
+.cstat strong{display:block;font-size:13px;color:var(--wine);font-family:'Lora',serif;line-height:1.1}
+@media(max-width:700px){.pgrid{grid-template-columns:1fr}}
+
+#contact{background:var(--wine);text-align:center;padding:clamp(4rem,8vw,6rem) clamp(1.5rem,8vw,8rem)}
+#contact .eyebrow{color:rgba(245,235,216,0.38);justify-content:center}
+#contact .eyebrow::after{display:none}
+#contact .sec-title{color:var(--parchment);margin-bottom:.75rem}
+#contact .sec-sub{color:rgba(245,235,216,0.52);margin:0 auto 1rem;max-width:520px}
+.contact-fine{font-size:12px;color:rgba(245,235,216,0.3);margin:0 auto 2.5rem;max-width:480px;line-height:1.7}
+.crow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cbtn{display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border-radius:3px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;border:1.5px solid transparent;letter-spacing:.03em}
+.cbtn svg{width:15px;height:15px;flex-shrink:0}
+.cbtn-parchment{background:var(--parchment);color:var(--wine);border-color:var(--parchment)}
+.cbtn-parchment:hover{background:#EDD9C0}
+.cbtn-ghost{background:transparent;color:rgba(245,235,216,.72);border-color:rgba(245,235,216,.2)}
+.cbtn-ghost:hover{border-color:rgba(245,235,216,.45);color:var(--parchment)}
+
+footer{background:var(--ink);padding:1.5rem clamp(1.5rem,8vw,8rem);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(196,146,74,0.12)}
+.fl{font-size:11px;color:rgba(245,235,216,0.22);letter-spacing:.04em}
+.fr{font-size:11px;color:rgba(245,235,216,0.15);letter-spacing:.04em}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Charlie Michel</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact" class="nav-cta">Let's talk</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <img src="charlie.jpg" alt="Charlie Michel" class="hero-photo">
+  <div class="hero-photo-fade"></div>
+  <div class="hero-photo-fade-bottom"></div>
+
+  <svg class="hero-svg-bg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <radialGradient id="hg1" cx="30%" cy="55%" r="40%">
+      <stop offset="0%" stop-color="#6B1A1A" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1C0E0A" stop-opacity="0"/>
+    </radialGradient>
+    <rect width="1200" height="900" fill="url(#hg1)"/>
+    <line x1="0" y1="52" x2="1200" y2="52" stroke="#C4924A" stroke-width="0.5" opacity="0.15"/>
+    <line x1="0" y1="848" x2="1200" y2="848" stroke="#C4924A" stroke-width="0.5" opacity="0.15"/>
+    <g opacity="0.12" stroke="#C4924A" stroke-width="0.5" fill="none">
+      <path d="M420,0 C428,120 408,240 430,360 C450,470 432,590 448,720 C458,800 454,850 456,900" stroke-dasharray="6,4"/>
+      <path d="M450,0 C460,110 440,230 462,350 C482,460 465,580 480,700" stroke-dasharray="4,6"/>
+    </g>
+    <g opacity="0.2" fill="#C4924A">
+      <ellipse cx="400" cy="310" rx="20" ry="7" transform="rotate(-38,400,310)"/>
+      <ellipse cx="380" cy="332" rx="18" ry="6" transform="rotate(-22,380,332)"/>
+      <ellipse cx="415" cy="348" rx="16" ry="6" transform="rotate(-55,415,348)"/>
+      <ellipse cx="388" cy="372" rx="20" ry="7" transform="rotate(-18,388,372)"/>
+      <ellipse cx="418" cy="392" rx="15" ry="5" transform="rotate(-65,418,392)"/>
+      <ellipse cx="382" cy="418" rx="19" ry="7" transform="rotate(-28,382,418)"/>
+      <ellipse cx="410" cy="440" rx="14" ry="5" transform="rotate(-72,410,440)"/>
+      <path d="M396,285 C393,330 390,375 387,420 C384,465 381,510 378,555" stroke="#C4924A" stroke-width="1" fill="none" opacity="0.45" stroke-dasharray="none"/>
+    </g>
+  </svg>
+
+  <div class="hero-rule-top"></div>
+
+  <div class="hero-content">
+    <div class="hero-label">Senior Program Manager  •  Jersey City, NJ</div>
+    <div class="award-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      <span class="award-text">Value Creator Award Recipient</span>
+    </div>
+    <h1 class="hero-title">Six years building<br><em>programs that work.</em></h1>
+    <p class="hero-sub">Onboarding systems, AI adoption, manager development, compliance infrastructure, and cross-functional enablement. Every function, both sides of the business, three continents. Award-winning work from a team of one.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-wine">See the work</a>
+      <a href="Charlie_Michel_Portfolio.pdf" target="_blank" class="btn-outline">Download PDF</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n">1,000+</span><span class="hstat-l">Employees enabled</span></div>
+      <div class="hstat"><span class="hstat-n">6</span><span class="hstat-l">Years in L&D</span></div>
+      <div class="hstat"><span class="hstat-n">3</span><span class="hstat-l">Continents</span></div>
+    </div>
+  </div>
+  <div class="hero-stamp">Charlie Michel  •  L&D and Enablement Portfolio  •  2026</div>
+</section>
+
+<section id="about">
+  <div class="eyebrow">About</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I am a Senior Program Manager on the L&D team at a global ad tech company, where I own onboarding and enablement for <strong>1,000+ employees across the US, India, and EMEA</strong>.</p>
+      <p>I have worked across the full operating cycle of a tech company. From the HRIS trigger that starts an offer to how a new hire shows up in Salesforce six months later. I have partnered with recruiting, CS, HR, and GTM teams, sat inside client support operations to understand the work firsthand, and built the tracking infrastructure to measure whether programs actually moved anything.</p>
+      <p>I build AI enablement programs, onboarding systems, cross-functional training, manager development, mentorship structures, and internal communications. I consult on capability gaps at the executive level and also fix the broken Qualtrics form. I do not think of those as different categories of work.</p>
+      <p><strong>What drives me is making organizations run cleanly.</strong> Nothing falling through the cracks, every handoff accounted for, and people genuinely equipped to do their jobs well. I want to do that work somewhere the mission matters to me too.</p>
+    </div>
+    <div>
+      <div class="about-right-title">Core expertise</div>
+      <div class="skills-wrap">
+        <div class="skill">AI Enablement & Adoption</div>
+        <div class="skill">Global Onboarding</div>
+        <div class="skill">LMS Administration</div>
+        <div class="skill">eLearning Design</div>
+        <div class="skill">Change Management</div>
+        <div class="skill">Sales Enablement</div>
+        <div class="skill">Leadership Development</div>
+        <div class="skill">Synthesia / SCORM 1.2</div>
+        <div class="skill">Articulate RISE</div>
+        <div class="skill">Program Management</div>
+        <div class="skill">Cross-Functional Collaboration</div>
+        <div class="skill">Facilitation</div>
+        <div class="skill">Knowledge Management</div>
+      </div>
+      <div class="about-right-title">Methodologies</div>
+      <div class="method-grid">
+        <div class="method-card"><div class="method-title">ADDIE</div><div class="method-desc">Analysis through evaluation, full ID lifecycle</div></div>
+        <div class="method-card"><div class="method-title">Kirkpatrick</div><div class="method-desc">4-level measurement: reaction to results</div></div>
+        <div class="method-card"><div class="method-title">MEDDIC</div><div class="method-desc">Sales methodology enablement and coaching</div></div>
+        <div class="method-card"><div class="method-title">70-20-10</div><div class="method-desc">Blended learning design framework</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="current">
+  <div class="eyebrow">Currently</div>
+  <h2 class="sec-title">What I am working on right now.</h2>
+  <div class="current-grid">
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>Active</div>
+      <div class="current-title">$300K platform decision</div>
+      <div class="current-desc">Leading a cross-functional LMS evaluation across L&D, Revenue, CS, and HR. Managing vendor POCs, scoring frameworks, and stakeholder alignment toward a decision with a hard September deadline.</div>
+    </div>
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>In progress</div>
+      <div class="current-title">Connecting learning to the systems teams actually use</div>
+      <div class="current-desc">Designing an enablement architecture that surfaces in the tools people already work in, rather than living in a separate platform nobody opens. Making the invisible work visible.</div>
+    </div>
+    <div class="current-card reveal">
+      <div class="current-status"><div class="status-dot"></div>Ongoing</div>
+      <div class="current-title">Onboarding as an operating system</div>
+      <div class="current-desc">Mapping the full new hire journey from first HRIS trigger to team integration. Finding every gap, every broken handoff, every thing nobody owns, and building the infrastructure to fix it so it does not need fixing again.</div>
+    </div>
+  </div>
+</section>
+
+<section id="casestudy">
+  <div class="eyebrow">Case Study</div>
+  <div class="cs-grid">
+    <div class="cs-left">
+      <div class="cs-label">Value Creator Award 2026</div>
+      <h2 class="cs-title">How I built an AI enablement program that earned a CEO-signed award.</h2>
+      <div class="cs-body">
+        <p>Three regions, different workflows, different levels of tool familiarity, and no shared time zone for live training. The program needed to work asynchronously and actually change behavior, not just produce a completion number.</p>
+        <p>Built the whole thing solo in under one month. Script, Synthesia avatar configuration, slide-by-slide trigger word mapping, screenshot captures, three embedded quiz blocks, SCORM packaging, and LMS deployment. The production pipeline became the repeatable template for every AI tool launch that followed.</p>
+        <p><strong>The result:</strong> CEO-recognized for "building the adoption engine, not just executing training." VP-level recognition on launch and adopted as the organizational standard for AI enablement. The content was substantive enough that the CEO watched the full module and followed up with questions.</p>
+      </div>
+    </div>
+    <div class="cs-right">
+      <div class="cs-phase">
+        <div class="cs-phase-label">Week 1</div>
+        <div class="cs-phase-title">Audience analysis and gap assessment</div>
+        <div class="cs-phase-desc">Three distinct learner groups across US, India, and EMEA with different tool familiarity, workflow contexts, and time zone constraints. No budget for live facilitation.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Week 2</div>
+        <div class="cs-phase-title">Instructional design and content development</div>
+        <div class="cs-phase-desc">24-slide scenario-based module with three embedded quiz blocks at key retention moments. Synthesia avatar configured, trigger words mapped, screenshot captures staged.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Week 3</div>
+        <div class="cs-phase-title">Production and SCORM packaging</div>
+        <div class="cs-phase-desc">Full production pipeline built solo: video generation, slide assembly, SCORM 1.2 packaging, LMS testing across three regions.</div>
+      </div>
+      <div class="cs-phase">
+        <div class="cs-phase-label">Week 4</div>
+        <div class="cs-phase-title">Global deployment and executive impact</div>
+        <div class="cs-phase-desc">Launched to 1,000+ employees. VP recognition on launch day. CEO watched in full and sent follow-up questions. Nominated for Value Creator Award by L&D Director and Executive Sponsor.</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-label">Outcome</div>
+        <div class="cs-outcome-text">A solo-built module delivered in under one month that reached <strong>1,000+ employees</strong> across 3 regions, earned a <strong>CEO-signed award</strong>, and became the organizational template for every AI tool rollout that followed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonial">
+  <div class="eyebrow">From colleagues</div>
+  <div class="testimonial-wrap">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">Charlie's training expertise and her ability to tailor her message to any audience was evident from the start, along with her unique talent of challenging trainees to consider different perspectives while maintaining engagement. Her leadership and professionalism created a positive learning environment among our peers and our clients. I would recommend Charlie for any position involving training, leadership development, or program management.</p>
+    <div class="quote-attr">
+      <div class="quote-avatar">C</div>
+      <div>
+        <div class="quote-name">Carolyn</div>
+        <div class="quote-role">Former colleague, Ford EV Enablement Program</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="eyebrow">Featured Work</div>
+  <h2 class="sec-title">Six years. Four capabilities.</h2>
+  <p class="sec-sub">Every project built on the same conviction: learning only matters if it changes what people do. Each sample shows a different skill.</p>
+  <div class="pgrid">
+    <a class="pcard reveal" href="mockup_elearning_module.html" target="_blank">
+      <div class="ctop bg-ink"><div class="card-grid"></div><div class="card-text"><div class="card-accent">Award-winning.<br><em>One month.</em><br>Solo build.</div></div><div class="card-rule"></div><div class="chover">View module sample</div></div>
+      <div class="cbody"><span class="ctag award">Value Creator Award</span><div class="ctitle">AI Tool Enablement Module</div><div class="cdesc">Built the full enablement program for an internal AI platform launch across three regions. Script, production, SCORM packaging, and LMS deployment. CEO-recognized for building the adoption engine, not just training. Shows: instructional design, speed, impact.</div><div class="cstats"><div class="cstat"><strong>1,000+</strong>Learners</div><div class="cstat"><strong>3</strong>Regions</div><div class="cstat"><strong>< 1 mo</strong>Timeline</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_onboarding.html" target="_blank">
+      <div class="ctop bg-wine-d"><div class="card-grid"></div><div class="card-text"><div class="card-accent">3 regions.<br>4 tracks.<br><em>1 system.</em></div></div><div class="card-rule"></div><div class="chover">View program structure</div></div>
+      <div class="cbody"><span class="ctag">Global Onboarding</span><div class="ctitle">Onboarding Program Architecture</div><div class="cdesc">Own global onboarding end to end for 1,000+ employees across US, India, and EMEA. Four role tracks, pre-boarding through 90-day ramp, connected to HRIS, LMS, and manager workflows. Shows: systems thinking, scale, operating infrastructure.</div><div class="cstats"><div class="cstat"><strong>1,000+</strong>Employees</div><div class="cstat"><strong>3</strong>Regions</div><div class="cstat"><strong>4</strong>Tracks</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_lms_scorecard.html" target="_blank">
+      <div class="ctop bg-charcoal"><div class="card-grid"></div><div class="card-text"><div class="card-accent" style="font-size:clamp(1.8rem,3.5vw,2.5rem)">$300K</div><div class="card-sub-label">Platform decision</div></div><div class="card-rule"></div><div class="chover">View scorecard</div></div>
+      <div class="cbody"><span class="ctag">LMS Strategy</span><div class="ctitle">LMS Platform Evaluation</div><div class="cdesc">Managing a $300K platform decision across L&D, Revenue, CS, and HR. Built the evaluation framework, ran two vendor POCs with 13 cross-functional reviewers, and delivered a scored recommendation to executive leadership. Shows: analytical rigor, stakeholder management.</div><div class="cstats"><div class="cstat"><strong>13</strong>Evaluators</div><div class="cstat"><strong>2</strong>Vendor POCs</div><div class="cstat"><strong>$300K</strong>Decision</div></div></div>
+    </a>
+    <a class="pcard reveal" href="mockup_manager_brief.html" target="_blank">
+      <div class="ctop bg-forest"><div class="card-grid"></div><div class="card-text"><div class="card-accent">Quick.<br>Scannable.<br><em>Useful.</em></div></div><div class="card-rule"></div><div class="chover">View training brief</div></div>
+      <div class="cbody"><span class="ctag teal">Leadership Development</span><div class="ctitle">Manager Development Brief</div><div class="cdesc">One-page training guide for new people managers covering 1:1 frameworks, performance conversations, and documentation requirements. Designed for managers who need answers fast, not another 40-slide deck. Shows: practical enablement, clarity under constraint.</div><div class="cstats"><div class="cstat"><strong>1-page</strong>Format</div><div class="cstat"><strong>4</strong>Core topics</div><div class="cstat"><strong>Managers</strong>Audience</div></div></div>
+    </a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">Let's connect</div>
+  <h2 class="sec-title">Looking for the right fit.</h2>
+  <p class="sec-sub">I do my best work at companies where the product genuinely excites me and the problems are complex enough to need real thinking. I want to be somewhere I can contribute at every layer, not just the training layer.</p>
+  <p class="contact-fine">Senior enablement, L&D program management, AI adoption, leadership development, people operations. Open to hybrid and remote. Based in Jersey City.</p>
+  <div class="crow">
+    <a href="https://linkedin.com/in/charliemichel" target="_blank" class="cbtn cbtn-parchment">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="/cdn-cgi/l/email-protection#a4c7ccc5d6c8cdc1c9c9cdc7ccc1c8e4c3c9c5cdc88ac7cbc9" class="cbtn cbtn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email me
+    </a>
+    <a href="Charlie_Michel_Portfolio.pdf" target="_blank" class="cbtn cbtn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Download PDF
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">© 2026 Charlie Michel  •  L&D and Enablement Portfolio</div>
+  <div class="fr">charliemmichel.github.io</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.querySelectorAll('.reveal').forEach(r=>n

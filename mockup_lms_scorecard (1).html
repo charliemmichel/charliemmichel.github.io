@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform Evaluation Framework | Charlie Michel</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+  background: #fafafa;
+  color: #1a1a1a;
+  padding: 40px 20px;
+}
+.container { max-width: 1200px; margin: 0 auto; }
+.header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e5e5e5;
+}
+.header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.header .subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 16px;
+}
+.intro {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 32px;
+  border-left: 4px solid #8B2D2D;
+}
+.intro h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #8B2D2D;
+}
+.intro p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #404040;
+  margin-bottom: 12px;
+}
+.intro p:last-child { margin-bottom: 0; }
+.intro strong { color: #1a1a1a; }
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8B2D2D;
+  margin: 40px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::before {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: #8B2D2D;
+}
+
+.framework-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.framework-card {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 24px;
+}
+.framework-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+.framework-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #404040;
+  margin-bottom: 12px;
+}
+.framework-card ul {
+  list-style: none;
+  font-size: 13px;
+  color: #404040;
+}
+.framework-card li {
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.framework-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #8B2D2D;
+  font-weight: 600;
+}
+
+.scoring-table {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+.scoring-table h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead th {
+  text-align: left;
+  padding: 12px;
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e5e5;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+  color: #404040;
+}
+tbody tr:hover {
+  background: #fafafa;
+}
+.category-row td {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #1a1a1a;
+  padding: 8px 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.weight-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(139,45,45,0.1);
+  color: #8B2D2D;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.stakeholder-section {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+.stakeholder-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+.stakeholder-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.stakeholder-card {
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+}
+.stakeholder-card h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8B2D2D;
+  margin-bottom: 8px;
+}
+.stakeholder-card p {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.stakeholder-card ul {
+  list-style: none;
+  font-size: 11px;
+  color: #666;
+}
+.stakeholder-card li {
+  padding-left: 12px;
+  position: relative;
+  margin-bottom: 4px;
+}
+.stakeholder-card li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #999;
+}
+
+.methodology {
+  background: #8B2D2D;
+  color: white;
+  padding: 32px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+.methodology h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.methodology p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+.methodology p:last-child { margin-bottom: 0; }
+.methodology strong {
+  color: #C4924A;
+}
+
+@media (max-width: 1024px) {
+  .framework-grid { grid-template-columns: 1fr; }
+  .stakeholder-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .stakeholder-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  
+  <div class="header">
+    <h1>Platform Evaluation Framework</h1>
+    <p class="subtitle">A repeatable methodology for cross-functional technology decisions</p>
+  </div>
+
+  <div class="intro">
+    <h2>Framework Overview</h2>
+    <p><strong>Use case:</strong> Evaluating enterprise platforms where stakeholders have competing priorities, budgets are high, and the wrong decision is expensive to reverse. Built for LMS selection but transferable to any major tech decision.</p>
+    <p><strong>What this framework solves:</strong> Most platform evaluations fail because of politics, not features. This framework forces alignment on criteria before anyone sees a demo. It weights what matters. It surfaces disagreement early. It produces a defensible recommendation.</p>
+    <p><strong>Real application:</strong> Used this to manage a cross-functional LMS evaluation across L&D, Revenue Enablement, Customer Success, and HR. 13 reviewers, 2 vendor POCs, 6-week timeline, $300K+ annual contract decision.</p>
+  </div>
+
+  <div class="section-title">Step 1: Stakeholder Mapping</div>
+  <div class="stakeholder-section">
+    <h3>Identify Who Owns What</h3>
+    <div class="stakeholder-grid">
+      <div class="stakeholder-card">
+        <h4>Executive Sponsor</h4>
+        <p>Final decision authority. Signs contract. Needs business case, not feature list.</p>
+        <ul>
+          <li>Budget approval</li>
+          <li>Risk tolerance</li>
+          <li>Strategic alignment</li>
+        </ul>
+      </div>
+      <div class="stakeholder-card">
+        <h4>Primary Admins</h4>
+        <p>Will configure and maintain platform daily. Cares most about usability.</p>
+        <ul>
+          <li>Admin workflows</li>
+          <li>Content authoring</li>
+          <li>Support quality</li>
+        </ul>
+      </div>
+      <div class="stakeholder-card">
+        <h4>End Users</h4>
+        <p>Learners or platform consumers. If they hate it, adoption fails.</p>
+        <ul>
+          <li>Learner experience</li>
+          <li>Mobile access</li>
+          <li>Speed and reliability</li>
+        </ul>
+      </div>
+      <div class="stakeholder-card">
+        <h4>Cross-Functional Partners</h4>
+        <p>Teams with adjacent needs. Integration points matter most.</p>
+        <ul>
+          <li>Data access</li>
+          <li>Reporting needs</li>
+          <li>System integrations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Step 2: Build Weighted Criteria</div>
+  <div class="scoring-table">
+    <h3>Evaluation Criteria Template</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 40%;">Criterion</th>
+          <th style="width: 15%;">Weight</th>
+          <th style="width: 45%;">Why This Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="category-row">
+          <td colspan="3">Core Functionality</td>
+        </tr>
+        <tr>
+          <td>Content authoring and management</td>
+          <td><span class="weight-badge">15%</span></td>
+          <td>Admins spend 60% of time here. Clunky authoring = slow rollouts.</td>
+        </tr>
+        <tr>
+          <td>Learning paths and compliance tracking</td>
+          <td><span class="weight-badge">20%</span></td>
+          <td>Primary use case. Must handle complex role-based assignments.</td>
+        </tr>
+        <tr>
+          <td>Reporting and analytics</td>
+          <td><span class="weight-badge">15%</span></td>
+          <td>Execs need completion data. Partners need custom exports.</td>
+        </tr>
+        <tr class="category-row">
+          <td colspan="3">User Experience</td>
+        </tr>
+        <tr>
+          <td>Admin interface and workflows</td>
+          <td><span class="weight-badge">15%</span></td>
+          <td>Friction here compounds. Bad UX = admins resist using it.</td>
+        </tr>
+        <tr>
+          <td>Learner interface and navigation</td>
+          <td><span class="weight-badge">10%</span></td>
+          <td>Low adoption if learners can't find content easily.</td>
+        </tr>
+        <tr class="category-row">
+          <td colspan="3">Integration and Scalability</td>
+        </tr>
+        <tr>
+          <td>HRIS/SSO integration</td>
+          <td><span class="weight-badge">10%</span></td>
+          <td>Manual user management does not scale. Must sync with HRIS.</td>
+        </tr>
+        <tr>
+          <td>CRM/Sales tool integration</td>
+          <td><span class="weight-badge">10%</span></td>
+          <td>Revenue teams need learning data in Salesforce, not separate login.</td>
+        </tr>
+        <tr>
+          <td>API and extensibility</td>
+          <td><span class="weight-badge">5%</span></td>
+          <td>Future-proofing. Will need custom integrations eventually.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Step 3: Run Structured POCs</div>
+  <div class="framework-grid">
+    <div class="framework-card">
+      <h3>Before the POC</h3>
+      <p>Most POCs fail because vendors control the agenda. Fix this by defining success criteria first.</p>
+      <ul>
+        <li>Build a test content library (real modules, real complexity)</li>
+        <li>Write scenario-based tasks for evaluators to complete</li>
+        <li>Set time limits (2 weeks max, forces focus)</li>
+        <li>Assign specific reviewers to specific criteria</li>
+      </ul>
+    </div>
+    <div class="framework-card">
+      <h3>During the POC</h3>
+      <p>Evaluators should test, not watch demos. Hands-on experience surfaces issues faster than vendor presentations.</p>
+      <ul>
+        <li>Everyone tests independently (no groupthink)</li>
+        <li>Document blockers in real-time</li>
+        <li>Track time spent on common tasks</li>
+        <li>Compare notes only after individual scoring</li>
+      </ul>
+    </div>
+    <div class="framework-card">
+      <h3>After the POC</h3>
+      <p>Aggregate scores reveal patterns. Outliers reveal deal-breakers or personal preferences.</p>
+      <ul>
+        <li>Calculate weighted composite scores per vendor</li>
+        <li>Surface disagreements (why did reviewers split?)</li>
+        <li>Identify must-haves vs. nice-to-haves</li>
+        <li>Flag contract or integration risks</li>
+      </ul>
+    </div>
+    <div class="framework-card">
+      <h3>Make the Recommendation</h3>
+      <p>Present to exec sponsor with data, not opinions. Show the math. Acknowledge tradeoffs.</p>
+      <ul>
+        <li>Lead with composite scores by category</li>
+        <li>Surface critical gaps or risks</li>
+        <li>Recommend a vendor with confidence level</li>
+        <li>Outline implementation risks and timeline</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="methodology">
+    <h3>Why This Framework Works</h3>
+    <p><strong>Forces early alignment.</strong> Building weighted criteria before seeing vendors eliminates "I like this one because it looks nicer" decisions. You argue about priorities once, not continuously.</p>
+    <p><strong>Surfaces hidden requirements.</strong> Cross-functional teams discover integration needs during criteria building that would have been deal-breakers post-contract.</p>
+    <p><strong>Creates defensible decisions.</strong> When an exec questions the choice, you have weighted data. When a stakeholder complains later, you can show they agreed to the criteria upfront.</p>
+    <p><strong>Scales beyond LMS.</strong> Used this exact framework for CRM, project management tools, and HR systems. The criteria change, the process stays the same.</p>
+  </div>
+
+</div>
+</body>
+</html>

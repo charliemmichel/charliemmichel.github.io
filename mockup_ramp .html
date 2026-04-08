@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ramp — Sales Onboarding System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#18120E;--ink-mid:#2E2218;--ink-light:#5C4A3A;
+  --paper:#F9F5EF;--paper-2:#F2EDE4;--paper-3:#E8E0D4;
+  --line:#D8D0C4;--rust:#B34A2F;--amber:#C4883A;--amber-lt:#D9A456;
+  --fog:#8A7E72;--white:#FEFCFA;--green:#2D6A4F;--green-lt:#52B788;
+  --blue:#1D4E89;--blue-lt:#4A90C4;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+.doc-header{background:var(--ink);padding:48px 64px 40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.doc-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;display:block}
+.doc-title{font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,50px);font-weight:700;color:var(--white);line-height:1.08;letter-spacing:-.02em}
+.doc-title em{font-style:italic;color:var(--amber-lt)}
+.doc-meta{text-align:right;display:flex;flex-direction:column;gap:6px}
+.doc-meta-row{font-size:11px;color:rgba(254,252,250,.45);letter-spacing:.04em}
+.doc-meta-row strong{color:rgba(254,252,250,.8);font-weight:500}
+
+/* STATS BAR */
+.stats-bar{background:var(--rust);padding:18px 64px;display:flex;gap:48px;flex-wrap:wrap}
+.s-stat{display:flex;flex-direction:column;gap:3px}
+.s-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--white);line-height:1}
+.s-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,252,250,.6)}
+
+/* NAV TABS */
+.tab-nav{background:var(--white);border-bottom:1px solid var(--line);padding:0 64px;display:flex;gap:0;overflow-x:auto}
+.tab{padding:14px 24px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab.active{color:var(--rust);border-bottom-color:var(--rust)}
+.tab:hover{color:var(--ink)}
+
+/* PANELS */
+.panel{display:none;padding:48px 64px;max-width:1200px;margin:0 auto}
+.panel.active{display:block}
+
+/* SECTION LABELS */
+.sec-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);margin-bottom:20px;display:block}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.sec-sub{font-size:14px;line-height:1.75;color:var(--ink-light);max-width:680px;margin-bottom:36px}
+
+/* PHASE GRID */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);margin-bottom:40px}
+.phase{background:var(--white);padding:32px 28px;position:relative;overflow:hidden}
+.phase-top-bar{height:3px;position:absolute;top:0;left:0;right:0}
+.phase-badge{display:inline-block;padding:4px 12px;margin-bottom:16px;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.phase-name{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.phase-theme{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fog);margin-bottom:18px}
+.phase-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+.phase-list li{font-size:13px;line-height:1.55;color:var(--ink-light);padding-left:14px;position:relative}
+.phase-list li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%}
+.phase-gate{margin-top:20px;padding:12px 14px;background:var(--paper-2);font-size:12px;line-height:1.6;color:var(--fog)}
+.phase-gate strong{color:var(--ink);font-weight:500}
+
+/* TRACKS */
+.tracks{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);margin-bottom:40px}
+.track{background:var(--paper-2);padding:22px 20px}
+.track-name{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:6px}
+.track-role{font-size:11px;color:var(--fog);padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.track-items{list-style:none;display:flex;flex-direction:column;gap:7px}
+.track-items li{font-size:12px;line-height:1.5;color:var(--ink-light);padding-left:12px;position:relative}
+.track-items li::before{content:'→';position:absolute;left:0;color:var(--rust);font-size:10px}
+
+/* SALESFORCE SECTION */
+.sf-header{background:var(--blue);padding:20px 28px;display:flex;align-items:center;gap:12px;margin-bottom:2px}
+.sf-logo{width:20px;height:20px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--blue);flex-shrink:0}
+.sf-header-text{font-size:12px;font-weight:500;color:var(--white);letter-spacing:.04em}
+.sf-header-sub{font-size:11px;color:rgba(254,252,250,.55);margin-left:auto}
+
+.sf-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);margin-bottom:32px}
+.sf-card{background:var(--white);padding:24px 26px}
+.sf-card-title{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.sf-field-row{display:grid;grid-template-columns:180px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--paper-3);align-items:start}
+.sf-field-row:last-child{border-bottom:none}
+.sf-field-name{font-size:12px;font-weight:500;color:var(--ink)}
+.sf-field-val{font-size:12px;color:var(--ink-light);line-height:1.5}
+.sf-field-type{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--fog);margin-top:2px}
+.sf-trigger-table{width:100%;border-collapse:collapse;font-size:12px}
+.sf-trigger-table th{text-align:left;padding:10px 14px;background:var(--paper-2);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);font-weight:500;border-bottom:1px solid var(--line)}
+.sf-trigger-table td{padding:11px 14px;border-bottom:1px solid var(--paper-3);color:var(--ink-light);vertical-align:top;line-height:1.5}
+.sf-trigger-table tr:last-child td{border-bottom:none}
+.sf-trigger-table td:first-child{color:var(--ink);font-weight:500}
+.badge{display:inline-block;padding:3px 8px;font-size:10px;letter-spacing:.06em;border-radius:2px}
+.badge-auto{background:rgba(29,78,137,.1);color:var(--blue)}
+.badge-manual{background:rgba(179,74,47,.1);color:var(--rust)}
+.badge-system{background:rgba(45,106,79,.1);color:var(--green)}
+
+/* LMS SECTION */
+.lms-header{background:var(--green);padding:20px 28px;display:flex;align-items:center;gap:12px;margin-bottom:2px}
+.lms-header-text{font-size:12px;font-weight:500;color:var(--white);letter-spacing:.04em}
+.lms-header-sub{font-size:11px;color:rgba(254,252,250,.55);margin-left:auto}
+.lms-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);margin-bottom:32px}
+.lms-card{background:var(--white);padding:24px 26px}
+.lms-card-title{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--green);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.lms-row{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--paper-3);align-items:start;font-size:12px}
+.lms-row:last-child{border-bottom:none}
+.lms-row-label{font-weight:500;color:var(--ink)}
+.lms-row-val{color:var(--ink-light);line-height:1.5}
+.completion-table{width:100%;border-collapse:collapse;font-size:12px}
+.completion-table th{text-align:left;padding:10px 14px;background:var(--paper-2);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);font-weight:500;border-bottom:1px solid var(--line)}
+.completion-table td{padding:11px 14px;border-bottom:1px solid var(--paper-3);color:var(--ink-light);vertical-align:top}
+.completion-table tr:last-child td{border-bottom:none}
+.completion-table td:first-child{color:var(--ink);font-weight:500}
+.pct-bar{width:100%;height:6px;background:var(--paper-3);margin-top:6px}
+.pct-fill{height:6px;background:var(--green)}
+
+/* HRIS FLOW */
+.hris-flow{display:flex;flex-direction:column;gap:2px;background:var(--line);margin-bottom:32px}
+.hris-step{background:var(--white);padding:20px 26px;display:grid;grid-template-columns:40px 1fr auto;gap:16px;align-items:center}
+.hris-num{width:32px;height:32px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--white);flex-shrink:0}
+.hris-text{}
+.hris-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px}
+.hris-desc{font-size:12px;color:var(--fog);line-height:1.5}
+.hris-system{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);padding:4px 10px;border:1px solid rgba(29,78,137,.2);white-space:nowrap}
+
+/* MEASUREMENT */
+.measure-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--line);margin-bottom:32px}
+.measure-card{background:var(--white);padding:28px}
+.measure-level{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--rust);margin-bottom:8px;display:block}
+.measure-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.measure-desc{font-size:13px;line-height:1.72;color:var(--ink-light);margin-bottom:14px}
+.measure-result{padding:12px 14px;background:var(--paper-2);font-size:12px;line-height:1.6;color:var(--ink-light)}
+.measure-result strong{color:var(--green);font-weight:600}
+
+/* BACK */
+.back-bar{padding:28px 64px;border-top:1px solid var(--line);background:var(--white)}
+.back-bar a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color .2s}
+.back-bar a:hover{color:var(--rust)}
+
+@media(max-width:768px){
+  .doc-header,.stats-bar,.tab-nav,.panel,.back-bar{padding-left:24px;padding-right:24px}
+  .doc-header,.phases,.tracks,.sf-grid,.lms-grid,.measure-grid{grid-template-columns:1fr}
+  .doc-meta{text-align:left}
+  .sf-field-row,.lms-row{grid-template-columns:1fr}
+  .hris-step{grid-template-columns:40px 1fr}
+  .hris-system{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div>
+    <span class="doc-label">Program Design &middot; Sales Enablement &middot; Global</span>
+    <h1 class="doc-title">The Ramp.<br><em>A sales onboarding system built to cut time-to-productivity.</em></h1>
+  </div>
+  <div class="doc-meta">
+    <div class="doc-meta-row"><strong>Owner:</strong> L&D, Sales Enablement</div>
+    <div class="doc-meta-row"><strong>Tracks:</strong> AE, SDR, AM, SE</div>
+    <div class="doc-meta-row"><strong>Regions:</strong> NTAM, EMEA, APAC</div>
+    <div class="doc-meta-row"><strong>LMS:</strong> Assignment via HRIS trigger</div>
+    <div class="doc-meta-row"><strong>Outcome:</strong> 35% faster time-to-first-deal</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="s-stat"><div class="s-num">90</div><div class="s-label">Day structured ramp</div></div>
+  <div class="s-stat"><div class="s-num">4</div><div class="s-label">Role-based tracks</div></div>
+  <div class="s-stat"><div class="s-num">35%</div><div class="s-label">Faster time-to-first-deal</div></div>
+  <div class="s-stat"><div class="s-num">3</div><div class="s-label">Global regions</div></div>
+  <div class="s-stat"><div class="s-num">L1–L4</div><div class="s-label">Kirkpatrick measured</div></div>
+</div>
+
+<div class="tab-nav">
+  <div class="tab active" onclick="showPanel('program')">Program Design</div>
+  <div class="tab" onclick="showPanel('backend')">HRIS &amp; LMS Admin</div>
+  <div class="tab" onclick="showPanel('salesforce')">Salesforce Integration</div>
+  <div class="tab" onclick="showPanel('measurement')">Measurement</div>
+</div>
+
+<!-- PROGRAM DESIGN -->
+<div class="panel active" id="panel-program">
+  <span class="sec-label">Architecture Overview</span>
+  <div class="sec-title">Three phases. Four tracks. One system.</div>
+  <p class="sec-sub">Built to give every new commercial hire a structured path from offer acceptance to first deal, regardless of region, manager, or start date. Milestone gates replace guesswork with clear readiness signals.</p>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-top-bar" style="background:var(--amber)"></div>
+      <span class="phase-badge" style="background:rgba(196,136,58,.12);color:var(--amber)">Days 1–30</span>
+      <div class="phase-name">Learn the Foundation</div>
+      <div class="phase-theme">Context, product, process</div>
+      <ul class="phase-list">
+        <li style="--dot:var(--amber)">Company, market, and competitive landscape</li>
+        <li>Product fundamentals and core use cases</li>
+        <li>Internal tools, CRM setup, and workflow orientation</li>
+        <li>Sales methodology introduction (MEDDIC)</li>
+        <li>Shadow 5 live customer calls with debrief</li>
+        <li>ICP and buyer persona deep dive</li>
+        <li>Async eLearning: 8 assigned modules in LMS</li>
+      </ul>
+      <div class="phase-gate"><strong>Gate:</strong> Product assessment pass (80%+), mock discovery call with manager sign-off</div>
+    </div>
+    <div class="phase">
+      <div class="phase-top-bar" style="background:var(--rust)"></div>
+      <span class="phase-badge" style="background:rgba(179,74,47,.1);color:var(--rust)">Days 31–60</span>
+      <div class="phase-name">Apply the Skills</div>
+      <div class="phase-theme">Reps, feedback, refinement</div>
+      <ul class="phase-list">
+        <li>First solo discovery calls with structured deal review</li>
+        <li>Objection handling lab — 3 live cohort sessions</li>
+        <li>Pipeline building and outbound sequencing</li>
+        <li>Demo certification with senior rep or manager</li>
+        <li>Cross-functional intros: CS, PMM, Solutions</li>
+        <li>Weekly coaching cadence — recorded and logged</li>
+        <li>Async: proposal writing, pricing, and negotiation modules</li>
+      </ul>
+      <div class="phase-gate"><strong>Gate:</strong> 5 qualified opps in Salesforce pipeline, demo certification complete</div>
+    </div>
+    <div class="phase">
+      <div class="phase-top-bar" style="background:var(--green)"></div>
+      <span class="phase-badge" style="background:rgba(45,106,79,.1);color:var(--green)">Days 61–90</span>
+      <div class="phase-name">Own the Motion</div>
+      <div class="phase-theme">Independence, first results</div>
+      <ul class="phase-list">
+        <li>Full pipeline ownership, no shadow required</li>
+        <li>First closed deal or documented path to close</li>
+        <li>Peer teach: present one skill or insight to the team</li>
+        <li>90-day self-assessment submitted in LMS</li>
+        <li>Manager readiness review and sign-off</li>
+        <li>Feedback loop submitted to L&D for program iteration</li>
+        <li>Transition to standard performance cadence</li>
+      </ul>
+      <div class="phase-gate"><strong>Gate:</strong> Closed deal or advanced-stage opp, manager readiness confirmation</div>
+    </div>
+  </div>
+
+  <span class="sec-label">Role-Based Tracks</span>
+  <div class="tracks">
+    <div class="track">
+      <div class="track-name">Account Executive</div>
+      <div class="track-role">Full-cycle, quota-bearing</div>
+      <ul class="track-items">
+        <li>Full 90-day program</li>
+        <li>MEDDIC certification</li>
+        <li>Executive presence coaching (wks 7–9)</li>
+        <li>Deal simulation exercise</li>
+      </ul>
+    </div>
+    <div class="track">
+      <div class="track-name">Sales Development</div>
+      <div class="track-role">Pipeline generation</div>
+      <ul class="track-items">
+        <li>Outbound sequencing emphasis</li>
+        <li>Cold call certification by day 21</li>
+        <li>ICP qualification deep dive</li>
+        <li>Handoff to AE protocols</li>
+      </ul>
+    </div>
+    <div class="track">
+      <div class="track-name">Account Manager</div>
+      <div class="track-role">Retention and expansion</div>
+      <ul class="track-items">
+        <li>Renewal motion and expansion signals</li>
+        <li>QBR facilitation training</li>
+        <li>CS handoff protocols</li>
+        <li>Health score interpretation</li>
+      </ul>
+    </div>
+    <div class="track">
+      <div class="track-name">Solutions Engineer</div>
+      <div class="track-role">Technical pre-sales</div>
+      <ul class="track-items">
+        <li>Demo environment certification</li>
+        <li>Integration and API fundamentals</li>
+        <li>Technical objection handling</li>
+        <li>RFI/RFP response protocols</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- HRIS + LMS -->
+<div class="panel" id="panel-backend">
+
+  <span class="sec-label">System Architecture</span>
+  <div class="sec-title">From offer acceptance to day-one assignments — automated.</div>
+  <p class="sec-sub">The program runs on a trigger chain that starts in the HRIS and ends in the LMS before the hire logs in for the first time. No manual enrollment, no missed assignments.</p>
+
+  <div class="hris-flow">
+    <div class="hris-step">
+      <div class="hris-num">1</div>
+      <div class="hris-text">
+        <div class="hris-title">Offer accepted — status updated in HRIS</div>
+        <div class="hris-desc">Hire record created with Job Title, Department, Region, Start Date, and Manager fields populated. Triggers downstream workflow.</div>
+      </div>
+      <div class="hris-system">Workday / BambooHR</div>
+    </div>
+    <div class="hris-step">
+      <div class="hris-num">2</div>
+      <div class="hris-text">
+        <div class="hris-title">Role mapped to learning track</div>
+        <div class="hris-desc">Job Title field triggers track assignment logic: AE → Full Ramp track, SDR → Pipeline track, AM → Expansion track, SE → Technical track.</div>
+      </div>
+      <div class="hris-system">HRIS Workflow / Zapier</div>
+    </div>
+    <div class="hris-step">
+      <div class="hris-num">3</div>
+      <div class="hris-text">
+        <div class="hris-title">LMS user account provisioned</div>
+        <div class="hris-desc">User created in LMS with role, region, manager, and cohort group auto-populated. Welcome email queued for 7am on start date. No manual setup required.</div>
+      </div>
+      <div class="hris-system">LMS Admin</div>
+    </div>
+    <div class="hris-step">
+      <div class="hris-num">4</div>
+      <div class="hris-text">
+        <div class="hris-title">Day-one learning path assigned automatically</div>
+        <div class="hris-desc">Track-specific modules assigned with due dates sequenced from start date. Phase 1 modules unlock immediately. Phase 2 unlocks after gate 1 completion. Phase 3 after gate 2.</div>
+      </div>
+      <div class="hris-system">LMS Rules Engine</div>
+    </div>
+    <div class="hris-step">
+      <div class="hris-num">5</div>
+      <div class="hris-text">
+        <div class="hris-title">Manager notified with onboarding dashboard link</div>
+        <div class="hris-desc">Automated email to hiring manager with hire name, track assigned, day-30 gate date, and link to manager-facing progress dashboard. No calendar invite required.</div>
+      </div>
+      <div class="hris-system">LMS + Email Automation</div>
+    </div>
+    <div class="hris-step">
+      <div class="hris-num">6</div>
+      <div class="hris-text">
+        <div class="hris-title">Salesforce contact and onboarding record created</div>
+        <div class="hris-desc">New hire record synced to Salesforce with onboarding status field set to "In Ramp." Pipeline activity, call logs, and deal creation tracked against ramp timeline from day one.</div>
+      </div>
+      <div class="hris-system">Salesforce + HRIS Sync</div>
+    </div>
+  </div>
+
+  <div class="lms-header">
+    <div class="lms-header-text">LMS Administration — Module and Completion Logic</div>
+    <div class="lms-header-sub">SCORM 1.2 / xAPI &middot; Role-gated unlocking &middot; Auto-escalation</div>
+  </div>
+  <div class="lms-grid">
+    <div class="lms-card">
+      <div class="lms-card-title">Enrollment and Assignment Rules</div>
+      <div class="lms-row"><span class="lms-row-label">Enrollment trigger</span><span class="lms-row-val">HRIS start date field — auto-enrolls 5 days before day one</span></div>
+      <div class="lms-row"><span class="lms-row-label">Track assignment</span><span class="lms-row-val">Mapped to Job Title field. Overridable by LMS admin only.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Module unlock logic</span><span class="lms-row-val">Sequential. Phase 2 locked until gate 1 passed. Phase 3 locked until gate 2 passed.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Due date logic</span><span class="lms-row-val">Calculated from hire start date. Phase 1 due day 28, Phase 2 due day 58, Phase 3 due day 88.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Completion threshold</span><span class="lms-row-val">80% quiz score required for knowledge modules. 100% required for compliance and certification modules.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Attempts allowed</span><span class="lms-row-val">Unlimited for knowledge modules. 3 attempts for certification. Auto-flags manager after 2 failed attempts.</span></div>
+    </div>
+    <div class="lms-card">
+      <div class="lms-card-title">Reporting and Escalation</div>
+      <div class="lms-row"><span class="lms-row-label">Manager dashboard</span><span class="lms-row-val">Live view of direct report completion %, gate status, overdue modules</span></div>
+      <div class="lms-row"><span class="lms-row-label">L&D dashboard</span><span class="lms-row-val">Cohort completion rates by region, track, and module. Drops flagged automatically.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Overdue escalation</span><span class="lms-row-val">Day 3 overdue → reminder to learner. Day 7 → manager notified. Day 14 → L&D flagged for intervention.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Gate pass reporting</span><span class="lms-row-val">Gate completions logged with timestamp, score, and manager sign-off date. Exported to HRIS for personnel file.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Salesforce sync</span><span class="lms-row-val">Completion milestones write to Salesforce onboarding record. Ramp status updates automatically at each gate.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Quarterly audit</span><span class="lms-row-val">L&D reviews completion rates, gate pass rates, and time-to-completion by cohort for program iteration.</span></div>
+    </div>
+  </div>
+
+  <span class="sec-label">Current Cohort Completion Snapshot</span>
+  <table class="completion-table">
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Track</th>
+        <th>Due</th>
+        <th>Completion Rate</th>
+        <th>Avg Score</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Product Fundamentals 101</td>
+        <td>All tracks</td>
+        <td>Day 10</td>
+        <td><div>94%</div><div class="pct-bar"><div class="pct-fill" style="width:94%"></div></div></td>
+        <td>88%</td>
+        <td><span class="badge badge-system">On track</span></td>
+      </tr>
+      <tr>
+        <td>MEDDIC Methodology</td>
+        <td>AE, AM</td>
+        <td>Day 21</td>
+        <td><div>87%</div><div class="pct-bar"><div class="pct-fill" style="width:87%"></div></div></td>
+        <td>82%</td>
+        <td><span class="badge badge-system">On track</span></td>
+      </tr>
+      <tr>
+        <td>Discovery Call Certification</td>
+        <td>AE, SDR</td>
+        <td>Day 28</td>
+        <td><div>72%</div><div class="pct-bar"><div class="pct-fill" style="width:72%;background:var(--amber)"></div></div></td>
+        <td>79%</td>
+        <td><span class="badge badge-manual">Needs attention</span></td>
+      </tr>
+      <tr>
+        <td>Demo Certification</td>
+        <td>AE, SE</td>
+        <td>Day 55</td>
+        <td><div>91%</div><div class="pct-bar"><div class="pct-fill" style="width:91%"></div></div></td>
+        <td>85%</td>
+        <td><span class="badge badge-system">On track</span></td>
+      </tr>
+      <tr>
+        <td>Pricing and Negotiation</td>
+        <td>AE, AM</td>
+        <td>Day 58</td>
+        <td><div>68%</div><div class="pct-bar"><div class="pct-fill" style="width:68%;background:var(--rust)"></div></div></td>
+        <td>74%</td>
+        <td><span class="badge badge-manual">Escalated</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SALESFORCE -->
+<div class="panel" id="panel-salesforce">
+
+  <span class="sec-label">CRM Integration</span>
+  <div class="sec-title">Ramp progress tracked inside the tool reps use every day.</div>
+  <p class="sec-sub">Salesforce is the source of truth for deal activity during ramp. Onboarding milestones write back to the contact record so managers and L&D can correlate learning progress with pipeline behavior without leaving CRM.</p>
+
+  <div class="sf-header">
+    <div class="sf-logo">SF</div>
+    <div class="sf-header-text">Salesforce Object: New Hire Onboarding Record</div>
+    <div class="sf-header-sub">Synced from HRIS via integration &middot; Updated by LMS completion events</div>
+  </div>
+  <div class="sf-grid">
+    <div class="sf-card">
+      <div class="sf-card-title">Standard Fields — Onboarding Object</div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Hire Start Date</div><div class="sf-field-type">Date &middot; Auto-populated from HRIS</div></div>
+        <div class="sf-field-val">Drives all phase due date calculations</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Role Track</div><div class="sf-field-type">Picklist &middot; AE / SDR / AM / SE</div></div>
+        <div class="sf-field-val">Mapped from Job Title. Determines which modules and gates apply.</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Ramp Status</div><div class="sf-field-type">Picklist &middot; Auto-updated</div></div>
+        <div class="sf-field-val">In Ramp / Gate 1 Complete / Gate 2 Complete / Ramp Complete / At Risk</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Gate 1 Date</div><div class="sf-field-type">Date &middot; Written by LMS</div></div>
+        <div class="sf-field-val">Populated when discovery call certification passes in LMS</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Gate 2 Date</div><div class="sf-field-type">Date &middot; Written by LMS</div></div>
+        <div class="sf-field-val">Populated when demo cert and pipeline gate confirmed</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">First Deal Date</div><div class="sf-field-type">Date &middot; Auto from Opportunity</div></div>
+        <div class="sf-field-val">Pulled from first Closed Won opportunity. Used for time-to-first-deal metric.</div>
+      </div>
+    </div>
+    <div class="sf-card">
+      <div class="sf-card-title">Custom Fields — Ramp Analytics</div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Days to Gate 1</div><div class="sf-field-type">Formula &middot; Calculated</div></div>
+        <div class="sf-field-val">Gate 1 Date minus Hire Start Date. Used for cohort benchmarking.</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Days to First Deal</div><div class="sf-field-type">Formula &middot; Calculated</div></div>
+        <div class="sf-field-val">First Deal Date minus Hire Start Date. Primary ramp efficiency KPI.</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Pipeline at Day 60</div><div class="sf-field-type">Currency &middot; Snapshot</div></div>
+        <div class="sf-field-val">Total open pipeline value at the 60-day mark. Captured via scheduled flow.</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Call Count at Day 30</div><div class="sf-field-type">Number &middot; Rolled up</div></div>
+        <div class="sf-field-val">Activity log rollup. Benchmarked against cohort average.</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">Ramp Risk Flag</div><div class="sf-field-type">Checkbox &middot; Auto-set</div></div>
+        <div class="sf-field-val">Triggered if Gate 1 not complete by day 35 or call count below cohort average at day 30.</div>
+      </div>
+      <div class="sf-field-row">
+        <div><div class="sf-field-name">L&D Intervention Date</div><div class="sf-field-type">Date &middot; Manual</div></div>
+        <div class="sf-field-val">Logged by L&D when risk flag triggers intervention. Tracks response time.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sf-header" style="margin-bottom:2px">
+    <div class="sf-logo">SF</div>
+    <div class="sf-header-text">Automation and Trigger Logic</div>
+    <div class="sf-header-sub">Flow Builder &middot; Process Builder &middot; LMS webhook</div>
+  </div>
+  <table class="sf-trigger-table">
+    <thead>
+      <tr>
+        <th>Trigger</th>
+        <th>Condition</th>
+        <th>Action</th>
+        <th>Owner</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Hire Start Date = Today</td>
+        <td>Ramp Status = null</td>
+        <td>Set Ramp Status to "In Ramp," create onboarding task for manager</td>
+        <td>L&D / RevOps</td>
+        <td><span class="badge badge-auto">Automated</span></td>
+      </tr>
+      <tr>
+        <td>LMS Gate 1 webhook received</td>
+        <td>Gate 1 Date = null</td>
+        <td>Populate Gate 1 Date, update Ramp Status to "Gate 1 Complete," notify manager</td>
+        <td>LMS + SF Admin</td>
+        <td><span class="badge badge-auto">Automated</span></td>
+      </tr>
+      <tr>
+        <td>Day 35 check — no Gate 1</td>
+        <td>Gate 1 Date = null AND Days Since Start &gt; 35</td>
+        <td>Set Ramp Risk Flag = true, alert L&D and manager, create intervention task</td>
+        <td>Scheduled Flow</td>
+        <td><span class="badge badge-auto">Automated</span></td>
+      </tr>
+      <tr>
+        <td>Call Count at Day 30 &lt; 8</td>
+        <td>Hire is 30 days in, activity below threshold</td>
+        <td>Flag for manager review. Add to "Ramp Risk" report.</td>
+        <td>RevOps</td>
+        <td><span class="badge badge-auto">Automated</span></td>
+      </tr>
+      <tr>
+        <td>First Closed Won opp created</td>
+        <td>Hire Ramp Status = "In Ramp" or "Gate 2 Complete"</td>
+        <td>Populate First Deal Date, calculate Days to First Deal, set Ramp Status = "Ramp Complete"</td>
+        <td>SF Admin</td>
+        <td><span class="badge badge-auto">Automated</span></td>
+      </tr>
+      <tr>
+        <td>90-day LMS assessment submitted</td>
+        <td>Self-assessment form complete in LMS</td>
+        <td>Log completion date, notify L&D, trigger manager 90-day review task in Salesforce</td>
+        <td>LMS + SF Admin</td>
+        <td><span class="badge badge-auto">Automated</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MEASUREMENT -->
+<div class="panel" id="panel-measurement">
+  <span class="sec-label">Kirkpatrick Framework — All Four Levels</span>
+  <div class="sec-title">Completion rates are the floor, not the ceiling.</div>
+  <p class="sec-sub">Every phase of The Ramp is tied to a measurable outcome at L1 through L4. The program is iterated quarterly based on gate pass rates, time-to-first-deal data, and cohort comparisons.</p>
+
+  <div class="measure-grid">
+    <div class="measure-card">
+      <span class="measure-level">Level 1 — Reaction</span>
+      <div class="measure-title">Did they find it useful?</div>
+      <p class="measure-desc">Post-phase surveys (3-question pulse) sent automatically after each gate. Questions target content relevance, pacing, and manager alignment. Results visible in L&D dashboard within 24 hours.</p>
+      <div class="measure-result"><strong>Baseline result:</strong> 4.3/5 avg across Phase 1. Identified demo module pacing as top friction point — rebuilt in Q2.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 2 — Learning</span>
+      <div class="measure-title">Did they retain it?</div>
+      <p class="measure-desc">Knowledge checks embedded in modules (80% pass threshold). Gate assessments at day 28 and day 58. Discovery call and demo certifications evaluated by manager against rubric with standardized scoring.</p>
+      <div class="measure-result"><strong>Baseline result:</strong> 84% avg quiz score across cohort. Demo cert pass rate improved from 71% to 89% after adding practice scenario in week 7.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 3 — Behavior</span>
+      <div class="measure-title">Did they do it differently?</div>
+      <p class="measure-desc">Salesforce activity data (call count, pipeline creation, stage progression) benchmarked against pre-program cohort baseline. Manager observation checklist at days 45 and 75. Call recording review with rubric scoring.</p>
+      <div class="measure-result"><strong>Baseline result:</strong> Reps in structured ramp averaged 40% more discovery calls in first 60 days vs. unstructured cohort.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 4 — Results</span>
+      <div class="measure-title">Did the business move?</div>
+      <p class="measure-desc">Time-to-first-deal pulled from Salesforce, compared against 12-month pre-program baseline. Pipeline value at day 60 tracked by cohort. Win rate at 6 months compared to historical average. Quarterly L&D review with Sales leadership.</p>
+      <div class="measure-result"><strong>Baseline result:</strong> <strong>35% reduction in time-to-first-deal.</strong> Average days from start to first close dropped from 118 to 77 after two full cohorts.</div>
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html">Back to portfolio</a>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

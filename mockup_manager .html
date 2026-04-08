@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Manager Track — New Manager Effectiveness Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#18120E;--ink-mid:#2E2218;--ink-light:#5C4A3A;
+  --paper:#F9F5EF;--paper-2:#F2EDE4;--paper-3:#E8E0D4;
+  --line:#D8D0C4;--rust:#B34A2F;--amber:#C4883A;--amber-lt:#D9A456;
+  --fog:#8A7E72;--white:#FEFCFA;--green:#2D6A4F;--purple:#4A3B8C;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+.doc-header{background:var(--ink);padding:48px 64px 40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.doc-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;display:block}
+.doc-title{font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,50px);font-weight:700;color:var(--white);line-height:1.08;letter-spacing:-.02em}
+.doc-title em{font-style:italic;color:var(--amber-lt)}
+.doc-meta{text-align:right;display:flex;flex-direction:column;gap:6px}
+.doc-meta-row{font-size:11px;color:rgba(254,252,250,.45);letter-spacing:.04em}
+.doc-meta-row strong{color:rgba(254,252,250,.8);font-weight:500}
+.stats-bar{background:var(--purple);padding:18px 64px;display:flex;gap:48px;flex-wrap:wrap}
+.s-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--white);line-height:1}
+.s-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,252,250,.6)}
+.tab-nav{background:var(--white);border-bottom:1px solid var(--line);padding:0 64px;display:flex;gap:0;overflow-x:auto}
+.tab{padding:14px 24px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple)}
+.panel{display:none;padding:48px 64px;max-width:1200px;margin:0 auto}
+.panel.active{display:block}
+.sec-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);margin-bottom:20px;display:block}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.sec-sub{font-size:14px;line-height:1.75;color:var(--ink-light);max-width:680px;margin-bottom:36px}
+
+.month-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);margin-bottom:40px}
+.month-card{background:var(--white);padding:28px 26px;position:relative}
+.month-bar{height:3px;position:absolute;top:0;left:0;right:0;background:var(--purple)}
+.month-num{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;display:block}
+.month-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:14px}
+.month-items{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.month-items li{font-size:12px;line-height:1.55;color:var(--ink-light);padding-left:14px;position:relative}
+.month-items li::before{content:'';position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:var(--purple)}
+.month-format{font-size:11px;color:var(--fog);padding-top:14px;border-top:1px solid var(--line)}
+.month-format strong{color:var(--ink);font-weight:500}
+
+.lms-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);margin-bottom:32px}
+.lms-card{background:var(--white);padding:26px}
+.lms-card-title{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--purple);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.lms-row{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--paper-3);font-size:12px;align-items:start}
+.lms-row:last-child{border-bottom:none}
+.lms-row-label{font-weight:500;color:var(--ink)}
+.lms-row-val{color:var(--ink-light);line-height:1.5}
+
+.comp-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:32px}
+.comp-table th{text-align:left;padding:10px 14px;background:var(--paper-2);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);font-weight:500;border-bottom:1px solid var(--line)}
+.comp-table td{padding:12px 14px;border-bottom:1px solid var(--paper-3);color:var(--ink-light);vertical-align:top;line-height:1.5}
+.comp-table td:first-child{color:var(--ink);font-weight:500}
+.badge{display:inline-block;padding:3px 8px;font-size:10px}
+.badge-live{background:rgba(74,59,140,.1);color:var(--purple)}
+.badge-async{background:rgba(196,136,58,.1);color:var(--amber)}
+.badge-cohort{background:rgba(45,106,79,.1);color:var(--green)}
+
+.measure-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--line);margin-bottom:32px}
+.measure-card{background:var(--white);padding:28px}
+.measure-level{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;display:block}
+.measure-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.measure-desc{font-size:13px;line-height:1.72;color:var(--ink-light);margin-bottom:14px}
+.measure-result{padding:12px 14px;background:var(--paper-2);font-size:12px;line-height:1.6;color:var(--ink-light)}
+.measure-result strong{color:var(--green);font-weight:600}
+
+.back-bar{padding:28px 64px;border-top:1px solid var(--line);background:var(--white)}
+.back-bar a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color .2s}
+.back-bar a:hover{color:var(--rust)}
+@media(max-width:768px){
+  .doc-header,.stats-bar,.tab-nav,.panel,.back-bar{padding-left:24px;padding-right:24px}
+  .doc-header,.month-grid,.lms-grid,.measure-grid{grid-template-columns:1fr}
+  .doc-meta{text-align:left}
+  .lms-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc-header">
+  <div>
+    <span class="doc-label">Program Design &middot; Leadership Development &middot; People Operations</span>
+    <h1 class="doc-title">The Manager Track.<br><em>A 6-month program built to make new managers effective, not just aware.</em></h1>
+  </div>
+  <div class="doc-meta">
+    <div class="doc-meta-row"><strong>Audience:</strong> First-time and transitioning managers</div>
+    <div class="doc-meta-row"><strong>Format:</strong> Cohort-based, blended</div>
+    <div class="doc-meta-row"><strong>Duration:</strong> 6 months, 10–12 hrs total</div>
+    <div class="doc-meta-row"><strong>Cohort size:</strong> 12–16 managers</div>
+    <div class="doc-meta-row"><strong>Outcome:</strong> 28% improvement in direct report eNPS</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div><div class="s-num">6</div><div class="s-label">Month program</div></div>
+  <div><div class="s-num">12–16</div><div class="s-label">Per cohort</div></div>
+  <div><div class="s-num">28%</div><div class="s-label">Direct report eNPS lift</div></div>
+  <div><div class="s-num">3</div><div class="s-label">Learning modalities</div></div>
+  <div><div class="s-num">L1–L4</div><div class="s-label">Kirkpatrick measured</div></div>
+</div>
+
+<div class="tab-nav">
+  <div class="tab active" onclick="showPanel('program')">Program Design</div>
+  <div class="tab" onclick="showPanel('lms')">LMS Administration</div>
+  <div class="tab" onclick="showPanel('measurement')">Measurement</div>
+</div>
+
+<div class="panel active" id="panel-program">
+  <span class="sec-label">6-Month Curriculum Architecture</span>
+  <div class="sec-title">Six months. Twelve sessions. One cohort that holds each other accountable.</div>
+  <p class="sec-sub">Built on the 70-20-10 model. 10% formal learning, 20% peer cohort and coaching, 70% on-the-job application with structured reflection. Each month targets a different management competency with an applied practice component before the next session.</p>
+
+  <div class="month-grid">
+    <div class="month-card">
+      <div class="month-bar"></div>
+      <span class="month-num">Month 1</span>
+      <div class="month-title">Identity and Foundations</div>
+      <ul class="month-items">
+        <li>Manager vs. individual contributor mindset shift</li>
+        <li>Defining your management philosophy</li>
+        <li>Understanding your team's existing dynamics</li>
+        <li>Your first 30 days in the role — a playbook</li>
+        <li>1:1 structure and cadence setup</li>
+      </ul>
+      <div class="month-format"><strong>Format:</strong> 90-min live kickoff session + async reflection module<br><strong>Practice:</strong> Draft your management philosophy doc, share with cohort</div>
+    </div>
+    <div class="month-card">
+      <div class="month-bar"></div>
+      <span class="month-num">Month 2</span>
+      <div class="month-title">Feedback and Communication</div>
+      <ul class="month-items">
+        <li>The SBI feedback model in practice</li>
+        <li>Delivering difficult feedback without softening the message</li>
+        <li>Receiving upward feedback without defensiveness</li>
+        <li>Running effective 1:1s that surface real problems</li>
+        <li>Written vs. verbal communication decisions</li>
+      </ul>
+      <div class="month-format"><strong>Format:</strong> 90-min live session + 2 async skill modules<br><strong>Practice:</strong> Deliver one structured feedback conversation, debrief at next session</div>
+    </div>
+    <div class="month-card">
+      <div class="month-bar"></div>
+      <span class="month-num">Month 3</span>
+      <div class="month-title">Performance Management</div>
+      <ul class="month-items">
+        <li>Setting goals that are measurable and motivating</li>
+        <li>Mid-cycle performance conversations</li>
+        <li>Managing underperformance before it becomes a PIP</li>
+        <li>Connecting individual goals to team and org priorities</li>
+        <li>Documentation: when and how</li>
+      </ul>
+      <div class="month-format"><strong>Format:</strong> 90-min live + HRIS performance tool walkthrough module<br><strong>Practice:</strong> Complete goals framework for each direct report</div>
+    </div>
+    <div class="month-card">
+      <div class="month-bar"></div>
+      <span class="month-num">Month 4</span>
+      <div class="month-title">Hiring and Team Building</div>
+      <ul class="month-items">
+        <li>Writing job descriptions that attract the right people</li>
+        <li>Structured interview design and bias mitigation</li>
+        <li>Evaluation rubrics and debrief facilitation</li>
+        <li>Onboarding your own hire: setting them up to ramp</li>
+        <li>Building psychological safety in a new team</li>
+      </ul>
+      <div class="month-format"><strong>Format:</strong> 90-min live + async interview design module<br><strong>Practice:</strong> Build an interview rubric for your next open role</div>
+    </div>
+    <div class="month-card">
+      <div class="month-bar"></div>
+      <span class="month-num">Month 5</span>
+      <div class="month-title">Navigating Up and Across</div>
+      <ul class="month-items">
+        <li>Managing your relationship with your manager</li>
+        <li>Cross-functional influence without authority</li>
+        <li>Presenting to leadership: what they actually want to hear</li>
+        <li>Escalation decisions: what to bring up and when</li>
+        <li>Protecting your team without burning bridges</li>
+      </ul>
+      <div class="month-format"><strong>Format:</strong> 90-min live panel with senior leaders + async module<br><strong>Practice:</strong> Draft one upward communication — present to cohort for feedback</div>
+    </div>
+    <div class="month-card">
+      <div class="month-bar"></div>
+      <span class="month-num">Month 6</span>
+      <div class="month-title">Sustaining and Growing</div>
+      <ul class="month-items">
+        <li>Avoiding burnout: your capacity and your team's</li>
+        <li>Developing your direct reports toward their next role</li>
+        <li>Building your management style over time</li>
+        <li>Cohort capstone: what changed, what you'll do differently</li>
+        <li>Transition to manager peer community</li>
+      </ul>
+      <div class="month-format"><strong>Format:</strong> 90-min live capstone + celebration + peer community launch<br><strong>Practice:</strong> 6-month retrospective submitted to L&D</div>
+    </div>
+  </div>
+
+  <span class="sec-label">Content and Modality Breakdown</span>
+  <table class="comp-table">
+    <thead>
+      <tr><th>Component</th><th>Format</th><th>Frequency</th><th>Duration</th><th>Owner</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Live cohort session</td><td><span class="badge badge-live">Live</span></td><td>Monthly</td><td>90 min</td><td>L&D facilitator</td></tr>
+      <tr><td>Async skill module</td><td><span class="badge badge-async">Async</span></td><td>1–2 per month</td><td>20–30 min each</td><td>LMS (SCORM)</td></tr>
+      <tr><td>Applied practice exercise</td><td><span class="badge badge-cohort">Applied</span></td><td>Monthly</td><td>Manager-paced</td><td>Manager + direct team</td></tr>
+      <tr><td>Peer cohort debrief</td><td><span class="badge badge-live">Live</span></td><td>Monthly (embedded in session)</td><td>30 min within session</td><td>Cohort self-facilitated</td></tr>
+      <tr><td>Manager coaching check-in</td><td><span class="badge badge-live">Live</span></td><td>Months 2 and 5</td><td>30 min 1:1</td><td>L&D or HR partner</td></tr>
+      <tr><td>360 feedback collection</td><td><span class="badge badge-async">Async</span></td><td>Month 3 and post-program</td><td>15 min for respondents</td><td>L&D via survey tool</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel" id="panel-lms">
+  <span class="sec-label">LMS Administration</span>
+  <div class="sec-title">Cohort-based enrollment with automatic sequencing.</div>
+  <p class="sec-sub">Each cohort is enrolled as a group with shared due dates. Async modules unlock monthly based on cohort start date. Live session attendance is manually logged by L&D admin after each session. Completion requires both async and live components.</p>
+
+  <div class="lms-grid">
+    <div class="lms-card">
+      <div class="lms-card-title">Enrollment and Access Logic</div>
+      <div class="lms-row"><span class="lms-row-label">Enrollment trigger</span><span class="lms-row-val">Manual — L&D admin enrolls cohort as a group 1 week before kickoff. Max 16 per cohort.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Eligibility rule</span><span class="lms-row-val">Manager role in HRIS for less than 18 months OR newly promoted. HR partner nominates. L&D confirms.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Module unlock schedule</span><span class="lms-row-val">Async modules unlock on the 1st of each program month. Cannot be accessed ahead of schedule.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Live session logging</span><span class="lms-row-val">L&D admin marks attendance manually after each session. Absence triggers follow-up email with recording link.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Completion definition</span><span class="lms-row-val">All 6 async modules complete (80%+ quiz score) AND attendance at 5 of 6 live sessions.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Certificate issued</span><span class="lms-row-val">Auto-issued via LMS upon full completion. Digital + PDF version. Added to HRIS personnel record.</span></div>
+    </div>
+    <div class="lms-card">
+      <div class="lms-card-title">Reporting and Stakeholder Visibility</div>
+      <div class="lms-row"><span class="lms-row-label">Cohort dashboard</span><span class="lms-row-val">Live view of cohort async completion %, attendance log, practice submission status</span></div>
+      <div class="lms-row"><span class="lms-row-label">HR partner report</span><span class="lms-row-val">Monthly summary of cohort progress emailed to HR partner and HRBP for each participant</span></div>
+      <div class="lms-row"><span class="lms-row-label">Skip-level visibility</span><span class="lms-row-val">Manager's manager can view completion status for their org. Not able to view peer cohort data.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Overdue escalation</span><span class="lms-row-val">Async module 7 days overdue → automated reminder. 14 days → L&D admin follow-up call.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Post-program alumni</span><span class="lms-row-val">Completers added to Manager Alumni group in LMS with access to resource library and quarterly refreshers.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Cohort cadence</span><span class="lms-row-val">New cohort launched quarterly. Waitlist managed by L&D. Priority given to managers with 90+ day tenure.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="panel-measurement">
+  <span class="sec-label">Measurement Framework</span>
+  <div class="sec-title">The program is judged by what changes in the team, not what the manager learned.</div>
+  <p class="sec-sub">Primary KPI is direct report eNPS at 6 months post-program completion, compared to pre-program baseline. Secondary KPIs include manager self-efficacy score, 360 feedback delta, and time-to-performance-conversation for underperformers.</p>
+
+  <div class="measure-grid">
+    <div class="measure-card">
+      <span class="measure-level">Level 1 — Reaction</span>
+      <div class="measure-title">Did it feel useful in the moment?</div>
+      <p class="measure-desc">3-question pulse after each live session. Questions: relevance to current challenges, quality of peer discussion, one thing they'll apply this week. Results reviewed before next session to adjust facilitation.</p>
+      <div class="measure-result"><strong>Result:</strong> Avg 4.6/5 across all sessions. Month 3 (performance management) consistently rated highest relevance. Month 1 pacing flagged — reduced content density for next cohort.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 2 — Learning</span>
+      <div class="measure-title">Did they internalize the frameworks?</div>
+      <p class="measure-desc">Async module quiz scores (80% threshold) and a mid-program 360 at Month 3. 360 asks direct reports to rate manager on 8 behaviors tied to program competencies. Baseline taken at Month 1.</p>
+      <div class="measure-result"><strong>Result:</strong> Average async quiz score 88%. 360 delta at Month 3: +0.6 on feedback quality (scale of 1–5), largest improvement area across all cohorts to date.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 3 — Behavior</span>
+      <div class="measure-title">Did they manage differently?</div>
+      <p class="measure-desc">Post-program 360 at Month 7 (1 month after completion). HR partner observation notes from any PIPs or performance conversations initiated during program. Applied practice completion as leading indicator.</p>
+      <div class="measure-result"><strong>Result:</strong> 360 delta Month 1 to Month 7: +1.1 on "gives clear and actionable feedback" item. 34% increase in documented 1:1 notes logged in HRIS vs. pre-program cohort.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 4 — Results</span>
+      <div class="measure-title">Did their teams notice?</div>
+      <p class="measure-desc">Direct report eNPS survey sent 6 months post-program completion. Compared to pre-program baseline for same team. Attrition rate for direct reports during and after program tracked against company average.</p>
+      <div class="measure-result"><strong>Result:</strong> <strong>28% improvement in direct report eNPS</strong> at 6-month mark. Direct report attrition for program participants ran 14% below company average in the 12 months following completion.</div>
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html">Back to portfolio</a>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

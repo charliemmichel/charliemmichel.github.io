@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eLearning Slide Sample — Scenario Knowledge Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#18120E;--ink-mid:#2E2218;--ink-light:#5C4A3A;
+  --paper:#F9F5EF;--paper-2:#F2EDE4;--paper-3:#E8E0D4;
+  --line:#D8D0C4;--rust:#B34A2F;--amber:#C4883A;--amber-lt:#D9A456;
+  --fog:#8A7E72;--white:#FEFCFA;--green:#2D6A4F;--green-lt:#52B788;
+  --slide-bg:#1C1410;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:14px}
+body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+.doc-header{background:var(--ink);padding:32px 64px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.doc-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;display:block}
+.doc-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--white)}
+.doc-meta-row{font-size:11px;color:rgba(254,252,250,.5);margin-top:4px}
+.doc-meta-row strong{color:rgba(254,252,250,.75)}
+
+.tools-bar{background:#272420;padding:10px 64px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(254,252,250,.06)}
+.tools-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);flex-shrink:0}
+.tool-badge{padding:3px 10px;background:rgba(254,252,250,.06);border:1px solid rgba(254,252,250,.1);font-size:10px;color:rgba(254,252,250,.55)}
+
+.context-bar{background:var(--white);padding:16px 64px;border-bottom:1px solid var(--line);display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+.ctx-item{display:flex;flex-direction:column;gap:2px}
+.ctx-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--fog)}
+.ctx-val{font-size:12px;font-weight:500;color:var(--ink)}
+
+/* SLIDE FRAME */
+.slide-wrapper{padding:32px 64px;background:var(--paper-2)}
+.slide-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);margin-bottom:16px;display:block;text-align:center}
+
+/* SLIDE 5 — SCENARIO */
+.slide{
+  background:var(--slide-bg);
+  width:100%;
+  max-width:960px;
+  margin:0 auto 24px;
+  aspect-ratio:16/9;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,.35);
+}
+.slide-progress{position:absolute;top:0;left:0;right:0;height:3px;background:rgba(254,252,250,.08)}
+.slide-progress-fill{height:3px;background:var(--amber);width:29%}
+.slide-section-tag{
+  position:absolute;top:16px;left:24px;
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amber);
+}
+.slide-num-tag{
+  position:absolute;top:16px;right:24px;
+  font-size:9px;color:rgba(254,252,250,.3);letter-spacing:.06em;
+}
+
+/* Split layout: left scenario, right activity */
+.slide-split{display:grid;grid-template-columns:1.1fr 1fr;height:100%;padding-top:36px}
+.slide-left{padding:28px 24px 24px 28px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(254,252,250,.06)}
+.scenario-badge{display:inline-block;padding:3px 10px;background:rgba(179,74,47,.2);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:14px}
+.scenario-heading{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--white);line-height:1.2;margin-bottom:14px}
+.scenario-text{font-size:11px;line-height:1.7;color:rgba(254,252,250,.65);margin-bottom:16px}
+.scenario-char{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(254,252,250,.04);border-left:2px solid var(--amber)}
+.char-avatar{width:32px;height:32px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink-mid);flex-shrink:0}
+.char-info{}
+.char-name{font-size:11px;font-weight:500;color:var(--white)}
+.char-role{font-size:10px;color:rgba(254,252,250,.4)}
+
+.slide-right{padding:28px 24px 20px;display:flex;flex-direction:column}
+.question-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-bottom:10px}
+.question-text{font-size:12px;font-weight:500;color:var(--white);line-height:1.5;margin-bottom:16px}
+.options{display:flex;flex-direction:column;gap:7px;flex:1}
+.option{
+  padding:9px 12px;
+  background:rgba(254,252,250,.05);
+  border:1px solid rgba(254,252,250,.1);
+  border-radius:0;
+  font-size:11px;line-height:1.45;
+  color:rgba(254,252,250,.7);
+  cursor:pointer;
+  transition:background .15s,border-color .15s;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.option:hover{background:rgba(254,252,250,.09);border-color:rgba(254,252,250,.25)}
+.option.correct{background:rgba(45,106,79,.2);border-color:var(--green-lt);color:var(--white)}
+.option.incorrect{background:rgba(179,74,47,.15);border-color:var(--rust);color:rgba(254,252,250,.6)}
+.option.selected.correct{background:rgba(45,106,79,.25);border-color:var(--green-lt)}
+.opt-letter{width:18px;height:18px;border:1px solid rgba(254,252,250,.2);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px}
+.option.correct .opt-letter{background:var(--green-lt);border-color:var(--green-lt);color:var(--ink)}
+.option.incorrect .opt-letter{background:var(--rust);border-color:var(--rust);color:var(--white)}
+
+.feedback-bar{
+  margin-top:10px;padding:8px 12px;
+  font-size:10px;line-height:1.5;
+  display:none;
+}
+.feedback-bar.show{display:block}
+.feedback-bar.correct{background:rgba(45,106,79,.15);border-left:2px solid var(--green-lt);color:var(--green-lt)}
+.feedback-bar.incorrect{background:rgba(179,74,47,.12);border-left:2px solid var(--rust);color:rgba(254,252,250,.7)}
+
+.slide-nav{position:absolute;bottom:14px;right:20px;display:flex;gap:8px;align-items:center}
+.nav-btn{padding:5px 16px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;font-family:'Instrument Sans',sans-serif}
+.nav-btn.primary{background:var(--rust);color:var(--white)}
+.nav-btn.primary:hover{background:var(--amber)}
+.nav-btn.ghost{background:transparent;color:rgba(254,252,250,.4);border:1px solid rgba(254,252,250,.12)}
+.quiz-counter{font-size:10px;color:rgba(254,252,250,.3);margin-right:4px}
+
+/* SLIDE 2 — DESIGN RATIONALE */
+.slide-2{
+  background:var(--white);
+  max-width:960px;margin:0 auto 24px;
+  box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+.slide-2-header{background:var(--rust);padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.slide-2-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--white)}
+.slide-2-badge{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,252,250,.6)}
+.slide-2-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.rationale-col{padding:24px 28px}
+.rationale-col:first-child{border-right:1px solid var(--line)}
+.rationale-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:12px;display:block}
+.rationale-item{padding:10px 0;border-bottom:1px solid var(--paper-3);display:grid;grid-template-columns:120px 1fr;gap:12px;font-size:12px}
+.rationale-item:last-child{border-bottom:none}
+.ri-key{font-weight:500;color:var(--ink)}
+.ri-val{color:var(--ink-light);line-height:1.55}
+
+/* NOTES SECTION */
+.notes-section{max-width:960px;margin:0 auto 24px;background:var(--white);padding:24px 28px;border-left:3px solid var(--amber)}
+.notes-title{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.note-card{padding:14px;background:var(--paper-2)}
+.note-card-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--rust);margin-bottom:6px;display:block}
+.note-card p{font-size:11px;line-height:1.6;color:var(--ink-light)}
+
+.back-bar{padding:24px 64px;border-top:1px solid var(--line);background:var(--white)}
+.back-bar a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);text-decoration:none}
+.back-bar a:hover{color:var(--rust)}
+
+@media(max-width:768px){
+  .doc-header,.tools-bar,.context-bar,.slide-wrapper,.back-bar,.notes-section{padding-left:20px;padding-right:20px}
+  .slide-split,.slide-2-body,.notes-grid{grid-template-columns:1fr}
+  .slide{aspect-ratio:auto;min-height:480px}
+  .slide-left{border-right:none;border-bottom:1px solid rgba(254,252,250,.06)}
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div>
+    <span class="doc-label">Instructional Design Artifact  ·  eLearning Slide Sample</span>
+    <div class="doc-title">Scenario-Based Knowledge Check — Slide 5 of 24</div>
+    <div class="doc-meta-row"><strong>Module:</strong> AI Enablement — Tier 1 Awareness  ·  <strong>Section:</strong> What It Is  ·  <strong>Bloom's Level:</strong> Apply (L3)</div>
+  </div>
+  <div style="text-align:right">
+    <div class="doc-meta-row"><strong>Authoring tool:</strong> Synthesia + PowerPoint</div>
+    <div class="doc-meta-row"><strong>Output:</strong> SCORM 1.2 for MindTickle LMS</div>
+    <div class="doc-meta-row"><strong>Interaction type:</strong> Scenario + MCQ with feedback</div>
+  </div>
+</div>
+
+<div class="tools-bar">
+  <span class="tools-label">Tools Used</span>
+  <span class="tool-badge">Synthesia (avatar narration)</span>
+  <span class="tool-badge">Articulate Storyline 360</span>
+  <span class="tool-badge">PowerPoint (slide design base)</span>
+  <span class="tool-badge">Camtasia (screen capture)</span>
+  <span class="tool-badge">Figma (wireframe)</span>
+  <span class="tool-badge">SCORM 1.2</span>
+  <span class="tool-badge">MindTickle LMS</span>
+</div>
+
+<div class="context-bar">
+  <div class="ctx-item"><span class="ctx-label">Slide</span><span class="ctx-val">05 of 24</span></div>
+  <div class="ctx-item"><span class="ctx-label">Section</span><span class="ctx-val">What It Is — Scenario</span></div>
+  <div class="ctx-item"><span class="ctx-label">Interaction</span><span class="ctx-val">MCQ with branched feedback</span></div>
+  <div class="ctx-item"><span class="ctx-label">Bloom's Level</span><span class="ctx-val">Apply (L3)</span></div>
+  <div class="ctx-item"><span class="ctx-label">Objective Covered</span><span class="ctx-val">Obj 1 — Appropriate tool use</span></div>
+  <div class="ctx-item"><span class="ctx-label">Avatar</span><span class="ctx-val">Off (VO narration only)</span></div>
+</div>
+
+<div class="slide-wrapper">
+  <span class="slide-label">Rendered Slide — Interactive Preview</span>
+
+  <!-- MAIN SLIDE -->
+  <div class="slide" id="slide-main">
+    <div class="slide-progress"><div class="slide-progress-fill"></div></div>
+    <div class="slide-section-tag">Section 2 — What It Is</div>
+    <div class="slide-num-tag">5 / 24</div>
+
+    <div class="slide-split">
+      <div class="slide-left">
+        <span class="scenario-badge">Scenario</span>
+        <div class="scenario-heading">Maya is preparing for a quarterly business review.</div>
+        <p class="scenario-text">She has three months of account notes, call summaries, and email threads from a key client. She needs to distill all of it into a two-page executive summary — and she has 90 minutes before the meeting.</p>
+        <p class="scenario-text" style="color:rgba(254,252,250,.5);font-size:10.5px;font-style:italic">The account notes contain client names and deal values but no personal data or confidential contracts.</p>
+        <div class="scenario-char">
+          <div class="char-avatar">M</div>
+          <div class="char-info">
+            <div class="char-name">Maya</div>
+            <div class="char-role">Client Success Manager, NTAM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-right">
+        <div class="question-label">Knowledge Check — Question 1 of 3</div>
+        <div class="question-text">Which of the following is the BEST way for Maya to use the AI tool in this situation?</div>
+        <div class="options" id="options">
+          <div class="option" onclick="selectOption(this, false)">
+            <div class="opt-letter">A</div>
+            <div>Paste all of the account notes directly into the tool and ask it to write the QBR summary for her, then submit it without reviewing.</div>
+          </div>
+          <div class="option" onclick="selectOption(this, true)">
+            <div class="opt-letter">B</div>
+            <div>Use the tool to draft a structured summary from the account notes, then review the output carefully and edit it before the meeting.</div>
+          </div>
+          <div class="option" onclick="selectOption(this, false)">
+            <div class="opt-letter">C</div>
+            <div>Skip using the tool because the account notes contain client names, which makes this an inappropriate use case.</div>
+          </div>
+          <div class="option" onclick="selectOption(this, false)">
+            <div class="opt-letter">D</div>
+            <div>Ask the tool to browse the client's public website and add that information to the QBR summary.</div>
+          </div>
+        </div>
+        <div class="feedback-bar correct" id="feedback-correct">
+          <strong>Correct.</strong> Using the tool to draft and then reviewing the output is exactly right. The account notes don't contain personal data or confidential contracts, so this is an appropriate use. Maya's judgment — not the tool — is the final check before submission.
+        </div>
+        <div class="feedback-bar incorrect" id="feedback-incorrect">
+          <strong>Not quite.</strong> Review the acceptable use guidelines from slide 4. The key principle: the tool can help draft, but you always review before submitting. Option B describes this correctly. Try again.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-nav">
+      <span class="quiz-counter" id="quiz-counter">Select an answer</span>
+      <button class="nav-btn ghost" onclick="resetSlide()">Reset</button>
+      <button class="nav-btn primary" id="next-btn" style="opacity:.35;cursor:not-allowed">Next →</button>
+    </div>
+  </div>
+
+  <!-- DESIGN RATIONALE -->
+  <span class="slide-label" style="margin-top:32px">Design Rationale — Why This Slide Is Built This Way</span>
+  <div class="slide-2">
+    <div class="slide-2-header">
+      <div class="slide-2-title">Instructional Design Decisions</div>
+      <div class="slide-2-badge">Slide 05  ·  Scenario + MCQ</div>
+    </div>
+    <div class="slide-2-body">
+      <div class="rationale-col">
+        <span class="rationale-label">Design Choices</span>
+        <div class="rationale-item"><span class="ri-key">Scenario framing</span><span class="ri-val">Grounds the question in a realistic work situation rather than abstract recall. Forces application of knowledge, not just recognition.</span></div>
+        <div class="rationale-item"><span class="ri-key">Named character</span><span class="ri-val">Maya is a CS persona — intentional. Learners in CS roles see themselves. Other functions still engage because the situation is universal.</span></div>
+        <div class="rationale-item"><span class="ri-key">Split layout</span><span class="ri-val">Scenario context stays visible while the learner answers. Eliminates the need to scroll back, reducing cognitive load.</span></div>
+        <div class="rationale-item"><span class="ri-key">Four distractors</span><span class="ri-val">Each wrong answer targets a specific misconception: over-reliance on the tool (A), data anxiety misapplied (C), and capability confusion (D).</span></div>
+      </div>
+      <div class="rationale-col">
+        <span class="rationale-label">Technical Decisions</span>
+        <div class="rationale-item"><span class="ri-key">Branched feedback</span><span class="ri-val">Correct and incorrect feedback are specific, not generic. Wrong answer feedback references the exact slide where the answer is found.</span></div>
+        <div class="rationale-item"><span class="ri-key">Next locked</span><span class="ri-val">Learner cannot advance until an answer is selected. Prevents click-through without engagement.</span></div>
+        <div class="rationale-item"><span class="ri-key">Avatar off</span><span class="ri-val">Avatar narration paused on interaction slides to avoid competing attention. VO introduces the slide before interaction begins.</span></div>
+        <div class="rationale-item"><span class="ri-key">Bloom's L3</span><span class="ri-val">This question targets Apply, not just Remember. The scenario requires learners to evaluate a situation against principles, not recall a definition.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTION NOTES -->
+  <div class="notes-section">
+    <div class="notes-title">Production Notes for This Slide</div>
+    <div class="notes-grid">
+      <div class="note-card">
+        <span class="note-card-label">Synthesia</span>
+        <p>Avatar is OFF on this slide. VO only — avatar introduces the scenario on slide 4, then cuts before the question appears. Trigger word on slide 4: "Watch what happens" → cut to slide 5 screen recording.</p>
+      </div>
+      <div class="note-card">
+        <span class="note-card-label">Storyline Logic</span>
+        <p>Variable: QuizQ1_Correct = True/False. Set on option B click. Next button state = Normal when variable = True. State = Disabled when variable = False. Retry: unlimited on this block. Tracked in LMS attempt log.</p>
+      </div>
+      <div class="note-card">
+        <span class="note-card-label">LMS / SCORM</span>
+        <p>This question contributes to Quiz Block 1 (slides 7, not this slide — this is practice). Response tracked via cmi.interactions but does not count toward pass/fail. Completion on slide 24 only.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="back-bar">
+  <a href="index.html">← Back to portfolio</a>
+</div>
+
+<script>
+let answered = false;
+
+function selectOption(el, isCorrect) {
+  if (answered) return;
+  answered = true;
+
+  const options = document.querySelectorAll('.option');
+  options.forEach(o => o.style.pointerEvents = 'none');
+
+  if (isCorrect) {
+    el.classList.add('correct', 'selected');
+    el.querySelector('.opt-letter').style.background = 'var(--green-lt)';
+    el.querySelector('.opt-letter').style.borderColor = 'var(--green-lt)';
+    el.querySelector('.opt-letter').style.color = 'var(--ink)';
+    document.getElementById('feedback-correct').classList.add('show');
+    document.getElementById('quiz-counter').textContent = '1 / 1 correct';
+    document.getElementById('quiz-counter').style.color = 'var(--green-lt)';
+  } else {
+    el.classList.add('incorrect', 'selected');
+    document.getElementById('feedback-incorrect').classList.add('show');
+    document.getElementById('quiz-counter').textContent = 'Incorrect — try reviewing option B';
+    document.getElementById('quiz-counter').style.color = 'var(--rust)';
+    // Highlight correct
+    options[1].classList.add('correct');
+  }
+
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.style.opacity = '1';
+  nextBtn.style.cursor = 'pointer';
+}
+
+function resetSlide() {
+  answered = false;
+  const options = document.querySelectorAll('.option');
+  options.forEach(o => {
+    o.classList.remove('correct', 'incorrect', 'selected');
+    o.style.pointerEvents = '';
+    const letter = o.querySelector('.opt-letter');
+    letter.style.background = '';
+    letter.style.borderColor = '';
+    letter.style.color = '';
+  });
+  document.getElementById('feedback-correct').classList.remove('show');
+  document.getElementById('feedback-incorrect').classList.remove('show');
+  document.getElementById('quiz-counter').textContent = 'Select an answer';
+  document.getElementById('quiz-counter').style.color = '';
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.style.opacity = '.35';
+  nextBtn.style.cursor = 'not-allowed';
+}
+</script>
+</body>
+</html>

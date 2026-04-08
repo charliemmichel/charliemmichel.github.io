@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Adoption Engine — AI Literacy Curriculum</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#18120E;--ink-mid:#2E2218;--ink-light:#5C4A3A;
+  --paper:#F9F5EF;--paper-2:#F2EDE4;--paper-3:#E8E0D4;
+  --line:#D8D0C4;--rust:#B34A2F;--amber:#C4883A;--amber-lt:#D9A456;
+  --fog:#8A7E72;--white:#FEFCFA;--green:#2D6A4F;
+  --purple:#4A3B8C;--teal:#1A6B72;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+.doc-header{background:var(--ink);padding:48px 64px 40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.doc-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;display:block}
+.doc-title{font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,50px);font-weight:700;color:var(--white);line-height:1.08;letter-spacing:-.02em}
+.doc-title em{font-style:italic;color:var(--amber-lt)}
+.doc-meta{text-align:right;display:flex;flex-direction:column;gap:6px}
+.doc-meta-row{font-size:11px;color:rgba(254,252,250,.45);letter-spacing:.04em}
+.doc-meta-row strong{color:rgba(254,252,250,.8);font-weight:500}
+.stats-bar{background:var(--teal);padding:18px 64px;display:flex;gap:48px;flex-wrap:wrap}
+.s-stat{display:flex;flex-direction:column;gap:3px}
+.s-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--white);line-height:1}
+.s-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,252,250,.6)}
+.tab-nav{background:var(--white);border-bottom:1px solid var(--line);padding:0 64px;display:flex;gap:0;overflow-x:auto}
+.tab{padding:14px 24px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.panel{display:none;padding:48px 64px;max-width:1200px;margin:0 auto}
+.panel.active{display:block}
+.sec-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);margin-bottom:20px;display:block}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.sec-sub{font-size:14px;line-height:1.75;color:var(--ink-light);max-width:680px;margin-bottom:36px}
+
+/* TIERS */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);margin-bottom:40px}
+.tier{background:var(--white);padding:32px 28px;position:relative}
+.tier-bar{height:3px;position:absolute;top:0;left:0;right:0}
+.tier-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;line-height:1;margin-bottom:8px}
+.tier-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.tier-audience{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fog);margin-bottom:20px}
+.tier-items{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
+.tier-items li{font-size:13px;line-height:1.55;color:var(--ink-light);padding-left:14px;position:relative}
+.tier-items li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%}
+.tier-format{padding:14px 16px;background:var(--paper-2);font-size:12px;line-height:1.6;color:var(--fog)}
+.tier-format strong{color:var(--ink);font-weight:500}
+
+/* ROLE MATRIX */
+.role-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:40px}
+.role-table th{text-align:left;padding:10px 16px;background:var(--ink);color:rgba(254,252,250,.7);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.role-table td{padding:12px 16px;border-bottom:1px solid var(--paper-3);color:var(--ink-light);vertical-align:top}
+.role-table tr:hover td{background:var(--paper-2)}
+.role-table td:first-child{color:var(--ink);font-weight:500}
+.dot-yes{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)}
+.dot-opt{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.dot-no{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--line)}
+
+/* LMS CONFIG */
+.lms-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);margin-bottom:32px}
+.lms-card{background:var(--white);padding:26px}
+.lms-card-title{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.lms-row{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--paper-3);font-size:12px;align-items:start}
+.lms-row:last-child{border-bottom:none}
+.lms-row-label{font-weight:500;color:var(--ink)}
+.lms-row-val{color:var(--ink-light);line-height:1.5}
+.badge{display:inline-block;padding:3px 8px;font-size:10px;letter-spacing:.06em}
+.badge-auto{background:rgba(26,107,114,.1);color:var(--teal)}
+.badge-manual{background:rgba(179,74,47,.1);color:var(--rust)}
+.badge-system{background:rgba(45,106,79,.1);color:var(--green)}
+.badge-warn{background:rgba(196,136,58,.1);color:var(--amber)}
+
+/* ADOPTION TABLE */
+.adopt-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:32px}
+.adopt-table th{text-align:left;padding:10px 14px;background:var(--paper-2);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);font-weight:500;border-bottom:1px solid var(--line)}
+.adopt-table td{padding:12px 14px;border-bottom:1px solid var(--paper-3);color:var(--ink-light);vertical-align:top;line-height:1.5}
+.adopt-table td:first-child{color:var(--ink);font-weight:500}
+.pct-bar{width:100%;height:5px;background:var(--paper-3);margin-top:6px}
+.pct-fill{height:5px}
+
+.measure-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--line);margin-bottom:32px}
+.measure-card{background:var(--white);padding:28px}
+.measure-level{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;display:block}
+.measure-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.measure-desc{font-size:13px;line-height:1.72;color:var(--ink-light);margin-bottom:14px}
+.measure-result{padding:12px 14px;background:var(--paper-2);font-size:12px;line-height:1.6;color:var(--ink-light)}
+.measure-result strong{color:var(--green);font-weight:600}
+
+.back-bar{padding:28px 64px;border-top:1px solid var(--line);background:var(--white)}
+.back-bar a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color .2s}
+.back-bar a:hover{color:var(--rust)}
+
+@media(max-width:768px){
+  .doc-header,.stats-bar,.tab-nav,.panel,.back-bar{padding-left:24px;padding-right:24px}
+  .doc-header,.tiers,.lms-grid,.measure-grid{grid-template-columns:1fr}
+  .doc-meta{text-align:left}
+  .lms-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div>
+    <span class="doc-label">Program Design &middot; AI Adoption &middot; Change Management</span>
+    <h1 class="doc-title">The Adoption Engine.<br><em>A tiered AI literacy curriculum built to change behavior, not log completions.</em></h1>
+  </div>
+  <div class="doc-meta">
+    <div class="doc-meta-row"><strong>Audience:</strong> 1,000+ employees, all functions</div>
+    <div class="doc-meta-row"><strong>Tiers:</strong> Awareness, Proficiency, Advanced</div>
+    <div class="doc-meta-row"><strong>Format:</strong> Async SCORM + live office hours</div>
+    <div class="doc-meta-row"><strong>Regions:</strong> US, India, EMEA</div>
+    <div class="doc-meta-row"><strong>Outcome:</strong> Org-wide adoption standard</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="s-stat"><div class="s-num">3</div><div class="s-label">Curriculum tiers</div></div>
+  <div class="s-stat"><div class="s-num">1,000+</div><div class="s-label">Employees reached</div></div>
+  <div class="s-stat"><div class="s-num">&lt;30</div><div class="s-label">Days build to launch</div></div>
+  <div class="s-stat"><div class="s-num">94%</div><div class="s-label">Completion rate, Tier 1</div></div>
+  <div class="s-stat"><div class="s-num">Org std</div><div class="s-label">Template adopted</div></div>
+</div>
+
+<div class="tab-nav">
+  <div class="tab active" onclick="showPanel('curriculum')">Curriculum Design</div>
+  <div class="tab" onclick="showPanel('lms')">LMS Configuration</div>
+  <div class="tab" onclick="showPanel('adoption')">Adoption Tracking</div>
+  <div class="tab" onclick="showPanel('measurement')">Measurement</div>
+</div>
+
+<!-- CURRICULUM -->
+<div class="panel active" id="panel-curriculum">
+  <span class="sec-label">Program Architecture</span>
+  <div class="sec-title">Three tiers. Every employee. Role-appropriate depth.</div>
+  <p class="sec-sub">Designed for a global workforce with wildly different starting points. Tier 1 is mandatory for everyone. Tiers 2 and 3 are role-triggered based on function and tool access. No one gets more than they need. No one gets less than the baseline.</p>
+
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-bar" style="background:var(--amber)"></div>
+      <div class="tier-num" style="color:var(--amber)">01</div>
+      <div class="tier-name">Awareness</div>
+      <div class="tier-audience">All employees &middot; Mandatory</div>
+      <ul class="tier-items">
+        <li style="--c:var(--amber)">What the tool is and what it is not</li>
+        <li>Where it fits in daily workflow</li>
+        <li>Data handling, privacy, and acceptable use policy</li>
+        <li>Three scenario walkthroughs: before and after</li>
+        <li>When to use it vs. when not to</li>
+        <li>Where to get help and how to flag issues</li>
+      </ul>
+      <div class="tier-format"><strong>Format:</strong> 24-slide SCORM module, avatar-narrated, 3 embedded quiz blocks. Avg completion: 18 min.<br><strong>Pass threshold:</strong> 80% on all 3 quiz blocks.</div>
+    </div>
+    <div class="tier">
+      <div class="tier-bar" style="background:var(--teal)"></div>
+      <div class="tier-num" style="color:var(--teal)">02</div>
+      <div class="tier-name">Proficiency</div>
+      <div class="tier-audience">Power users &middot; Role-triggered</div>
+      <ul class="tier-items">
+        <li>Prompt construction and iteration</li>
+        <li>Use case library: 12 function-specific scenarios</li>
+        <li>Output review and quality assessment</li>
+        <li>Integration with existing tools and workflows</li>
+        <li>Common failure modes and how to catch them</li>
+        <li>Sharing and standardizing outputs across the team</li>
+      </ul>
+      <div class="tier-format"><strong>Format:</strong> 4-module async series + 1 live cohort session (recorded). Avg time: 3 hrs total.<br><strong>Pass threshold:</strong> Practical exercise reviewed by manager.</div>
+    </div>
+    <div class="tier">
+      <div class="tier-bar" style="background:var(--rust)"></div>
+      <div class="tier-num" style="color:var(--rust)">03</div>
+      <div class="tier-name">Advanced</div>
+      <div class="tier-audience">Champions &middot; Nomination only</div>
+      <ul class="tier-items">
+        <li>Building prompts for team-wide reuse</li>
+        <li>Evaluating new AI tools against org criteria</li>
+        <li>Facilitation: running an AI office hours session</li>
+        <li>Change management within your function</li>
+        <li>Flagging edge cases and escalation protocols</li>
+        <li>Feedback loop back to L&D and product teams</li>
+      </ul>
+      <div class="tier-format"><strong>Format:</strong> Workshop series (3 sessions, 90 min each) + peer teaching capstone.<br><strong>Outcome:</strong> Certified AI Champion, internal facilitator network.</div>
+    </div>
+  </div>
+
+  <span class="sec-label">Role-Based Tier Assignment</span>
+  <table class="role-table">
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th>Tier 1 (Mandatory)</th>
+        <th>Tier 2 (Role-triggered)</th>
+        <th>Tier 3 (Nomination)</th>
+        <th>Primary Use Cases</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sales / Account Management</td>
+        <td><span class="dot-yes"></span> Required</td>
+        <td><span class="dot-yes"></span> Auto-assigned</td>
+        <td><span class="dot-opt"></span> Eligible</td>
+        <td>Call prep, email drafting, deal research, QBR summaries</td>
+      </tr>
+      <tr>
+        <td>Product Marketing</td>
+        <td><span class="dot-yes"></span> Required</td>
+        <td><span class="dot-yes"></span> Auto-assigned</td>
+        <td><span class="dot-opt"></span> Eligible</td>
+        <td>Content drafting, competitive analysis, messaging iteration</td>
+      </tr>
+      <tr>
+        <td>Client Success</td>
+        <td><span class="dot-yes"></span> Required</td>
+        <td><span class="dot-yes"></span> Auto-assigned</td>
+        <td><span class="dot-opt"></span> Eligible</td>
+        <td>Status report generation, renewal prep, health score narratives</td>
+      </tr>
+      <tr>
+        <td>Engineering / Product</td>
+        <td><span class="dot-yes"></span> Required</td>
+        <td><span class="dot-opt"></span> Optional</td>
+        <td><span class="dot-opt"></span> Eligible</td>
+        <td>Code review, documentation drafting, spec writing</td>
+      </tr>
+      <tr>
+        <td>People / HR / L&D</td>
+        <td><span class="dot-yes"></span> Required</td>
+        <td><span class="dot-yes"></span> Auto-assigned</td>
+        <td><span class="dot-yes"></span> Priority</td>
+        <td>JD writing, policy summarization, training content iteration</td>
+      </tr>
+      <tr>
+        <td>Finance / Legal / Ops</td>
+        <td><span class="dot-yes"></span> Required</td>
+        <td><span class="dot-no"></span> Not assigned</td>
+        <td><span class="dot-opt"></span> Eligible</td>
+        <td>Document summarization only. Approved use cases list provided.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- LMS CONFIG -->
+<div class="panel" id="panel-lms">
+  <span class="sec-label">LMS Administration</span>
+  <div class="sec-title">Every enrollment automated. Every exception documented.</div>
+  <p class="sec-sub">Built to require zero manual enrollment from L&D after initial setup. HRIS sync handles new hire assignment. Role changes trigger re-enrollment in the appropriate tier. Completion data exports weekly to stakeholder dashboard.</p>
+
+  <div class="lms-grid">
+    <div class="lms-card">
+      <div class="lms-card-title">Tier 1 — Enrollment and Completion Logic</div>
+      <div class="lms-row"><span class="lms-row-label">Trigger</span><span class="lms-row-val">HRIS new hire event OR manual L&D admin bulk upload for existing employees</span></div>
+      <div class="lms-row"><span class="lms-row-label">Due date</span><span class="lms-row-val">New hires: 14 days from start date. Existing employees at launch: 30 days from comms send.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Pass threshold</span><span class="lms-row-val">80% on all 3 quiz blocks. Unlimited retakes with different question order each attempt.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Overdue logic</span><span class="lms-row-val">Day 3 overdue → learner reminder. Day 10 → manager CC'd. Day 20 → L&D flagged for escalation.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Completion record</span><span class="lms-row-val">Timestamp, score, attempts, and pass date stored. Exports to HRIS compliance record quarterly.</span></div>
+      <div class="lms-row"><span class="lms-row-label">SCORM standard</span><span class="lms-row-val">SCORM 1.2. Tested across Chrome, Safari, and Edge. Mobile-compatible.</span></div>
+    </div>
+    <div class="lms-card">
+      <div class="lms-card-title">Tier 2 and 3 — Role-Triggered Logic</div>
+      <div class="lms-row"><span class="lms-row-label">Tier 2 trigger</span><span class="lms-row-val">Job function field in HRIS matches approved list (Sales, PMM, CS, People). Tier 1 completion required first.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Tier 3 trigger</span><span class="lms-row-val">Manual nomination by manager + L&D approval. Capacity capped at 20 per cohort.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Prerequisite gates</span><span class="lms-row-val">Tier 2 locked until Tier 1 complete. Tier 3 locked until Tier 2 complete AND nomination approved.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Cohort grouping</span><span class="lms-row-val">Tier 2 auto-grouped by region for live session scheduling. Tier 3 cohorts formed quarterly.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Role change logic</span><span class="lms-row-val">Job function change in HRIS triggers re-evaluation. New tier assigned automatically within 48 hrs.</span></div>
+      <div class="lms-row"><span class="lms-row-label">Champion badge</span><span class="lms-row-val">Tier 3 completions receive digital badge issued via LMS. Visible on internal profile and org directory.</span></div>
+    </div>
+  </div>
+
+  <div class="lms-card" style="margin-bottom:32px">
+    <div class="lms-card-title">Admin Maintenance Calendar</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);margin-top:2px">
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px">Weekly</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+          <li style="font-size:12px;color:var(--ink-light)">Pull overdue report, email manager list</li>
+          <li style="font-size:12px;color:var(--ink-light)">Review new HRIS hires, confirm auto-enrollment fired</li>
+          <li style="font-size:12px;color:var(--ink-light)">Check for failed SCORM launches, log errors</li>
+        </ul>
+      </div>
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px">Monthly</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+          <li style="font-size:12px;color:var(--ink-light)">Completion rate report to HR and functional leaders</li>
+          <li style="font-size:12px;color:var(--ink-light)">Office hours attendance and Q&amp;A summary distributed</li>
+          <li style="font-size:12px;color:var(--ink-light)">Quiz question performance review — flag underperforming items</li>
+        </ul>
+      </div>
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px">Quarterly</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+          <li style="font-size:12px;color:var(--ink-light)">Content accuracy review with SME</li>
+          <li style="font-size:12px;color:var(--ink-light)">New cohort formed for Tier 3 nominations</li>
+          <li style="font-size:12px;color:var(--ink-light)">HRIS compliance export for personnel records</li>
+        </ul>
+      </div>
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px">Annually</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+          <li style="font-size:12px;color:var(--ink-light)">Full curriculum review and refresh cycle</li>
+          <li style="font-size:12px;color:var(--ink-light)">Re-enrollment of all employees for policy updates</li>
+          <li style="font-size:12px;color:var(--ink-light)">Champion recertification for Tier 3 alumni</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADOPTION TRACKING -->
+<div class="panel" id="panel-adoption">
+  <span class="sec-label">Behavior Change Tracking</span>
+  <div class="sec-title">Completion is the start. Adoption is the goal.</div>
+  <p class="sec-sub">Post-completion, adoption is tracked through a combination of tool usage data, manager observation check-ins, and a 30-day pulse survey. The goal is to know whether people are actually using what they learned, not just whether they finished the module.</p>
+
+  <table class="adopt-table">
+    <thead>
+      <tr>
+        <th>Signal</th>
+        <th>Source</th>
+        <th>Timing</th>
+        <th>Current Rate</th>
+        <th>Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tier 1 completion</td>
+        <td>LMS</td>
+        <td>Ongoing</td>
+        <td>
+          94% global
+          <div class="pct-bar"><div class="pct-fill" style="width:94%;background:var(--green)"></div></div>
+        </td>
+        <td>L&D</td>
+      </tr>
+      <tr>
+        <td>30-day pulse: "I have used the tool in the past 2 weeks"</td>
+        <td>Survey (auto-sent at 30 days post-completion)</td>
+        <td>Day 30 post-completion</td>
+        <td>
+          78% yes
+          <div class="pct-bar"><div class="pct-fill" style="width:78%;background:var(--teal)"></div></div>
+        </td>
+        <td>L&D</td>
+      </tr>
+      <tr>
+        <td>30-day pulse: "I feel confident using it in my workflow"</td>
+        <td>Survey</td>
+        <td>Day 30 post-completion</td>
+        <td>
+          71% agree / strongly agree
+          <div class="pct-bar"><div class="pct-fill" style="width:71%;background:var(--teal)"></div></div>
+        </td>
+        <td>L&D</td>
+      </tr>
+      <tr>
+        <td>Manager observation: observed using tool in workflow</td>
+        <td>Manager check-in form (LMS)</td>
+        <td>Day 45 post-launch</td>
+        <td>
+          66% confirmed
+          <div class="pct-bar"><div class="pct-fill" style="width:66%;background:var(--amber)"></div></div>
+        </td>
+        <td>L&D + Managers</td>
+      </tr>
+      <tr>
+        <td>Tier 2 enrollment (role-eligible employees)</td>
+        <td>LMS</td>
+        <td>After Tier 1 complete</td>
+        <td>
+          82% enrolled of eligible
+          <div class="pct-bar"><div class="pct-fill" style="width:82%;background:var(--green)"></div></div>
+        </td>
+        <td>L&D</td>
+      </tr>
+      <tr>
+        <td>Office hours attendance (at least 1 session)</td>
+        <td>Calendar / attendance log</td>
+        <td>Ongoing (biweekly)</td>
+        <td>
+          38% of Tier 1 completers
+          <div class="pct-bar"><div class="pct-fill" style="width:38%;background:var(--amber)"></div></div>
+        </td>
+        <td>L&D</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MEASUREMENT -->
+<div class="panel" id="panel-measurement">
+  <span class="sec-label">Kirkpatrick Measurement — L1 through L4</span>
+  <div class="sec-title">Every level measured. Every result used.</div>
+  <p class="sec-sub">The program is iterated quarterly based on what the data says. Underperforming quiz items get rewritten. Low-confidence survey results trigger office hours scheduling. Manager observation gaps trigger coaching for managers, not just for learners.</p>
+
+  <div class="measure-grid">
+    <div class="measure-card">
+      <span class="measure-level">Level 1 — Reaction</span>
+      <div class="measure-title">Did it land?</div>
+      <p class="measure-desc">5-question pulse survey sent immediately after Tier 1 completion. Covers content clarity, pacing, relevance to daily work, and avatar quality. Results reviewed by L&D within 48 hours of each completion wave.</p>
+      <div class="measure-result"><strong>Finding:</strong> 89% found content relevant to their role. Lowest-rated item was quiz pacing — addressed in v1.2 by adding scenario context before each quiz block.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 2 — Learning</span>
+      <div class="measure-title">Did they get it?</div>
+      <p class="measure-desc">Three embedded quiz blocks at key retention moments. Question bank rotated quarterly. Wrong answers trigger remediation slide before re-attempt. Score and attempt count logged per user.</p>
+      <div class="measure-result"><strong>Finding:</strong> Average score 86%. Lowest-scoring item was data privacy scenario — rewrote with more concrete example in v1.1. Score jumped from 61% to 79% on that item.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 3 — Behavior</span>
+      <div class="measure-title">Did they change what they do?</div>
+      <p class="measure-desc">30-day post-completion pulse (2 questions), manager observation form at 45 days, and office hours Q&A patterns analyzed for recurring friction points. Themes fed back into Tier 2 curriculum design.</p>
+      <div class="measure-result"><strong>Finding:</strong> 78% self-reported active use at day 30. Top barrier: "not sure when it's appropriate to use it" — added decision tree to Tier 1 in v1.2.</div>
+    </div>
+    <div class="measure-card">
+      <span class="measure-level">Level 4 — Results</span>
+      <div class="measure-title">Did the org move?</div>
+      <p class="measure-desc">Tracked against two org-level goals: reduction in AI-related support tickets and increase in cross-functional AI tool proposals. Reviewed with senior leadership quarterly. Program recognized as org standard for all future tool launches.</p>
+      <div class="measure-result"><strong>Finding:</strong> <strong>62% reduction in AI support tickets</strong> in first 60 days post-launch. Program adopted as organizational template — cited in CEO recognition of L&D team.</div>
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html">Back to portfolio</a>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

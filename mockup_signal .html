@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Signal — Learning Measurement Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#18120E;--ink-mid:#2E2218;--ink-light:#5C4A3A;
+  --paper:#F9F5EF;--paper-2:#F2EDE4;--paper-3:#E8E0D4;
+  --line:#D8D0C4;--rust:#B34A2F;--amber:#C4883A;--amber-lt:#D9A456;
+  --fog:#8A7E72;--white:#FEFCFA;--green:#2D6A4F;--green-lt:#52B788;
+  --blue:#1D4E89;--teal:#1A6B72;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Instrument Sans',sans-serif;background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased}
+
+.doc-header{background:var(--ink-mid);padding:40px 64px 32px;border-bottom:1px solid rgba(254,252,250,.08)}
+.doc-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;display:block}
+.header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.doc-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,44px);font-weight:700;color:var(--white);line-height:1.08;letter-spacing:-.02em}
+.doc-title em{font-style:italic;color:var(--amber-lt)}
+.doc-period{text-align:right}
+.period-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-bottom:4px}
+.period-val{font-size:14px;font-weight:500;color:rgba(254,252,250,.75)}
+
+/* TOP KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(254,252,250,.06);border-bottom:1px solid rgba(254,252,250,.08)}
+.kpi{padding:24px 28px;background:var(--ink-mid)}
+.kpi-num{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;line-height:1;margin-bottom:5px}
+.kpi-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(254,252,250,.45)}
+.kpi-delta{font-size:11px;margin-top:5px}
+.up{color:var(--green-lt)}.down{color:var(--rust)}.flat{color:var(--amber)}
+
+/* TABS */
+.tab-nav{background:var(--ink-mid);border-bottom:1px solid rgba(254,252,250,.08);padding:0 64px;display:flex;gap:0;overflow-x:auto}
+.tab{padding:14px 22px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(254,252,250,.4);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab.active{color:var(--amber);border-bottom-color:var(--amber)}
+.panel{display:none;padding:40px 64px;max-width:1200px;margin:0 auto}
+.panel.active{display:block}
+
+/* PROGRAM ROWS */
+.program-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:32px}
+.program-table th{text-align:left;padding:10px 16px;background:rgba(254,252,250,.04);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(254,252,250,.4);font-weight:500;border-bottom:1px solid rgba(254,252,250,.07)}
+.program-table td{padding:14px 16px;border-bottom:1px solid rgba(254,252,250,.05);color:rgba(254,252,250,.65);vertical-align:middle}
+.program-table tr:hover td{background:rgba(254,252,250,.02)}
+.program-table td:first-child{color:var(--white);font-weight:500}
+.bar-wrap{width:120px;height:5px;background:rgba(254,252,250,.08)}
+.bar-fill{height:5px}
+.badge{display:inline-block;padding:3px 9px;font-size:10px;letter-spacing:.04em}
+.g{background:rgba(82,183,136,.15);color:var(--green-lt)}
+.a{background:rgba(196,136,58,.15);color:var(--amber)}
+.r{background:rgba(179,74,47,.15);color:#E87C60}
+
+/* SECTION HEADER */
+.sec-head{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(254,252,250,.35);margin-bottom:20px;display:block;padding-top:8px}
+
+/* CARD GRID */
+.card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(254,252,250,.07);margin-bottom:32px}
+.card{background:var(--ink-mid);padding:28px}
+.card-level{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;display:block}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px}
+.card-desc{font-size:13px;line-height:1.72;color:rgba(254,252,250,.55);margin-bottom:16px}
+.card-stat{padding:12px 14px;background:rgba(254,252,250,.04);border-left:2px solid var(--amber);font-size:12px;line-height:1.6;color:rgba(254,252,250,.65)}
+.card-stat strong{color:var(--green-lt);font-weight:600}
+
+/* MODULE DEEP DIVE */
+.module-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:32px}
+.module-table th{text-align:left;padding:10px 14px;background:rgba(254,252,250,.04);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(254,252,250,.4);font-weight:500;border-bottom:1px solid rgba(254,252,250,.07)}
+.module-table td{padding:12px 14px;border-bottom:1px solid rgba(254,252,250,.04);color:rgba(254,252,250,.6);vertical-align:top;line-height:1.5}
+.module-table td:first-child{color:var(--white);font-weight:500}
+
+/* BUSINESS IMPACT */
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(254,252,250,.07);margin-bottom:32px}
+.impact-card{background:var(--ink-mid);padding:28px}
+.impact-program{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;display:block}
+.impact-metric{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--green-lt);line-height:1;margin-bottom:6px}
+.impact-label{font-size:12px;color:rgba(254,252,250,.55);margin-bottom:14px}
+.impact-context{font-size:12px;line-height:1.65;color:rgba(254,252,250,.45);padding-top:14px;border-top:1px solid rgba(254,252,250,.07)}
+
+.back-bar{padding:28px 64px;border-top:1px solid rgba(254,252,250,.07);background:var(--ink-mid)}
+.back-bar a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(254,252,250,.35);text-decoration:none;transition:color .2s}
+.back-bar a:hover{color:var(--amber)}
+
+@media(max-width:768px){
+  .doc-header,.tab-nav,.panel,.back-bar{padding-left:24px;padding-right:24px}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .header-row,.card-grid,.impact-grid{grid-template-columns:1fr}
+  .doc-period{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <span class="doc-label">Learning Measurement &middot; L&D Analytics &middot; Q1 2026</span>
+  <div class="header-row">
+    <h1 class="doc-title">The Signal.<br><em>What the learning data is actually telling us.</em></h1>
+    <div class="doc-period">
+      <div class="period-label">Reporting period</div>
+      <div class="period-val">Jan 1 – Mar 31, 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-num" style="color:var(--green-lt)">94%</div>
+    <div class="kpi-label">Global completion rate</div>
+    <div class="kpi-delta up">&#9650; +6pts vs Q4 2025</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num" style="color:var(--amber)">84%</div>
+    <div class="kpi-label">Avg knowledge score</div>
+    <div class="kpi-delta up">&#9650; +3pts vs Q4 2025</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num" style="color:var(--green-lt)">4.4</div>
+    <div class="kpi-label">Avg L1 satisfaction (of 5)</div>
+    <div class="kpi-delta flat">&#9644; Flat vs Q4 2025</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num" style="color:var(--amber)">78%</div>
+    <div class="kpi-label">30-day behavior adoption</div>
+    <div class="kpi-delta up">&#9650; +12pts vs Q4 2025</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num" style="color:var(--green-lt)">3</div>
+    <div class="kpi-label">Programs with L4 data</div>
+    <div class="kpi-delta up">&#9650; +2 vs Q4 2025</div>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <div class="tab active" onclick="showPanel('overview')">Program Overview</div>
+  <div class="tab" onclick="showPanel('kirkpatrick')">Kirkpatrick L1–L4</div>
+  <div class="tab" onclick="showPanel('modules')">Module Performance</div>
+  <div class="tab" onclick="showPanel('impact')">Business Impact</div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="panel active" id="panel-overview">
+  <span class="sec-head">All Active Programs — Q1 2026</span>
+  <table class="program-table">
+    <thead>
+      <tr>
+        <th>Program</th>
+        <th>Audience</th>
+        <th>Completion</th>
+        <th>Avg Score</th>
+        <th>L1 Sat</th>
+        <th>Behavior Adoption</th>
+        <th>L4 Data</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>The Adoption Engine — Tier 1</td>
+        <td>All employees (1,047)</td>
+        <td>
+          94%
+          <div class="bar-wrap"><div class="bar-fill" style="width:94%;background:var(--green-lt)"></div></div>
+        </td>
+        <td>86%</td>
+        <td>4.5/5</td>
+        <td>78% at 30 days</td>
+        <td>62% ticket reduction</td>
+        <td><span class="badge g">On track</span></td>
+      </tr>
+      <tr>
+        <td>The Adoption Engine — Tier 2</td>
+        <td>Power users (312 eligible)</td>
+        <td>
+          82%
+          <div class="bar-wrap"><div class="bar-fill" style="width:82%;background:var(--green-lt)"></div></div>
+        </td>
+        <td>81%</td>
+        <td>4.3/5</td>
+        <td>In progress</td>
+        <td>Pending</td>
+        <td><span class="badge g">On track</span></td>
+      </tr>
+      <tr>
+        <td>The Ramp — Q1 Cohort</td>
+        <td>New commercial hires (24)</td>
+        <td>
+          88%
+          <div class="bar-wrap"><div class="bar-fill" style="width:88%;background:var(--green-lt)"></div></div>
+        </td>
+        <td>83%</td>
+        <td>4.4/5</td>
+        <td>Gate 1: 79% passed</td>
+        <td>35% faster ramp</td>
+        <td><span class="badge g">On track</span></td>
+      </tr>
+      <tr>
+        <td>The Manager Track — Cohort 3</td>
+        <td>New managers (14)</td>
+        <td>
+          100%
+          <div class="bar-wrap"><div class="bar-fill" style="width:100%;background:var(--green-lt)"></div></div>
+        </td>
+        <td>88%</td>
+        <td>4.6/5</td>
+        <td>360 delta pending (Month 7)</td>
+        <td>28% eNPS lift (prior cohort)</td>
+        <td><span class="badge g">On track</span></td>
+      </tr>
+      <tr>
+        <td>Compliance — Annual Recertification</td>
+        <td>All employees (1,047)</td>
+        <td>
+          71%
+          <div class="bar-wrap"><div class="bar-fill" style="width:71%;background:var(--amber)"></div></div>
+        </td>
+        <td>91%</td>
+        <td>3.8/5</td>
+        <td>N/A — compliance only</td>
+        <td>Audit passed</td>
+        <td><span class="badge a">Needs attention</span></td>
+      </tr>
+      <tr>
+        <td>GTM RFI Training</td>
+        <td>Commercial teams (87)</td>
+        <td>
+          96%
+          <div class="bar-wrap"><div class="bar-fill" style="width:96%;background:var(--green-lt)"></div></div>
+        </td>
+        <td>89%</td>
+        <td>4.2/5</td>
+        <td>Pending manager survey</td>
+        <td>Pending</td>
+        <td><span class="badge g">On track</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <span class="sec-head">Completion by Region — Q1 2026</span>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(254,252,250,.07);margin-bottom:32px">
+    <div style="background:var(--ink-mid);padding:28px">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-bottom:14px">NTAM</div>
+      <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--green-lt);margin-bottom:6px">96%</div>
+      <div style="font-size:11px;color:rgba(254,252,250,.45);margin-bottom:16px">Completion rate across all programs</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.5)">Strongest: Manager Track (100%)<br>Watch: Compliance (74%)</div>
+    </div>
+    <div style="background:var(--ink-mid);padding:28px">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-bottom:14px">EMEA</div>
+      <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--amber);margin-bottom:6px">89%</div>
+      <div style="font-size:11px;color:rgba(254,252,250,.45);margin-bottom:16px">Completion rate across all programs</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.5)">Strongest: GTM RFI (97%)<br>Watch: Adoption Tier 2 (76%)</div>
+    </div>
+    <div style="background:var(--ink-mid);padding:28px">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-bottom:14px">APAC / India</div>
+      <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--green-lt);margin-bottom:6px">94%</div>
+      <div style="font-size:11px;color:rgba(254,252,250,.45);margin-bottom:16px">Completion rate across all programs</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.5)">Strongest: Adoption Tier 1 (97%)<br>Watch: Compliance (68%)</div>
+    </div>
+  </div>
+</div>
+
+<!-- KIRKPATRICK -->
+<div class="panel" id="panel-kirkpatrick">
+  <span class="sec-head">Measurement by Level — All Programs, Q1 2026</span>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-level">Level 1 — Reaction</span>
+      <div class="card-title">Did it land?</div>
+      <p class="card-desc">Post-module 3–5 question pulse surveys. Collected automatically via LMS within 24 hours of completion. Reported by module, program, and region. Reviewed weekly by L&D.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--green-lt)">4.4</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">Avg satisfaction / 5</div>
+        </div>
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--amber)">81%</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">Rate content relevant</div>
+        </div>
+      </div>
+      <div class="card-stat">Top friction: Compliance module pacing rated 3.2/5. Flagged for redesign in Q2. All other programs 4.0+.</div>
+    </div>
+    <div class="card">
+      <span class="card-level">Level 2 — Learning</span>
+      <div class="card-title">Did they get it?</div>
+      <p class="card-desc">Embedded quiz scores (80% pass threshold), certification assessments, and gate evaluations. Question item analysis run quarterly to identify underperforming items. Scores tracked per user and cohort.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--green-lt)">84%</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">Avg quiz score</div>
+        </div>
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--green-lt)">91%</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">First-attempt pass rate</div>
+        </div>
+      </div>
+      <div class="card-stat">Lowest-scoring item Q1: data privacy scenario in Adoption Tier 1 (61%). Rewritten for Q2 release. Preview testing showed 79% on revised version.</div>
+    </div>
+    <div class="card">
+      <span class="card-level">Level 3 — Behavior</span>
+      <div class="card-title">Did they do it differently?</div>
+      <p class="card-desc">30-day post-completion pulse (self-reported), manager observation forms at 45 days, and behavioral proxies from Salesforce (for ramp program) and LMS engagement data (repeat tool use, office hours attendance).</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--amber)">78%</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">Self-reported behavior change</div>
+        </div>
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--amber)">66%</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">Manager-confirmed adoption</div>
+        </div>
+      </div>
+      <div class="card-stat">Gap between self-report (78%) and manager-confirmed (66%) flagged. L3 strategy for Q2: train managers on what adoption looks like before observation window opens.</div>
+    </div>
+    <div class="card">
+      <span class="card-level">Level 4 — Results</span>
+      <div class="card-title">Did the business move?</div>
+      <p class="card-desc">Business impact metrics tied to each program at design stage. Reviewed with functional stakeholders quarterly. Sourced from Salesforce, HRIS, IT support ticketing, and People survey data. Not retrofitted — built in from day one.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--green-lt)">3</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">Programs with L4 data</div>
+        </div>
+        <div style="padding:14px;background:rgba(254,252,250,.04)">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--amber)">2</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(254,252,250,.4);margin-top:4px">Pending data (new programs)</div>
+        </div>
+      </div>
+      <div class="card-stat"><strong>Q1 priority:</strong> Establish L4 baseline for GTM RFI training (RFI win rate, response time) before Q2 measurement window opens.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE PERFORMANCE -->
+<div class="panel" id="panel-modules">
+  <span class="sec-head">Module-Level Performance — Q1 2026</span>
+  <table class="module-table">
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Program</th>
+        <th>Completions</th>
+        <th>Avg Score</th>
+        <th>Pass Rate</th>
+        <th>L1 Satisfaction</th>
+        <th>Flag</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>What the Tool Is (and Isn't)</td>
+        <td>Adoption Engine T1</td>
+        <td>1,012</td>
+        <td>88%</td>
+        <td>94%</td>
+        <td>4.6/5</td>
+        <td><span class="badge g">Strong</span></td>
+      </tr>
+      <tr>
+        <td>Data Privacy and Acceptable Use</td>
+        <td>Adoption Engine T1</td>
+        <td>1,009</td>
+        <td>79%</td>
+        <td>87%</td>
+        <td>4.2/5</td>
+        <td><span class="badge a">Review item #4</span></td>
+      </tr>
+      <tr>
+        <td>Three Workflow Scenarios</td>
+        <td>Adoption Engine T1</td>
+        <td>998</td>
+        <td>91%</td>
+        <td>97%</td>
+        <td>4.7/5</td>
+        <td><span class="badge g">Strong</span></td>
+      </tr>
+      <tr>
+        <td>Product Fundamentals 101</td>
+        <td>The Ramp</td>
+        <td>24</td>
+        <td>88%</td>
+        <td>96%</td>
+        <td>4.4/5</td>
+        <td><span class="badge g">Strong</span></td>
+      </tr>
+      <tr>
+        <td>MEDDIC Methodology</td>
+        <td>The Ramp</td>
+        <td>18</td>
+        <td>82%</td>
+        <td>89%</td>
+        <td>4.3/5</td>
+        <td><span class="badge g">Strong</span></td>
+      </tr>
+      <tr>
+        <td>Discovery Call Certification</td>
+        <td>The Ramp</td>
+        <td>16</td>
+        <td>79%</td>
+        <td>75%</td>
+        <td>4.0/5</td>
+        <td><span class="badge a">Low pass rate</span></td>
+      </tr>
+      <tr>
+        <td>Feedback and Communication</td>
+        <td>Manager Track</td>
+        <td>14</td>
+        <td>90%</td>
+        <td>100%</td>
+        <td>4.8/5</td>
+        <td><span class="badge g">Strong</span></td>
+      </tr>
+      <tr>
+        <td>Annual Compliance Recertification</td>
+        <td>Compliance</td>
+        <td>743</td>
+        <td>91%</td>
+        <td>99%</td>
+        <td>3.8/5</td>
+        <td><span class="badge a">Low satisfaction</span></td>
+      </tr>
+      <tr>
+        <td>RFI Response Standards</td>
+        <td>GTM RFI Training</td>
+        <td>84</td>
+        <td>89%</td>
+        <td>96%</td>
+        <td>4.2/5</td>
+        <td><span class="badge g">Strong</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <span class="sec-head">Flagged Items — Action Required</span>
+  <div style="display:flex;flex-direction:column;gap:1px;background:rgba(254,252,250,.07);margin-bottom:32px">
+    <div style="background:var(--ink-mid);padding:20px 24px;display:grid;grid-template-columns:160px 1fr auto;gap:16px;align-items:start">
+      <div style="font-size:11px;color:var(--amber);font-weight:500">Discovery Call Cert</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.55);line-height:1.6">Pass rate dropped from 88% to 75% vs. Q4. Root cause: scenario complexity increased without practice support. Adding a prep exercise before the certification attempt in Q2 release.</div>
+      <span class="badge a">In progress</span>
+    </div>
+    <div style="background:var(--ink-mid);padding:20px 24px;display:grid;grid-template-columns:160px 1fr auto;gap:16px;align-items:start">
+      <div style="font-size:11px;color:var(--amber);font-weight:500">Data Privacy Item #4</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.55);line-height:1.6">Question stem ambiguous — two correct-adjacent options. Rewrote with clearer distractors. SME reviewed. Deploying in v1.2 release end of April.</div>
+      <span class="badge a">Scheduled</span>
+    </div>
+    <div style="background:var(--ink-mid);padding:20px 24px;display:grid;grid-template-columns:160px 1fr auto;gap:16px;align-items:start">
+      <div style="font-size:11px;color:rgba(224,120,96,1)">Compliance Satisfaction</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.55);line-height:1.6">3.8/5 is below L&D threshold of 4.0. Content is accurate and legally required — redesigning delivery format. Testing scenario-based version with one region in Q2 before global rollout.</div>
+      <span class="badge r">Escalated</span>
+    </div>
+  </div>
+</div>
+
+<!-- BUSINESS IMPACT -->
+<div class="panel" id="panel-impact">
+  <span class="sec-head">L4 Business Impact — Programs with Confirmed Data</span>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <span class="impact-program">The Adoption Engine</span>
+      <div class="impact-metric">62%</div>
+      <div class="impact-label">Reduction in AI-related support tickets (60 days post-launch)</div>
+      <div class="impact-context">Baseline: 47 AI support tickets per week pre-launch. Post-launch average: 18 per week at week 8. Tracked via IT helpdesk system. Program recognized as org standard and cited in executive communications.</div>
+    </div>
+    <div class="impact-card">
+      <span class="impact-program">The Ramp</span>
+      <div class="impact-metric">35%</div>
+      <div class="impact-label">Reduction in time-to-first-deal (vs. 12-month pre-program baseline)</div>
+      <div class="impact-context">Pre-program avg: 118 days from start date to first closed deal. Post-program avg: 77 days across two full cohorts. Sourced from Salesforce "Days to First Deal" formula field. Reviewed with Sales leadership quarterly.</div>
+    </div>
+    <div class="impact-card">
+      <span class="impact-program">The Manager Track</span>
+      <div class="impact-metric">28%</div>
+      <div class="impact-label">Improvement in direct report eNPS (6 months post-completion)</div>
+      <div class="impact-context">eNPS survey sent to direct reports of program completers at Month 7. Compared to baseline collected at Month 1. Direct report attrition for program participants ran 14% below company average in the 12 months following completion.</div>
+    </div>
+  </div>
+
+  <span class="sec-head">Pending L4 Baselines — Q2 Measurement Plan</span>
+  <div style="display:flex;flex-direction:column;gap:1px;background:rgba(254,252,250,.07)">
+    <div style="background:var(--ink-mid);padding:20px 24px;display:grid;grid-template-columns:160px 1fr 160px;gap:16px;align-items:start">
+      <div style="font-size:11px;color:rgba(254,252,250,.6);font-weight:500">GTM RFI Training</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.45);line-height:1.6">KPIs: RFI-to-proposal conversion rate, response time from RFI receipt to submission, quality score from PMM review rubric. Baseline being pulled from CRM for 12-month pre-training period.</div>
+      <div style="font-size:11px;color:var(--amber)">Baseline Q2</div>
+    </div>
+    <div style="background:var(--ink-mid);padding:20px 24px;display:grid;grid-template-columns:160px 1fr 160px;gap:16px;align-items:start">
+      <div style="font-size:11px;color:rgba(254,252,250,.6);font-weight:500">Adoption Tier 2</div>
+      <div style="font-size:12px;color:rgba(254,252,250,.45);line-height:1.6">KPIs: Self-reported workflow integration at 60 days, manager-confirmed tool use, output quality improvement (manager rubric). Measurement window opens June 2026 for first Tier 2 completers.</div>
+      <div style="font-size:11px;color:var(--amber)">Measure Q2</div>
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html">Back to portfolio</a>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

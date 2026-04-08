@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storyboard — AI Enablement Module</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#18120E;--ink-mid:#2E2218;--ink-light:#5C4A3A;
+  --paper:#F9F5EF;--paper-2:#F2EDE4;--paper-3:#E8E0D4;
+  --line:#D8D0C4;--rust:#B34A2F;--amber:#C4883A;--amber-lt:#D9A456;
+  --fog:#8A7E72;--white:#FEFCFA;--green:#2D6A4F;--teal:#1A6B72;
+  --blue:#1D4E89;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:14px;scroll-behavior:smooth}
+body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+.doc-header{background:var(--ink);padding:40px 64px 32px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.doc-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;display:block}
+.doc-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,42px);font-weight:700;color:var(--white);line-height:1.08;letter-spacing:-.02em}
+.doc-title em{font-style:italic;color:var(--amber-lt)}
+.doc-meta{text-align:right;display:flex;flex-direction:column;gap:5px}
+.doc-meta-row{font-size:11px;color:rgba(254,252,250,.45)}
+.doc-meta-row strong{color:rgba(254,252,250,.8);font-weight:500}
+
+.tools-bar{background:var(--ink-mid, #272420);padding:12px 64px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid rgba(254,252,250,.07)}
+.tools-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);flex-shrink:0}
+.tool-badge{padding:4px 12px;background:rgba(254,252,250,.07);border:1px solid rgba(254,252,250,.12);font-size:10px;color:rgba(254,252,250,.6);letter-spacing:.04em}
+
+.content{max-width:1200px;margin:0 auto;padding:40px 64px}
+.sec-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);margin-bottom:16px;display:block}
+
+/* OBJECTIVES */
+.obj-block{background:var(--white);padding:28px 32px;margin-bottom:32px;border-left:3px solid var(--rust)}
+.obj-block h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:16px}
+.obj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.obj-card{padding:16px;background:var(--paper-2)}
+.obj-level{font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:6px;display:block}
+.obj-text{font-size:12px;line-height:1.65;color:var(--ink-light)}
+.obj-bloom{font-size:10px;color:var(--fog);margin-top:8px;font-style:italic}
+
+/* STORYBOARD CARDS */
+.sb-grid{display:flex;flex-direction:column;gap:2px;background:var(--line)}
+.sb-row{background:var(--white);display:grid;grid-template-columns:60px 180px 1fr 1fr 120px;gap:0;align-items:stretch}
+.sb-row.header{background:var(--ink);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,252,250,.5)}
+.sb-cell{padding:14px 16px;border-right:1px solid var(--paper-3);font-size:12px;line-height:1.6;color:var(--ink-light)}
+.sb-cell:last-child{border-right:none}
+.sb-row.header .sb-cell{color:rgba(254,252,250,.5);padding:10px 16px;border-right-color:rgba(254,252,250,.07)}
+.slide-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--paper-3)}
+.slide-type{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;display:inline-block;margin-top:4px}
+.type-title{background:rgba(179,74,47,.1);color:var(--rust)}
+.type-content{background:rgba(29,78,137,.1);color:var(--blue)}
+.type-scenario{background:rgba(26,107,114,.1);color:var(--teal)}
+.type-quiz{background:rgba(196,136,58,.1);color:var(--amber)}
+.type-summary{background:rgba(45,106,79,.1);color:var(--green)}
+.type-avatar{background:rgba(74,59,140,.1);color:#4A3B8C}
+.avatar-note{font-size:10px;font-style:italic;color:var(--fog);margin-top:6px;display:block}
+.narration{font-size:11.5px;line-height:1.65;color:var(--ink-light)}
+.narration em{color:var(--rust);font-style:normal;font-weight:500}
+.visual-note{font-size:11px;line-height:1.6;color:var(--fog);font-style:italic}
+.visual-note strong{color:var(--ink-light);font-style:normal}
+.production-note{font-size:10px;color:var(--fog);line-height:1.5}
+
+/* SECTION DIVIDERS */
+.section-div{background:var(--ink);padding:10px 16px;display:flex;align-items:center;gap:16px}
+.section-div span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+.section-div em{font-size:10px;color:rgba(254,252,250,.35);font-style:normal}
+
+.back-bar{padding:28px 64px;border-top:1px solid var(--line);background:var(--white)}
+.back-bar a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);text-decoration:none}
+.back-bar a:hover{color:var(--rust)}
+
+@media(max-width:900px){
+  .doc-header,.tools-bar,.content,.back-bar{padding-left:24px;padding-right:24px}
+  .doc-header{grid-template-columns:1fr}
+  .doc-meta{text-align:left}
+  .sb-row{grid-template-columns:1fr}
+  .sb-row.header{display:none}
+  .obj-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div>
+    <span class="doc-label">Instructional Design Artifact  ·  Storyboard</span>
+    <h1 class="doc-title">AI Enablement Module<br><em>Slide-by-slide production blueprint.</em></h1>
+  </div>
+  <div class="doc-meta">
+    <div class="doc-meta-row"><strong>Module:</strong> Tier 1 Awareness — All Employees</div>
+    <div class="doc-meta-row"><strong>Format:</strong> Synthesia avatar-narrated, SCORM 1.2</div>
+    <div class="doc-meta-row"><strong>Duration:</strong> ~18 minutes</div>
+    <div class="doc-meta-row"><strong>Slides:</strong> 24 total, 3 quiz blocks</div>
+    <div class="doc-meta-row"><strong>Audience:</strong> Global, 3 regions, async delivery</div>
+  </div>
+</div>
+
+<div class="tools-bar">
+  <span class="tools-label">Tools Used</span>
+  <span class="tool-badge">Synthesia</span>
+  <span class="tool-badge">PowerPoint (production base)</span>
+  <span class="tool-badge">SCORM 1.2</span>
+  <span class="tool-badge">MindTickle LMS</span>
+  <span class="tool-badge">Confluence (SME review)</span>
+  <span class="tool-badge">Slack (stakeholder coordination)</span>
+  <span class="tool-badge">Camtasia (screen captures)</span>
+  <span class="tool-badge">Google Forms (feedback)</span>
+</div>
+
+<div class="content">
+
+  <!-- OBJECTIVES -->
+  <span class="sec-label">Learning Objectives — Bloom's Taxonomy</span>
+  <div class="obj-block">
+    <h3>By the end of this module, learners will be able to:</h3>
+    <div class="obj-grid">
+      <div class="obj-card">
+        <span class="obj-level">Remember / Understand</span>
+        <div class="obj-text">Describe what the AI tool does, what it does not do, and where it fits in their daily workflow without referencing documentation.</div>
+        <div class="obj-bloom">Bloom's Level 1–2  ·  Assessed: Quiz Block 1</div>
+      </div>
+      <div class="obj-card">
+        <span class="obj-level">Apply / Analyze</span>
+        <div class="obj-text">Identify at least two appropriate use cases for the tool in their specific role and explain why each use case meets the acceptable use criteria.</div>
+        <div class="obj-bloom">Bloom's Level 3–4  ·  Assessed: Quiz Block 2</div>
+      </div>
+      <div class="obj-card">
+        <span class="obj-level">Evaluate</span>
+        <div class="obj-text">Distinguish between situations where using the tool is appropriate versus where human judgment or escalation is required, using the decision framework provided.</div>
+        <div class="obj-bloom">Bloom's Level 5  ·  Assessed: Quiz Block 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORYBOARD -->
+  <span class="sec-label">Storyboard — Slide by Slide</span>
+  <div class="sb-grid">
+
+    <div class="sb-row header">
+      <div class="sb-cell">#</div>
+      <div class="sb-cell">Slide Type</div>
+      <div class="sb-cell">Narration Script</div>
+      <div class="sb-cell">Visual / On-Screen</div>
+      <div class="sb-cell">Production Notes</div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section-div"><span>Section 1 — Introduction</span><em>Slides 1–3</em></div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">01</div></div>
+      <div class="sb-cell"><span class="slide-type type-title">Title / Hook</span><span class="avatar-note">Avatar: on-screen, center frame</span></div>
+      <div class="sb-cell"><p class="narration">"Every week, thousands of decisions get made across this organization. Some take hours. Some take minutes. What if more of them could take seconds — without sacrificing quality? That is what this module is about. Not AI in the abstract. <em>This tool. Your workflow. Starting now.</em>"</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Title card:</strong> Full-bleed dark background. Module title centered. Subtle animated gradient. No logo until slide 3.</p></div>
+      <div class="sb-cell"><p class="production-note">Trigger word: "Starting now" — avatar hand gesture. Avatar placement: center. Duration target: 45s.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">02</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">Agenda</span><span class="avatar-note">Avatar: lower-left corner</span></div>
+      <div class="sb-cell"><p class="narration">"Here is what we are covering today. What this tool is and — just as importantly — what it is not. How to use it in your role. The rules that protect you and the organization. And how to get help when you need it. This should take about 18 minutes. You can pause, rewind, and revisit any section."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Agenda list:</strong> Four items appear sequentially as narrated. Clean numbered list. Warm paper background. Each item has a small icon.</p></div>
+      <div class="sb-cell"><p class="production-note">Items animate in on trigger words. No auto-advance — learner clicks through. Screenshot capture: not needed.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">03</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">Context</span><span class="avatar-note">Avatar: right side</span></div>
+      <div class="sb-cell"><p class="narration">"Before we go further — why now? The organization has rolled out this tool because we believe it can save time, reduce friction, and help everyone focus on higher-value work. But tools only deliver value when people know how to use them well. That is what this module is for. Not to tell you to use it — to make sure you can."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Left side:</strong> Three-column stat layout. "X hours saved per week per user," "Used across Y functions," "Launched to Z employees." Stats animate in.</p></div>
+      <div class="sb-cell"><p class="production-note">Stats are placeholder — confirm real numbers with SME before production. Trigger: "That is what this module is for."</p></div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section-div"><span>Section 2 — What It Is</span><em>Slides 4–7</em></div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">04</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">Explanation</span><span class="avatar-note">Avatar: left side</span></div>
+      <div class="sb-cell"><p class="narration">"Let's start with what this tool actually is. At its core, it is a large language model — which means it processes text, understands context, and generates responses based on patterns in data it was trained on. Think of it less like a search engine and more like a very well-read assistant that can draft, summarize, and analyze — but one that needs your direction to do it well."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Right side:</strong> Simple diagram showing input → process → output. Labels: "Your prompt," "AI reasoning," "Generated response." Clean, no clip art.</p></div>
+      <div class="sb-cell"><p class="production-note">Diagram builds in three steps with narration. Avoid jargon visually even if narration uses it. Duration: ~55s.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">05</div></div>
+      <div class="sb-cell"><span class="slide-type type-scenario">Scenario</span><span class="avatar-note">Avatar: off-screen (VO only)</span></div>
+      <div class="sb-cell"><p class="narration">"Here is what that looks like in practice. Maya is a Client Success Manager preparing for a quarterly business review. She needs to summarize three months of account activity into a two-page document. Normally that takes two hours. Watch what happens when she uses the tool."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Screen recording:</strong> Simulated tool interface. User types prompt: "Summarize the following account notes into a 2-page QBR summary..." Output appears. Total clip: ~30s. Camtasia capture.</p></div>
+      <div class="sb-cell"><p class="production-note">Screen capture needed. Record in Camtasia. Use placeholder account data — no real client info. Trim to 30s max. Export at 1080p.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">06</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">What It Is Not</span><span class="avatar-note">Avatar: center</span></div>
+      <div class="sb-cell"><p class="narration">"Now — what it is not. It is not a search engine. It does not browse the internet or pull live data. It is not always right — it can generate plausible-sounding information that is incorrect. It is not a replacement for your judgment. And it is not the right tool for every task. Knowing those limits is as important as knowing the capabilities."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Four-panel layout:</strong> Each "not" appears as a card with a simple icon and one-line descriptor. Red X icon used sparingly — one per card, top corner.</p></div>
+      <div class="sb-cell"><p class="production-note">Cards animate in sequentially with narration triggers. No auto-advance. Learner must read all four before Next is enabled — set in SCORM logic.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">07</div></div>
+      <div class="sb-cell"><span class="slide-type type-quiz">Quiz Block 1</span><span class="avatar-note">Avatar: off</span></div>
+      <div class="sb-cell"><p class="narration">"Let's check your understanding before we move on. Three quick questions. Take your time."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Knowledge check:</strong> 3 multiple choice questions. Q1: What is the tool best described as? Q2: Which of these is NOT a limitation of the tool? Q3: When Maya used the tool for the QBR, what was her primary benefit?</p></div>
+      <div class="sb-cell"><p class="production-note">Embedded in SCORM. Pass threshold: 2/3 correct. Wrong answer → remediation screen with explanation. Correct → positive reinforcement + continue. No retake limit on this block.</p></div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="section-div"><span>Section 3 — Acceptable Use</span><em>Slides 8–12</em></div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">08</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">Policy</span><span class="avatar-note">Avatar: left side</span></div>
+      <div class="sb-cell"><p class="narration">"Before you use any AI tool at work, you need to understand three things: what data you can put into it, what you cannot, and what happens to everything you share. Let's cover each one clearly."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Three-column layout:</strong> "What you CAN input," "What you CANNOT input," "What happens to your data." Color-coded: green, red, blue. Simple iconography.</p></div>
+      <div class="sb-cell"><p class="production-note">SME-confirmed content. Do not publish until Legal and IT have reviewed this slide specifically. Flag for compliance review in Confluence before recording.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">09</div></div>
+      <div class="sb-cell"><span class="slide-type type-scenario">Scenario</span><span class="avatar-note">Avatar: off-screen VO</span></div>
+      <div class="sb-cell"><p class="narration">"Here is a scenario. Marcus works in Finance. He wants to use the tool to help draft a summary of a confidential vendor contract. Is that an appropriate use? Take a moment to think about it before we continue."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Split screen:</strong> Left — Marcus at desk (illustration style, no stock photo). Right — text of the decision he is facing. Pause point: learner must click "I've thought about it" to continue.</p></div>
+      <div class="sb-cell"><p class="production-note">Pause enforced in SCORM — Next button hidden for 8 seconds. This creates cognitive processing time before reveal on slide 10.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">10</div></div>
+      <div class="sb-cell"><span class="slide-type type-scenario">Reveal</span><span class="avatar-note">Avatar: center</span></div>
+      <div class="sb-cell"><p class="narration">"The answer is no — not without checking first. Confidential vendor contracts contain proprietary third-party data. Before inputting any document marked confidential, Marcus should check with Legal or IT. The rule is simple: when in doubt, check before you paste."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Decision tree revealed:</strong> "Is it confidential?" → Yes → "Check with Legal/IT first." → No → "Is it personal data?" → Yes → "Do not input." → No → "You're clear to proceed." Simple flowchart, clean lines.</p></div>
+      <div class="sb-cell"><p class="production-note">Decision tree is a static screenshot from Figma wireframe. Export at 2x resolution for clarity at any screen size.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">11</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">Use Cases</span><span class="avatar-note">Avatar: lower-right</span></div>
+      <div class="sb-cell"><p class="narration">"Now let's look at where the tool works well for your specific role. We have mapped the most common use cases by function. Find yours and take note of the two or three that apply most directly to your day-to-day."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Interactive tab layout:</strong> Six function tabs — Sales, CS, PMM, Engineering, People/HR, Finance. Each tab reveals 3 use cases with one-line descriptions. Learner clicks their function. Screenshot capture of tool interface embedded in each use case where applicable.</p></div>
+      <div class="sb-cell"><p class="production-note">Tab interaction built in Storyline 360. Each tab state designed separately. Screenshot captures for Sales (QBR), CS (status report), PMM (content drafting) confirmed with SMEs.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">12</div></div>
+      <div class="sb-cell"><span class="slide-type type-quiz">Quiz Block 2</span><span class="avatar-note">Avatar: off</span></div>
+      <div class="sb-cell"><p class="narration">"Section check. Three questions on acceptable use. These are the ones that matter most from a compliance standpoint."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>3 scenario-based questions:</strong> Q1: Aisha wants to paste a client's personal email address into the tool. Should she? Q2: Which of these is an appropriate use for the Finance team? Q3: Before using the tool with confidential data, what should you do?</p></div>
+      <div class="sb-cell"><p class="production-note">Pass threshold: 3/3 required on this block — compliance-critical content. Wrong answer triggers mandatory remediation before retry. Max 3 attempts before L&D notified via LMS flag.</p></div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="section-div"><span>Section 4 — Using It Well</span><em>Slides 13–20</em></div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">13</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">Prompting</span><span class="avatar-note">Avatar: left side</span></div>
+      <div class="sb-cell"><p class="narration">"The output is only as good as the input. A vague prompt gets a vague answer. A clear, specific prompt — with context, a defined format, and the right constraints — gets something you can actually use. Let's look at the difference."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Before/after split:</strong> Left — weak prompt and weak output (highlighted in red). Right — strong prompt and strong output (highlighted in green). Real examples, not generic.</p></div>
+      <div class="sb-cell"><p class="production-note">Use real example prompts approved by SME. Do not use Lorem Ipsum. Weak prompt: "Summarize this." Strong prompt: "Summarize the following in 3 bullet points for a VP audience, focusing on business impact." Duration: ~50s.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">14</div></div>
+      <div class="sb-cell"><span class="slide-type type-scenario">Practice</span><span class="avatar-note">Avatar: off-screen VO</span></div>
+      <div class="sb-cell"><p class="narration">"Your turn. Below is a task you might actually face in your role. Draft a prompt that would get you a useful result. There is no single right answer — but I will show you three strong examples after you try."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Reflection activity:</strong> Text box with scenario description. Learner types their prompt attempt (no submission — self-reflection only). After 30 seconds, "See strong examples" button appears. Three example prompts slide in.</p></div>
+      <div class="sb-cell"><p class="production-note">Text box is decorative — no data captured. JavaScript timer reveals button at 30s. This is a practice moment, not an assessment. Note in design doc.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">17</div></div>
+      <div class="sb-cell"><span class="slide-type type-avatar">Avatar Feature</span><span class="avatar-note">Avatar: full screen, direct address</span></div>
+      <div class="sb-cell"><p class="narration">"One more thing before the final section. Always review the output before you use it. The tool is fast — but fast is not the same as accurate. Read what it gives you. Edit where needed. Put your name on it only when you are confident it reflects your judgment, not just its generation."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Avatar only:</strong> Full-frame avatar direct address. No slide content. This is a trust-building moment — the "voice of reason" beat before the compliance section. Warm but serious tone.</p></div>
+      <div class="sb-cell"><p class="production-note">Avatar slide — no screenshot capture needed. Use Synthesia direct-camera avatar angle. This is slide 17 per production guide — avatar appears on slides 1, 17, and 23 only.</p></div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="section-div"><span>Section 5 — Getting Help</span><em>Slides 21–23</em></div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">21</div></div>
+      <div class="sb-cell"><span class="slide-type type-content">Resources</span><span class="avatar-note">Avatar: lower-left</span></div>
+      <div class="sb-cell"><p class="narration">"If something goes wrong — or if you are not sure — here is where to go. The AI community Slack channel is your first stop for questions. The Confluence page has the full acceptable use policy and a prompt library. And if you have a compliance concern, go straight to Legal or IT."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Three-resource layout:</strong> Slack channel card (with channel name), Confluence link card (URL confirmed by SME), Legal/IT escalation card. Each card is clickable — links open in new tab.</p></div>
+      <div class="sb-cell"><p class="production-note">Confluence URL and Slack channel name must be confirmed before production. URLs locked per SME review on [DATE]. Do not record until confirmed — these are the only two fields still pending.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">22</div></div>
+      <div class="sb-cell"><span class="slide-type type-quiz">Quiz Block 3</span><span class="avatar-note">Avatar: off</span></div>
+      <div class="sb-cell"><p class="narration">"Final check. Three questions. These test your ability to make the right call in a real situation — not just recall what we covered."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>3 decision-scenario questions:</strong> Q1: You get a AI-generated output that sounds confident but includes a statistic you cannot verify. What do you do? Q2: A colleague asks you to share your prompt for a client email you drafted. Is that okay? Q3: Where do you go first if you have a question about appropriate use?</p></div>
+      <div class="sb-cell"><p class="production-note">Pass threshold: 2/3. Bloom's Level 5 — evaluation. Wrong answer triggers specific remediation per question (not generic). Each distractor written to address a common misconception confirmed in SME interviews.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">23</div></div>
+      <div class="sb-cell"><span class="slide-type type-avatar">Avatar Close</span><span class="avatar-note">Avatar: full screen</span></div>
+      <div class="sb-cell"><p class="narration">"You made it. And more importantly — you are ready. Not just to use the tool, but to use it well. Remember: the technology is here to give you more time for the work that requires you. Keep that in mind and it will serve you well. Go try it today."</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Avatar full-frame close:</strong> Warm, direct. No slide content. Transition to completion screen on final word.</p></div>
+      <div class="sb-cell"><p class="production-note">Avatar slide 23 — third and final avatar appearance. Trigger word: "today" — avatar nod gesture. Auto-advance to completion screen after 3s pause.</p></div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-cell"><div class="slide-num">24</div></div>
+      <div class="sb-cell"><span class="slide-type type-summary">Completion</span><span class="avatar-note">Avatar: off</span></div>
+      <div class="sb-cell"><p class="narration">No narration — completion screen.</p></div>
+      <div class="sb-cell"><p class="visual-note"><strong>Completion card:</strong> Congratulations message. Summary of three key takeaways (one per objective). Links to Slack channel and Confluence. "Mark complete" button triggers SCORM completion signal to LMS.</p></div>
+      <div class="sb-cell"><p class="production-note">SCORM completion: cmi.completion_status = "completed" fires on this slide only after learner has passed all 3 quiz blocks. Partial completion does not trigger. Test in MindTickle sandbox before publishing.</p></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html">← Back to portfolio</a>
+</div>
+</body>
+</html>
